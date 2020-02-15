@@ -1,0 +1,22 @@
+{
+  "name": "ubiquous-office-signs",
+  "version": "0.0.1",
+  "description": "Ubiquous office",
+  "main": "index.js",
+  "scripts": {
+    "test": "start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MortenAstrup96/ubiquous-office-signs.git"
+  },
+  "keywords": [
+    "office"
+  ],
+  "author": "Morten Astrup, Celine Moeller, Martin Kjær",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MortenAstrup96/ubiquous-office-signs/issues"
+  },
+  "homepage": "https://github.com/MortenAstrup96/ubiquous-office-signs#readme"
+}
