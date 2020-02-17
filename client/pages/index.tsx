@@ -6,7 +6,7 @@ const Index = props => (
     
     <Layout>
         
-        <h1>Batman</h1>
+        <h1>Showing API Fetch</h1>
         <ul>
             
             {props.shows.map(show => (
@@ -17,7 +17,7 @@ const Index = props => (
                     </Link>
                 </li>
             ))}
-        </ul>
+        </ul> 
 
         <style jsx>{`
         h1,
@@ -32,7 +32,7 @@ const Index = props => (
         li {
           list-style: none;
           margin: 5px 0;
-        }
+        } 
 
         a {
           text-decoration: none;
