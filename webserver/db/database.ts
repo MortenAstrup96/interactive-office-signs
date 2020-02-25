@@ -3,8 +3,7 @@ import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
 // https://www.npmjs.com/package/node-json-db
 // Test
-var db = new JsonDB(new Config("officeDB", true, false, '/'));
-generateGenericDatabase();
+var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
 
 export function getAll() {
     let data = db.getData("/");
@@ -24,6 +23,4 @@ export function generateGenericDatabase() {
     db.push("/person/5922/name","Martin Kjær");
     db.push("/person/5922/mail","m.Kjaer@facebook.com");
     db.push("/person/5922/status","available");
-
-    db.save();
 }
