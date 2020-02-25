@@ -2,7 +2,7 @@ import { JsonDB } from 'node-json-db';
 import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
 // https://www.npmjs.com/package/node-json-db
-
+// Test
 var db = new JsonDB(new Config("officeDB", true, false, '/'));
 generateGenericDatabase();
 
