@@ -1,44 +1,16 @@
 import fetch from 'isomorphic-unfetch';
 import useSWR from 'swr';
+import {fetcher} from "../library/general_functions";
+import {useEffect, useState} from "react";
 
 export default function Index() {
     const { data, error } = useSWR('/api/apiExample', fetcher);
     // The following line has optional chaining, added in Next.js v9.1.5,
     // is the same as `data && data.author`
-    const author = data?.author;
-    let quote = data?.quote; 
-  
-    if (!data) quote = 'Loading...';
-    if (error) quote = 'Failed to fetch the quote.';
+
+    console.log(data);
   
     return (
-      <main className="center">
-        <div className="quote">{quote}</div>
-        {author && <span className="author">- {author}</span>}
-  
-        <style jsx>{`
-          main {
-            width: 90%;
-            max-width: 900px;
-            margin: 300px auto;
-            text-align: center;
-          }
-          .quote {
-            font-family: cursive;
-            color: #e243de; 
-            font-size: 24px;
-            padding-bottom: 10px;
-          }
-          .author {
-            font-family: sans-serif;
-            color: #559834;
-            font-size: 20px;
-          }
-        `}</style>
-      </main>
+        <div>{}</div>
     );
-}
-
-function fetcher(url) {
-    return fetch(url).then(r => r.json());
 }
