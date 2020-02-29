@@ -1,16 +1,23 @@
-import fetch from 'isomorphic-unfetch';
-import useSWR from 'swr';
-import {fetcher} from "../library/general_functions";
-import {useEffect, useState} from "react";
+import {Button} from "@material-ui/core";
+import Link from "next/link";
 
 export default function Index() {
-    const { data, error } = useSWR('/api/apiExample', fetcher);
     // The following line has optional chaining, added in Next.js v9.1.5,
     // is the same as `data && data.author`
 
-    console.log(data);
-  
     return (
-        <div>{}</div>
+        <div>
+            <Link href="/p/[id]" as={`/p/7913`}>
+            <Button variant={"contained"} color={"primary"}>
+                    Office Sign
+            </Button>
+
+            </Link>
+            <Link href="user">
+            <Button variant={"contained"} color={"primary"} >
+                Settings
+            </Button>
+            </Link>
+        </div>
     );
 }

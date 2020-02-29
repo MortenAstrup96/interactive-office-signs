@@ -7,7 +7,11 @@ var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
 
 export function getAll() {
     let data = db.getData("/");
-    console.log(data);
+    return data;
+}
+
+export function getPerson(id: string) {
+    let data = db.getData("/person/" + id);
     return data;
 }
 

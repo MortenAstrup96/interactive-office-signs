@@ -1,13 +1,15 @@
-import Layout from "../components/layout";
-import SignHeader from "../components/signHeader";
+import React, {useState} from "react";
+import {OfficeInformation} from "../components/office/officeInformation";
+import OfficeInformationId from "./p/[id]";
 
-export default function Office() {
+const Office = () => {
+    const[currentOffice, setCurrentOffice] = useState();
+
     return(
         <div>
-            <Layout>
-                <SignHeader/>
-                <h2>Jo Vermeulen</h2>
-            </Layout>
+            <OfficeInformationId/>
         </div>
     )
-}
+};
+
+export default Office;
