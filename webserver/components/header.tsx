@@ -1,18 +1,11 @@
 import Link from "next/link"
+import {Box} from "@material-ui/core";
 
-const linkStyle = {
-    marginRight: 15
-}
 
 const Header = () => (
-    <div>
-        <Link href="/">
-            <a style={linkStyle}>Home</a>
-        </Link>
-        <Link href="/office">
-            <a style={linkStyle}>Office Sign</a>
-        </Link>
-    </div>
+    <Box color="#ffffff">
+
+    </Box>
 )
 
 export default Header

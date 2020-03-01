@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import {OfficeInformation} from "../components/office/officeInformation";
-import OfficeInformationId from "./p/[id]";
+import OfficeInformationId from "./p/[officeId]";
 
 const Office = () => {
-    const[currentOffice, setCurrentOffice] = useState();
+    const [currentOffice, setCurrentOffice] = useState();
 
-    return(
+    return (
         <div>
             <OfficeInformationId/>
         </div>
