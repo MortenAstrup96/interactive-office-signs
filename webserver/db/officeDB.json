@@ -1,11 +1,1 @@
-{
-  "office":{
-    "Ada-247":{
-      "nameId":"5922"
-    }
-  },
-  "person":{
-    "5922":
-    {"nameId":"5922","name":"Martin Kjær","mail":"m.Kjaer@facebook.com","status":"available"},
-    "7913":{
-      "nameId":"7913","name":"Jo Vermeulen","mail":"Jo@gmail.com","status":"busy"}}}
+{"office":{"Ada-247":{"nameId":"7913"},"Hopper-129":{"nameId":"5922"},"Ada-299":{"nameId":"3559"}},"person":{"3559":{"nameId":"3559","name":"Niels Oluf Bouvin","mail":"Boivin@cs.au.dk","status":"available"},"5922":{"nameId":"5922","name":"Martin Kjær","mail":"m.Kjaer@facebook.com","status":"available"},"7913":{"nameId":"7913","name":"Jo Vermeulen","mail":"Jo@gmail.com","status":"busy"}}}

@@ -2,46 +2,34 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
+import Header from "../../components/header";
 
 export default function OfficeInformationId() {
     const router = useRouter();
-    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>({
-        nameId: "",
-        name: "",
-        status: "",
-        mail: ""
-    });
-
-    const {data, error} = useSWR(() => 'http://localhost:3000/api/persons/7913', fetcher);
+    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+    const {data, error} = useSWR(() => 'http://localhost:3000/api/persons/' + router.query.officeId, fetcher);
 
     useEffect(() => {
-        if (!data) {
-            currentOffice.name = "Loading"
-        }
-
-        setCurrentOffice({
-            nameId: data?.nameId,
-            name: data?.name,
-            mail: data?.mail,
-            status: data?.status
-        })
-
-
-    }, [router, data])
-
+        setCurrentOffice(data);
+    }, [data])
 
     async function fetcher(url) {
         return fetch(url).then(r => r.json());
     }
 
+
+    console.log(data);
+    if (error) return <div> Failed to load </div>
+    if (!data) return <div> Loading... </div>
+
     return (
         <div>
-            <h1>{router.query.id}</h1>
-            <h1>{currentOffice.name}</h1>
-            <h2>{currentOffice.nameId}</h2>
-            <h2>{currentOffice.mail}</h2>
-            <h2>{currentOffice.status}</h2>
+            <Header/>
+            <h1>{router.query.officeId}</h1>
+            <h2>{data.nameId}</h2>
         </div>
     );
+
+
 }
 
