@@ -1,5 +1,6 @@
 import Container from "@material-ui/core/Container";
-import {Divider} from "@material-ui/core";
+import {Divider, Button} from "@material-ui/core";
+import Link from "next/link";
 
 const auLogo = require("../img/aulogo.png");
 
@@ -34,6 +35,18 @@ const Header = (props: officeInformationProps) => (
                 <p style={textStyle}>Department of Computer Science</p>
             </span>
         </div>
+
+        <Link href={"/office/" + props.office}>
+            <Button variant="contained">
+                Far
+            </Button>
+        </Link>
+
+        <Link href={"/detailed-office/" + props.office}>
+            <Button variant="contained">
+                Close
+            </Button>
+        </Link>
         <Divider/>
     </div>
 

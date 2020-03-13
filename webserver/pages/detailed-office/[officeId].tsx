@@ -26,10 +26,12 @@ export default function OfficeInformationId() {
     return (
         <Container>
             <div>
-                <Header office={"Ada-" + currentOffice.nameId}/>
-                <h2>{currentOffice.name}</h2>
-                <h2>{currentOffice.mail}</h2>
-                <h2>{currentOffice.status}</h2>
+                <Header office={currentOffice.nameId}/>
+                <div style={{textAlign: "center"}}>
+                    <h2>{currentOffice.name}</h2>
+                    <h2>{currentOffice.mail}</h2>
+                    <h2>{currentOffice.status}</h2>
+                </div>
             </div>
         </Container>
     );
