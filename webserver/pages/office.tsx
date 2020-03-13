@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {OfficeInformation} from "../components/office/officeInformation";
-import OfficeInformationId from "./p/[officeId]";
+import OfficeInformationId from "./office/[officeId]";
 import {Container} from "@material-ui/core";
 
 const Office = () => {

@@ -17,6 +17,7 @@ const textStyle = {
     fontFamily: 'sans-serif'
 }
 
+// Interface defines what items must be given this Header
 interface officeInformationProps {
     office: string
 }
