@@ -3,6 +3,8 @@ import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/header";
+import {Container} from "@material-ui/core";
+import {border} from "@material-ui/system";
 
 export default function OfficeInformationId() {
     const router = useRouter();
@@ -18,16 +20,18 @@ export default function OfficeInformationId() {
     }
 
 
-    console.log(data);
     if (error) return <div> Failed to load </div>
-    if (!data) return <div> Loading... </div>
+    if (!data || !currentOffice) return <div> Loading... </div>
 
     return (
-        <div>
-            <Header/>
-            <h1>{router.query.officeId}</h1>
-            <h2>{data.nameId}</h2>
-        </div>
+        <Container>
+            <div>
+                <Header office={"Ada-" + currentOffice.nameId}/>
+                <h2>{currentOffice.name}</h2>
+                <h2>{currentOffice.mail}</h2>
+                <h2>{currentOffice.status}</h2>
+            </div>
+        </Container>
     );
 
 

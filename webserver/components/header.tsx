@@ -3,17 +3,39 @@ import {Divider} from "@material-ui/core";
 
 const auLogo = require("../img/aulogo.png");
 
-const Header = () => (
+/** CSS Properties can be defiend as constants and applied as style={name}*/
+const headerStyles = {
+    display: 'grid',
+    gridTemplateColumns: '50% 50%',
+    marginLeft: "20px",
+    marginRight: "20px"
+}
+
+const textStyle = {
+    marginTop: '10px',
+    marginBottom: '10px',
+    fontFamily: 'sans-serif'
+}
+
+interface officeInformationProps {
+    office: string
+}
+
+const Header = (props: officeInformationProps) => (
     <div>
-        <Container color="#123">
-            <span>
-            <h1>Ada-242</h1>
-            <p>Department of Computer Science</p>
+        <div style={headerStyles}>
+            <div style={{position: "relative"}}>
+                <img src={auLogo} style={{position: "absolute", width: "250px", bottom: "10px"}}/>
+            </div>
+
+            <span style={{textAlign: "right", minHeight: "80px"}}>
+                <h1 style={textStyle}>{props.office}</h1>
+                <p style={textStyle}>Department of Computer Science</p>
             </span>
-            <img src={auLogo}/>
-        </Container>
+        </div>
         <Divider/>
     </div>
+
 
 )
 
