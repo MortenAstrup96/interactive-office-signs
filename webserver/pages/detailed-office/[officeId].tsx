@@ -13,7 +13,7 @@ export default function OfficeInformationId() {
 
     useEffect(() => {
         setCurrentOffice(data);
-    }, [data])
+    }, [data]);
 
     async function fetcher(url) {
         if (router.query.officeId) {
@@ -22,8 +22,8 @@ export default function OfficeInformationId() {
     }
 
 
-    if (error) return <div> Failed to load </div>
-    if (!data || !currentOffice) return <div> Loading... </div>
+    if (error) return (<div> Failed to load </div>);
+    if (!data || !currentOffice) return (<div> Loading... </div>);
 
     return (
         <Container>
@@ -32,7 +32,7 @@ export default function OfficeInformationId() {
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
-                    <AvailabilityComponent status={currentOffice.status}/>
+                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
         </Container>

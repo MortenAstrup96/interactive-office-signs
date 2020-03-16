@@ -1,8 +1,6 @@
-import {getOfficeInformation, setPersonById} from "../../../db/database";
+import {setPersonById} from "../../../db/database";
 
 export default (req, res) => {
-    console.log("STATUS")
-    const {query: {nameId}} = req
-    setPersonById(nameId)
+    setPersonById(req.body);
     res.json("OK");
 };
