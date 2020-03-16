@@ -1,13 +1,18 @@
-import Layout from "../components/layout";
-import SignHeader from "../components/signHeader";
+import React, {useState} from "react";
+import {OfficeInformation} from "../components/office/officeInformation";
+import OfficeInformationId from "./office/[officeId]";
+import {Container} from "@material-ui/core";
 
-export default function Office() {
-    return(
+const Office = () => {
+    const [currentOffice, setCurrentOffice] = useState();
+
+    return (
         <div>
-            <Layout>
-                <SignHeader/>
-                <h2>Jo Vermeulen</h2>
-            </Layout>
+            <Container color="#123">
+                <OfficeInformationId/>
+            </Container>
         </div>
     )
-}
+};
+
+export default Office;
