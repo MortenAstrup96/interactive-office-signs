@@ -9,12 +9,14 @@ export function getAll() {
     return data;
 }
 
-export function getOfficeInformation(id: string) {
+export function getOfficeInformation(id: any) {
 
-    let person = db.getData("/person/" + id);
-    const office = db.getData("/office");
+    if(id) {
+        let person = db.getData("/person/" + id);
+        return person;
+    }
 
-    return person;
+    return undefined;
 }
 
 export function generateGenericDatabase() {

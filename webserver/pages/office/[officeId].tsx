@@ -5,6 +5,7 @@ import useSWR from "swr";
 import Header from "../../components/header";
 import {Container} from "@material-ui/core";
 import {border} from "@material-ui/system";
+import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 
 export default function OfficeInformationId() {
     const router = useRouter();
@@ -16,7 +17,9 @@ export default function OfficeInformationId() {
     }, [data])
 
     async function fetcher(url) {
-        return fetch(url).then(r => r.json());
+        if(router.query.officeId) {
+            return fetch(url).then(r => r.json());
+        }
     }
 
 
@@ -30,7 +33,7 @@ export default function OfficeInformationId() {
                 <div>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
-                    <h2>{currentOffice.status}</h2>
+                    <AvailabilityComponent status={currentOffice.status}/>
                 </div>
 
             </div>
