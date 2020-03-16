@@ -11,8 +11,7 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
     function changeStatus() {
         status === "available" ? setStatus("busy") : setStatus("available");
     }
-
-    if(status === "available") {
+    if (status === "available") {
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={changeStatus}>

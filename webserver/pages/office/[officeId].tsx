@@ -17,7 +17,7 @@ export default function OfficeInformationId() {
     }, [data])
 
     async function fetcher(url) {
-        if(router.query.officeId) {
+        if (router.query.officeId) {
             return fetch(url).then(r => r.json());
         }
     }

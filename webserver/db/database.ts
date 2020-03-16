@@ -11,7 +11,7 @@ export function getAll() {
 
 export function getOfficeInformation(id: any) {
 
-    if(id) {
+    if (id) {
         let person = db.getData("/person/" + id);
         return person;
     }
