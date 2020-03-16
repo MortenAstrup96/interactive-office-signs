@@ -10,13 +10,15 @@ export function getAll() {
 }
 
 export function getOfficeInformation(id: any) {
-
     if (id) {
-        let person = db.getData("/person/" + id);
-        return person;
+        return db.getData("/person/" + id);
     }
+}
 
-    return undefined;
+export function setPersonById(id: any) {
+    if(id) {
+        db.push("/person/" + id + "/status", "busy")
+    }
 }
 
 export function generateGenericDatabase() {

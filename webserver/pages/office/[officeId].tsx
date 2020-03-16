@@ -10,7 +10,7 @@ import {AvailabilityComponent} from "../../components/office/availabilityCompone
 export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
-    const {data, error} = useSWR(() => 'http://localhost:3000/api/persons/' + router.query.officeId, fetcher);
+    const {data, error} = useSWR(() => 'http://localhost:3000/api/getPersonById/' + router.query.officeId, fetcher);
 
     useEffect(() => {
         setCurrentOffice(data);

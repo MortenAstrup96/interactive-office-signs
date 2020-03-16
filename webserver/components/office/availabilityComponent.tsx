@@ -1,16 +1,22 @@
 import React, {useState} from "react";
-import {useRouter} from "next/router";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button} from "@material-ui/core";
-import color from "@material-ui/core/colors";
+import {stringify} from "querystring";
 
 
 export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
-    const [status, setStatus] = useState(props.status);
+    const [status, setStatus] = useState<string>(props.status);
 
     function changeStatus() {
         status === "available" ? setStatus("busy") : setStatus("available");
+
+        fetch('http://localhost:3000/api/setStatusById/' + "7913", {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(status)
+        });
     }
+
     if (status === "available") {
         return (
             <div>
