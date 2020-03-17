@@ -3,8 +3,9 @@ import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/header";
-import {Container} from "@material-ui/core";
+import {Avatar, Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
+import Link from "next/link";
 
 export default function OfficeInformationId() {
     const router = useRouter();
@@ -30,15 +31,13 @@ export default function OfficeInformationId() {
             <div>
                 <Header office={currentOffice.nameId}/>
                 <div>
+                    <Avatar alt="Jo Vermeluen" src="../img/avatar-icon.png"/>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
-
             </div>
         </Container>
     );
-
-
 }
 

@@ -1,4 +1,5 @@
 import Header from "./header"
+import React from "react";
 
 const layoutStyle = {
     margin: 20,
