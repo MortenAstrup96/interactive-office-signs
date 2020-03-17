@@ -10,7 +10,10 @@ import {serverName} from "../../library/constants";
 export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
-    const {data, error} = useSWR(() => serverName +'/api/getPersonById/' + router.query.officeId, fetcher);
+    const {data, error} = useSWR(() => serverName +'/api/getPersonById/' + router.query.officeId, fetcher, {
+        // revalidate the data per second
+        refreshInterval: 200
+    });
 
     useEffect(() => {
         setCurrentOffice(data);
