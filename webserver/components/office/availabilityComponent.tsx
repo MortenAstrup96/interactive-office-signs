@@ -7,7 +7,6 @@ import {serverName} from "../../library/constants";
 export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
     const [status, setStatus] = useState<string>(props.status);
     const [nameId] = useState<string>(props.nameId);
-    console.log("Im changed! " + props.status);
 
     // Updates database via API on status change
     useEffect(() => {
