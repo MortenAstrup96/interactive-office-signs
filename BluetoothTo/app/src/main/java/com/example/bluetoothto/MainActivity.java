@@ -17,6 +17,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+//http://solderer.tv/data-transfer-between-android-and-arduino-via-bluetooth/
 public class MainActivity extends Activity {
     private static final String TAG = "bluetooth2";
 
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
     // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    // MAC-address of Bluetooth module (you must edit this line) can på found when connecting to module via bluetooth
+    // MAC-address of Bluetooth module (Must be changed to match module) can på found when connecting to module via bluetooth
     private static String address = "98:D3:31:F7:47:2A";
 
     /** Called when the activity is first created. */
@@ -57,9 +58,9 @@ public class MainActivity extends Activity {
                         if (endOfLineIndex > 0) {                                            // if end-of-line,
                             String sbprint = sb.substring(0, endOfLineIndex);               // extract string
                             sb.delete(0, sb.length());                                      // and clear
-                            txtArduino.setText("Data: " + sbprint);            // update TextView
+                            txtArduino.setText("Data: " + sbprint);            // update TextView (change web-view)
                         }
-                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+                        Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
                         break;
                 }
             };
