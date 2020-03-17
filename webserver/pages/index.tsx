@@ -7,7 +7,7 @@ export default function Index() {
 
     return (
         <div>
-            <Link href="/p/[id]" as={`/p/7913`}>
+            <Link href="/p/[id]" as={`/office/7913`}>
                 <Button variant={"contained"} color={"primary"}>
                     Office Sign
                 </Button>

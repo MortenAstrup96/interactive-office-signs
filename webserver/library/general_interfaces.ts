@@ -7,5 +7,6 @@ export interface OfficeInformationProps {
 }
 
 export interface OfficeAvailabilityProps {
+    nameId: string;
     status: string;
 }

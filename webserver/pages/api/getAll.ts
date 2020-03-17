@@ -3,6 +3,7 @@ import {getAll} from "../../db/database";
 export default (req, res) => {
     switch (req.method) {
         case 'GET':
+            console.log("Now!")
             const quote = getAll();
             res.status(200).json(quote);
             break
