@@ -22,21 +22,25 @@ export function setPersonById(statusRequest: OfficeAvailabilityProps) {
 }
 
 export function generateGenericDatabase() {
-    db.push("/office/Ada-247/nameId", "7913");
     db.push("/person/7913/nameId", "7913");
     db.push("/person/7913/name", "Jo Vermeulen");
+    db.push("/person/7913/office", "Ada-589");
     db.push("/person/7913/mail", "Jo@gmail.com");
     db.push("/person/7913/status", "busy");
+    db.push("/personList[]", {name: "Jo Vermeulen", nameId: "7913"});
 
-    db.push("/office/Hopper-129/nameId", "5922");
+
     db.push("/person/5922/nameId", "5922");
     db.push("/person/5922/name", "Martin Kjær");
+    db.push("/person/5922/office", "Stibitz-2");
     db.push("/person/5922/mail", "m.Kjaer@facebook.com");
     db.push("/person/5922/status", "available");
+    db.push("/personList[]", {name: "Martin Kjær", nameId: "5922"});
 
-    db.push("/office/Ada-299/nameId", "3559");
     db.push("/person/3559/nameId", "3559");
     db.push("/person/3559/name", "Niels Oluf Bouvin");
+    db.push("/person/3559/office", "Ada-246");
     db.push("/person/3559/mail", "Boivin@cs.au.dk");
     db.push("/person/3559/status", "available");
+    db.push("/personList[]", {name: "Niels Oluf Bouvin", nameId: "3559"});
 }
