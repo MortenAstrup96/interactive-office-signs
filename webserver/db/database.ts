@@ -9,6 +9,10 @@ export function getAll() {
     return db.getData("/");
 }
 
+export function getPersonData() {
+    return db.getData("/personList");
+}
+
 export function getOfficeInformation(id: any) {
     if (id) {
         return db.getData("/person/" + id);
