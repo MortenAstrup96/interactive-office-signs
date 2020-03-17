@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button} from "@material-ui/core";
+import {serverName} from "../../library/constants";
 
 
 export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
@@ -9,18 +10,23 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
 
     // Updates database via API on status change
     useEffect(() => {
-        fetch('http://localhost:3000/api/setStatusById/' + props.nameId, {
+        fetch(serverName + '/api/setStatusById/' + props.nameId, {
             method: 'PUT',
             headers: {'Content-Type':'application/json'},
             body: JSON.stringify(Object.assign({nameId}, {status}))
         });
     }, [status, nameId]);
 
+    useEffect(() => {
+        setStatus(props.status);
+    }, [props.status]);
+
     function changeStatus() {
         status === "available" ? setStatus("busy") : setStatus("available");
     }
 
     if (status === "available") {
+
         return (
             <div>
                 <Button variant="contained" color="primary" onClick={changeStatus}>

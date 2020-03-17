@@ -5,6 +5,7 @@ import useSWR from "swr";
 import Header from "../../components/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
+import {serverName} from "../../library/constants";
 
 const avatar = require("../../img/avataricon.png");
 
@@ -12,11 +13,14 @@ export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
-    const {data, error} = useSWR(() => 'http://localhost:3000/api/getPersonById/' + router.query.officeId, fetcher);
+    let {data, revalidate } = useSWR(() => serverName +'/api/getPersonById/' + router.query.officeId, fetcher, {
+        // revalidate the data per second
+        refreshInterval: 200
+    });
 
     useEffect(() => {
         setCurrentOffice(data);
-    }, [data]);
+    }, [data, revalidate]);
 
     async function fetcher(url) {
         if (router.query.officeId) {
@@ -24,8 +28,6 @@ export default function OfficeInformationId() {
         }
     }
 
-
-    if (error) return (<div> Failed to load </div>);
     if (!data || !currentOffice) return (<div> Loading... </div>);
 
     return (

@@ -1,7 +1,9 @@
-import {List, ListItem, ListItemText} from "@material-ui/core";
+import {Container, List, ListItem, ListItemText, } from "@material-ui/core";
 import useSWR from "swr";
-import {useEffect, useState} from "react";
 import Link from "next/link";
+import {OfficeInformationProps} from "../library/general_interfaces";
+import {Form} from "../components/form";
+import {serverName} from "../library/constants";
 
 interface NameProp {
     name: string,
@@ -9,8 +11,19 @@ interface NameProp {
 }
 
 export default function Overview() {
-    const {data, error} = useSWR(() => 'http://localhost:3000/api/getPersonData', fetcher);
+    const {data} = useSWR(() => serverName +'/api/getPersonData', fetcher);
 
+
+    const addPersonToDB = (prop: OfficeInformationProps) => {
+        fetch(serverName + '/api/addPerson', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(prop)
+        });
+    };
+
+
+    /** This function returns a Material UI Listitem with a link, linking to /office/nameId */
     function ListItemLink(props) {
         return (
             <Link href={"/office/" + props.nameId}>
@@ -21,21 +34,27 @@ export default function Overview() {
         );
     }
 
+    // Leave me alone!!
     async function fetcher(url) {
         return fetch(url).then(r => r.json());
     }
 
+
     if (!data) return (
-        <div><p>Loading..</p></div>
+        <div> <Form addPerson={addPersonToDB}/></div>
     );
 
     return (
         <div>
-            <List>
-                {data.map((result: NameProp, index: number) =>
-                    <ListItemLink key={index} nameId={result.nameId} name={result.name}/>
-                )}
-            </List>
+            <Container>
+                <List>
+                    {data.map((result: NameProp, index: number) =>
+                        <ListItemLink key={index} nameId={result.nameId} name={result.name}/>
+                    )}
+                </List>
+                <Form addPerson={addPersonToDB}/>
+            </Container>
         </div>
     );
 }
+
