@@ -8,6 +8,7 @@ import {AvailabilityComponent} from "../../components/office/availabilityCompone
 import Link from "next/link";
 
 export default function OfficeInformationId() {
+    const avatar = require("../img/avataricon.png");
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
     const {data, error} = useSWR(() => 'http://localhost:3000/api/getPersonById/' + router.query.officeId, fetcher);
@@ -31,7 +32,7 @@ export default function OfficeInformationId() {
             <div>
                 <Header office={currentOffice.nameId}/>
                 <div>
-                    <Avatar alt="Jo Vermeluen" src="../img/avatar-icon.png"/>
+                    <img src={avatar} />
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
