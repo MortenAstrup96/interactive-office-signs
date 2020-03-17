@@ -1,196 +1,194 @@
 package com.example.bluetoothto;
 
-import android.Manifest;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.util.UUID;
+
+import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Set;
+public class MainActivity extends Activity {
+    private static final String TAG = "bluetooth2";
 
+    TextView txtArduino;
+    Handler h;
 
+    final int RECIEVE_MESSAGE = 1;        // Status  for Handler
+    private BluetoothAdapter btAdapter = null;
+    private BluetoothSocket btSocket = null;
+    private StringBuilder sb = new StringBuilder();
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private static final String TAG = "MyActivity";
+    private ConnectedThread mConnectedThread;
 
-    BluetoothAdapter bluetoothAdapter;
-    ArrayList<BluetoothDevice> BTal = new ArrayList<>();
-    DeviceList deviceList;
-    ListView lvNewDevice;
+    // SPP UUID service
+    private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
+    // MAC-address of Bluetooth module (you must edit this line) can på found when connecting to module via bluetooth
+    private static String address = "98:D3:31:F7:47:2A";
 
+    /** Called when the activity is first created. */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        lvNewDevice = (ListView) findViewById(R.id.lv);
-        BTal = new ArrayList<>();
-        Log.d(TAG, "START: ");
+        txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
 
-        connect();
-
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        registerReceiver(receiver2, filter);
-
-
-        lvNewDevice.setOnItemClickListener(MainActivity.this);
-
-        // Open for discovering devices
-        Button cnnctBtn = (Button)findViewById(R.id.connect);
-        cnnctBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if(bluetoothAdapter.isDiscovering()) {
-                    bluetoothAdapter.cancelDiscovery();
-
-                    // mangler muligvis permission check her?
-
-                    bluetoothAdapter.startDiscovery();
-                    IntentFilter discoverIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                    registerReceiver(receiver, discoverIntent);
+        // Handle recieved data to string
+        h = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case RECIEVE_MESSAGE:                                                   // if receive massage
+                        byte[] readBuf = (byte[]) msg.obj;
+                        String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
+                        sb.append(strIncom);                                                // append string
+                        int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
+                        if (endOfLineIndex > 0) {                                            // if end-of-line,
+                            String sbprint = sb.substring(0, endOfLineIndex);               // extract string
+                            sb.delete(0, sb.length());                                      // and clear
+                            txtArduino.setText("Data: " + sbprint);            // update TextView
+                        }
+                        //Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+                        break;
                 }
-                if(!bluetoothAdapter.isDiscovering()) {
-                    bluetoothAdapter.cancelDiscovery();
+            };
+        };
 
-                    // Permission check. Skal alle nyere end lollipop have
-                    checkBTPermissions();
-
-
-                    bluetoothAdapter.startDiscovery();
-                    IntentFilter discoverIntent = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-                    registerReceiver(receiver, discoverIntent);
-                }
-
-
-                //nothing yet
-            }
-        });
-
-
-
+        btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
+        checkBTState();
 
     }
 
-    // BroadcastReceiver for ACTION_FOUND.
-    private final BroadcastReceiver receiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                BTal.add(device);
-
-                Log.d(TAG, "onReceive: " + device.getName() + " ADDR: "+device.getAddress());
-
-                deviceList = new DeviceList(context, R.layout.device_list,BTal);
-
-                lvNewDevice.setAdapter(deviceList);
-
+    private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
+        if(Build.VERSION.SDK_INT >= 10){
+            try {
+                final Method  m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
+                return (BluetoothSocket) m.invoke(device, MY_UUID);
+            } catch (Exception e) {
+                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
             }
         }
-    };
-
-    // Create a BroadcastReceiver for BOND_STATE_CHANGED. (Pair devices)
-    private final BroadcastReceiver receiver2 = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            Log.d(TAG, "RECIEVER2 called");
-
-            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
-                // is paired
-                if(device.getBondState() == BluetoothDevice.BOND_BONDED) {
-                    Log.d(TAG, "is paired :) ");
-                }
-
-                // pairing
-                if(device.getBondState() == BluetoothDevice.BOND_BONDING) {
-                    Log.d(TAG, "is pairing: ");
-                }
-
-                // broken
-                if(device.getBondState() == BluetoothDevice.BOND_NONE) {
-                    Log.d(TAG, "pairing is broken: ");
-                }
-
-
-            }
-        }
-    };
+        return  device.createRfcommSocketToServiceRecord(MY_UUID);
+    }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onResume() {
+        super.onResume();
 
+        Log.d(TAG, "...onResume - try connect...");
 
-        // Don't forget to unregister the ACTION_FOUND receiver.
-        unregisterReceiver(receiver);
-        unregisterReceiver(receiver2);
-    }
+        // Set up a pointer to the remote node using it's address.
+        BluetoothDevice device = btAdapter.getRemoteDevice(address);
 
+        // Two things are needed to make a connection:
+        //   A MAC address, which we got above.
+        //   A Service ID or UUID.  In this case we are using the
+        //     UUID for SPP.
 
-    void connect() {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        // spørg om at tænde bluetooth hvis det ikke er tændt
-        if (!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, 0);
-
+        try {
+            btSocket = createBluetoothSocket(device);
+        } catch (IOException e) {
+            errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
         }
 
+        // Discovery is resource intensive.  Make sure it isn't going on
+        // when you attempt to connect and pass your message.
+        btAdapter.cancelDiscovery();
 
-    }
-
-    private void checkBTPermissions() {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP){
-            int permissionCheck = this.checkSelfPermission("Manifest.permission.ACCESS_FINE_LOCATION");
-            permissionCheck += this.checkSelfPermission("Manifest.permission.ACCESS_COARSE_LOCATION");
-            if (permissionCheck != 0) {
-
-                this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001); //Any number
+        // Establish the connection.  This will block until it connects.
+        Log.d(TAG, "...Connecting...");
+        try {
+            btSocket.connect();
+            Log.d(TAG, "....Connection ok...");
+        } catch (IOException e) {
+            try {
+                btSocket.close();
+            } catch (IOException e2) {
+                errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
             }
-        }else{
-            Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
         }
-    }
 
+        // Create a data stream so we can talk to server.
+        Log.d(TAG, "...Create Socket...");
+
+        mConnectedThread = new ConnectedThread(btSocket);
+        mConnectedThread.start();
+    }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        bluetoothAdapter.cancelDiscovery();
+    public void onPause() {
+        super.onPause();
 
-        Log.d(TAG, "onClick Device");
-        // find index her!!!
-        String deviceName = BTal.get(position).getName();
-        String deviceAdd = BTal.get(position).getAddress();
+        Log.d(TAG, "...In onPause()...");
 
-        Log.d(TAG, "Device name: " +deviceName+" and add: "+deviceAdd);
+        try     {
+            btSocket.close();
+        } catch (IOException e2) {
+            errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
+        }
+    }
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            // muligvis version control here
-            Log.d(TAG, "Prøver at pair ");
-            BTal.get(position).createBond();
+    private void checkBTState() {
+        // Check for Bluetooth support and then check to make sure it is turned on
+        // Emulator doesn't support Bluetooth and will return null
+        if(btAdapter==null) {
+            errorExit("Fatal Error", "Bluetooth not support");
         } else {
+            if (btAdapter.isEnabled()) {
+                Log.d(TAG, "...Bluetooth ON...");
+            } else {
+                //Prompt user to turn on Bluetooth
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, 1);
+            }
+        }
+    }
 
-            Log.d(TAG, "OLD BUILDVERSION");
+    private void errorExit(String title, String message){
+        Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        finish();
+    }
 
+    private class ConnectedThread extends Thread {
+        private final InputStream mmInStream;
+
+        public ConnectedThread(BluetoothSocket socket) {
+            InputStream tmpIn = null;
+
+            // Get the input and output streams, using temp objects because
+            // member streams are final
+            try {
+                tmpIn = socket.getInputStream();
+            } catch (IOException e) { }
+
+            mmInStream = tmpIn;
+        }
+
+        public void run() {
+            byte[] buffer = new byte[256];  // buffer store for the stream
+            int bytes; // bytes returned from read()
+
+            // Keep listening to the InputStream until an exception occurs
+            while (true) {
+                try {
+                    // Read from the InputStream
+                    bytes = mmInStream.read(buffer);        // Get number of bytes and message in "buffer"
+                    h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                } catch (IOException e) {
+                    break;
+                }
+            }
         }
 
     }
