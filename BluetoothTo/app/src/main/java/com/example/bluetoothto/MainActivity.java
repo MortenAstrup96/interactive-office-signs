@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -20,7 +21,7 @@ import java.util.Set;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final String TAG = "MyActivity";
 
     BluetoothAdapter bluetoothAdapter;
@@ -41,8 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         connect();
 
-        Button cnnctBtn = (Button)findViewById(R.id.connect);
+        // Register for broadcasts when a device is discovered.
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
+        registerReceiver(receiver2, filter);
 
+
+        lvNewDevice.setOnItemClickListener(MainActivity.this);
+
+        // Open for discovering devices
+        Button cnnctBtn = (Button)findViewById(R.id.connect);
         cnnctBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,13 +81,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Register for broadcasts when a device is discovered.
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
-        registerReceiver(receiver, filter);
+
+
 
     }
 
-    // Create a BroadcastReceiver for ACTION_FOUND.
+    // BroadcastReceiver for ACTION_FOUND.
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -98,6 +105,35 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    // Create a BroadcastReceiver for BOND_STATE_CHANGED. (Pair devices)
+    private final BroadcastReceiver receiver2 = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.d(TAG, "RECIEVER2 called");
+
+            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+
+                // is paired
+                if(device.getBondState() == BluetoothDevice.BOND_BONDED) {
+                    Log.d(TAG, "is paired :) ");
+                }
+
+                // pairing
+                if(device.getBondState() == BluetoothDevice.BOND_BONDING) {
+                    Log.d(TAG, "is pairing: ");
+                }
+
+                // broken
+                if(device.getBondState() == BluetoothDevice.BOND_NONE) {
+                    Log.d(TAG, "pairing is broken: ");
+                }
+
+
+            }
+        }
+    };
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -105,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Don't forget to unregister the ACTION_FOUND receiver.
         unregisterReceiver(receiver);
+        unregisterReceiver(receiver2);
     }
 
 
@@ -132,5 +169,29 @@ public class MainActivity extends AppCompatActivity {
         }else{
             Log.d(TAG, "checkBTPermissions: No need to check permissions. SDK version < LOLLIPOP.");
         }
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        bluetoothAdapter.cancelDiscovery();
+
+        Log.d(TAG, "onClick Device");
+        // find index her!!!
+        String deviceName = BTal.get(position).getName();
+        String deviceAdd = BTal.get(position).getAddress();
+
+        Log.d(TAG, "Device name: " +deviceName+" and add: "+deviceAdd);
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            // muligvis version control here
+            Log.d(TAG, "Prøver at pair ");
+            BTal.get(position).createBond();
+        } else {
+
+            Log.d(TAG, "OLD BUILDVERSION");
+
+        }
+
     }
 }
