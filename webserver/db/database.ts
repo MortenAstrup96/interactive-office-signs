@@ -1,6 +1,6 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
-import {OfficeAvailabilityProps} from "../library/general_interfaces";
+import {OfficeAvailabilityProps, OfficeInformationProps} from "../library/general_interfaces";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
@@ -22,6 +22,18 @@ export function getOfficeInformation(id: any) {
 export function setPersonById(statusRequest: OfficeAvailabilityProps) {
     if(statusRequest) {
         db.push("/person/" + statusRequest.nameId + "/status", statusRequest.status)
+    }
+}
+
+export function addPerson(personToAdd: OfficeInformationProps) {
+    if(personToAdd) {
+        console.log(personToAdd);
+        db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
+        db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
+        db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
+        db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
+        db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/personList[]/", {name: personToAdd.name, nameId: personToAdd.nameId});
     }
 }
 
