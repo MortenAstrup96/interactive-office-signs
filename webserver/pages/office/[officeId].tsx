@@ -3,12 +3,13 @@ import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/header";
-import {Avatar, Container} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
-import Link from "next/link";
+
+const avatar = require("../../img/avataricon.png");
 
 export default function OfficeInformationId() {
-    const avatar = require("../img/avataricon.png");
+
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
     const {data, error} = useSWR(() => 'http://localhost:3000/api/getPersonById/' + router.query.officeId, fetcher);
