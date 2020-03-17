@@ -2,21 +2,30 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../components/header";
-import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../components/office/availabilityComponent";
+import {Button, Container, TextField} from "@material-ui/core";
 import {serverName} from "../../library/constants";
-
-const avatar = require("../../img/avataricon.png");
 
 export default function PersonOverview() {
     const router = useRouter();
-    const [currentPerson, setCurrentPerson] = useState<OfficeInformationProps>();
-    let {data, error } = useSWR(() => serverName +'/api/getPersonById/' + router.query.personId, fetcher);
+    const [currentStatus, setCurrentStatus] = useState("");
+    const [currentNameId, setCurrentNameId] = useState("");
+    let {data, error} = useSWR(() => serverName + '/api/getPersonById/' + router.query.personId, fetcher);
 
     useEffect(() => {
-        setCurrentPerson(data);
+        if(data) {
+            setCurrentStatus(data.status);
+            setCurrentNameId(data.nameId);
+        }
     }, [data]);
+
+    // Updates database via API on status change
+    useEffect(() => {
+        fetch(serverName + '/api/setStatusById/' + currentNameId, {
+            method: 'PUT',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify(Object.assign({nameId: currentNameId}, {status: currentStatus}))
+        });
+    }, [currentStatus]);
 
     async function fetcher(url) {
         if (router.query.personId) {
@@ -28,7 +37,21 @@ export default function PersonOverview() {
 
     return (
         <Container>
+            <div style={{margin: "30px"}}>
+                <h1>User Dashboard</h1>
+                <h2>Currently Status:</h2>
+                <h3>{currentStatus}</h3>
+            </div>
 
+            <div style={{margin: "30px"}}>
+                <Button variant="contained" color="primary" onClick={() => setCurrentStatus("Available")}>Available</Button>
+                <Button variant="contained" color="secondary" onClick={() => setCurrentStatus("Busy")}>Busy</Button>
+            </div>
+            <div style={{margin: "30px"}}>
+                <TextField type="text" value={currentStatus}
+                           onChange={(e) => setCurrentStatus(e.target.value)} variant="outlined" label="Status Message"/>
+
+            </div>
         </Container>
     );
 }

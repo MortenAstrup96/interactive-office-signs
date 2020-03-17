@@ -50,8 +50,6 @@ const Header = (props: officeInformationProps) => (
         </Link>
         <Divider/>
     </div>
-
-
-)
+);
 
 export default Header

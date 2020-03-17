@@ -22,10 +22,10 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
     }, [props.status]);
 
     function changeStatus() {
-        status === "available" ? setStatus("busy") : setStatus("available");
+        status === "Available" ? setStatus("Busy") : setStatus("Available");
     }
 
-    if (status === "available") {
+    if (status === "Available") {
 
         return (
             <div>
@@ -34,13 +34,23 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
                 </Button>
             </div>
         );
+    } else if (status === "Busy") {
+        return (
+            <div>
+                <Button variant="contained" color="secondary" onClick={changeStatus}>
+                    {status}
+                </Button>
+            </div>
+        );
     }
 
     return (
         <div>
-            <Button variant="contained" color="secondary" onClick={changeStatus}>
+            <Button variant="contained" style={{backgroundColor: "#FFFF00"}} onClick={changeStatus}>
                 {status}
             </Button>
         </div>
     );
+
+
 };
