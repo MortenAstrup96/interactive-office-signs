@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from "react";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
-import {Button} from "@material-ui/core";
+import {Button, Color, colors, withStyles} from "@material-ui/core";
 import {serverName} from "../../library/constants";
+import {green} from "@material-ui/core/colors";
 
 
 export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
     const [status, setStatus] = useState<string>(props.status);
+    const [buttonColor, setButtonColor] = useState<any>({background: colors.green["500"], text: colors.common.black});
     const [nameId] = useState<string>(props.nameId);
+
 
     // Updates database via API on status change
     useEffect(() => {
         fetch(serverName + '/api/setStatusById/' + props.nameId, {
             method: 'PUT',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(Object.assign({nameId}, {status}))
         });
     }, [status, nameId]);
@@ -21,36 +24,31 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
         setStatus(props.status);
     }, [props.status]);
 
+    useEffect(() => {
+        switch (status) {
+            case "Available":
+                setButtonColor({background: colors.green["500"], text: colors.common.white});
+                break;
+            case "Busy":
+                setButtonColor({background: colors.red.A700, text: colors.common.white});
+                break;
+            default:
+                setButtonColor({background: colors.yellow.A700, text: colors.common.black});
+        }
+    }, [status]);
+
+
+    // Will switch between available/busy - If neither switch to available
     function changeStatus() {
         status === "Available" ? setStatus("Busy") : setStatus("Available");
     }
 
-    if (status === "Available") {
-
-        return (
-            <div>
-                <Button variant="contained" color="primary" onClick={changeStatus}>
-                    {status}
-                </Button>
-            </div>
-        );
-    } else if (status === "Busy") {
-        return (
-            <div>
-                <Button variant="contained" color="secondary" onClick={changeStatus}>
-                    {status}
-                </Button>
-            </div>
-        );
-    }
-
     return (
         <div>
-            <Button variant="contained" style={{backgroundColor: "#FFFF00"}} onClick={changeStatus}>
+            <Button variant="contained" onClick={changeStatus}
+                    style={{backgroundColor: buttonColor.background, color: buttonColor.text}}>
                 {status}
             </Button>
         </div>
     );
-
-
 };
