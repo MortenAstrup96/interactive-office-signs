@@ -1,8 +1,8 @@
-import {Container, List, ListItem, ListItemText, } from "@material-ui/core";
+import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
 import {OfficeInformationProps} from "../library/general_interfaces";
-import {Form} from "../components/overview/form";
+import {Form} from "../components/index/form";
 import {serverName} from "../library/constants";
 
 interface NameProp {
@@ -11,13 +11,13 @@ interface NameProp {
 }
 
 export default function Index() {
-    const {data} = useSWR(() => serverName +'/api/getPersonData', fetcher);
+    const {data} = useSWR(() => serverName + '/api/getUserData', fetcher);
 
 
-    const addPersonToDB = (prop: OfficeInformationProps) => {
-        fetch(serverName + '/api/addPerson', {
+    const addUserToDB = (prop: OfficeInformationProps) => {
+        fetch(serverName + '/api/addUser', {
             method: 'POST',
-            headers: {'Content-Type':'application/json'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(prop)
         });
     };
@@ -39,9 +39,11 @@ export default function Index() {
         return fetch(url).then(r => r.json());
     }
 
+    console.log(data);
+
 
     if (!data) return (
-        <div> <Form addPerson={addPersonToDB}/></div>
+        <div><Form addUser={addUserToDB}/></div>
     );
 
     return (
@@ -52,9 +54,8 @@ export default function Index() {
                         <ListItemLink key={index} nameId={result.nameId} name={result.name}/>
                     )}
                 </List>
-                <Form addPerson={addPersonToDB}/>
+                <Form addUser={addUserToDB}/>
             </Container>
         </div>
     );
 }
-

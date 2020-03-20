@@ -8,7 +8,7 @@ export default function Index() {
     const router = useRouter();
     const [currentStatus, setCurrentStatus] = useState("");
     const [currentNameId, setCurrentNameId] = useState("");
-    let {data} = useSWR(() => serverName + '/api/getPersonById/' + router.query.personId, fetcher);
+    let {data} = useSWR(() => serverName + '/api/getUserById/' + router.query.personId, fetcher);
 
     useEffect(() => {
         if (data) {

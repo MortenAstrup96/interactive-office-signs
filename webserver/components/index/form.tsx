@@ -1,14 +1,14 @@
 import {useState} from "react";
 import {TextField} from "@material-ui/core";
 
-export const Form = ({addPerson}) => {
+export const Form = ({addUser}) => {
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
     const [mail, setMail] = useState("");
     const handleSubmit = (e) => {
         e.preventDefault();
-        addPerson({office: office, nameId: nameId, name: name, mail: mail, status: "available"});
+        addUser({office: office, nameId: nameId, name: name, mail: mail, status: "available"});
         setName("");
         setNameId("");
         setOffice("");
