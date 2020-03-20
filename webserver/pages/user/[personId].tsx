@@ -1,18 +1,17 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import {Button, Container, TextField} from "@material-ui/core";
 import {serverName} from "../../library/constants";
 
-export default function PersonOverview() {
+export default function Index() {
     const router = useRouter();
     const [currentStatus, setCurrentStatus] = useState("");
     const [currentNameId, setCurrentNameId] = useState("");
-    let {data, error} = useSWR(() => serverName + '/api/getPersonById/' + router.query.personId, fetcher);
+    let {data} = useSWR(() => serverName + '/api/getPersonById/' + router.query.personId, fetcher);
 
     useEffect(() => {
-        if(data) {
+        if (data) {
             setCurrentStatus(data.status);
             setCurrentNameId(data.nameId);
         }
@@ -21,13 +20,13 @@ export default function PersonOverview() {
     // Updates database via API on status change
     useEffect(() => {
         fetch(serverName + '/api/setStatusById/' + currentNameId, {
-            method: 'PUT',
-            headers: {'Content-Type':'application/json'},
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(Object.assign({nameId: currentNameId}, {status: currentStatus}))
         });
     }, [currentStatus]);
 
-    async function fetcher(url) {
+    async function fetcher(url: any) {
         if (router.query.personId) {
             return fetch(url).then(r => r.json());
         }
@@ -44,12 +43,14 @@ export default function PersonOverview() {
             </div>
 
             <div style={{margin: "30px"}}>
-                <Button variant="contained" color="primary" onClick={() => setCurrentStatus("Available")}>Available</Button>
+                <Button variant="contained" color="primary"
+                        onClick={() => setCurrentStatus("Available")}>Available</Button>
                 <Button variant="contained" color="secondary" onClick={() => setCurrentStatus("Busy")}>Busy</Button>
             </div>
             <div style={{margin: "30px"}}>
                 <TextField type="text" value={currentStatus}
-                           onChange={(e) => setCurrentStatus(e.target.value)} variant="outlined" label="Status Message"/>
+                           onChange={(e) => setCurrentStatus(e.target.value)} variant="outlined"
+                           label="Status Message"/>
 
             </div>
         </Container>

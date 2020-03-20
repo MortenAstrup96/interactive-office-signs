@@ -1,6 +1,6 @@
-import {addPerson} from "../../db/database";
+import {addUser} from "../../db/database";
 
 export default (req, res) => {
-            addPerson(req.body);
-            res.status(200);
+    addUser(req.body);
+    res.json(200);
 };

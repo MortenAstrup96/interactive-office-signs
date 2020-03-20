@@ -1,6 +1,6 @@
-import {getPersonData} from "../../db/database";
+import {getUserList} from "../../db/database";
 
 export default (req, res) => {
-            const quote = getPersonData();
-            res.status(200).json(quote);
+    const quote = getUserList();
+    res.json(200).json(quote);
 };

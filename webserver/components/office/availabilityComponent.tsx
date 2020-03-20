@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
-import {Button, Color, colors, withStyles} from "@material-ui/core";
+import {Button, colors} from "@material-ui/core";
 import {serverName} from "../../library/constants";
-import {green} from "@material-ui/core/colors";
 
 
 export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
@@ -24,6 +23,8 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
         setStatus(props.status);
     }, [props.status]);
 
+
+    // Whenever status switches, color of button will change TODO: Change so it just returns a colored button instead
     useEffect(() => {
         switch (status) {
             case "Available":

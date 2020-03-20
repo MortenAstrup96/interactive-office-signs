@@ -1,6 +1,6 @@
-import {getOfficeInformation} from "../../../db/database";
+import {getUserById} from "../../../db/database";
 
 export default (req, res) => {
-    const {query: {nameId}} = req
-    res.json(getOfficeInformation(nameId))
+    const {query: {nameId}} = req;
+    res.json(getUserById(nameId));
 };

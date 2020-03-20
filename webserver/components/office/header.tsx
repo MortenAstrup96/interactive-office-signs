@@ -1,9 +1,7 @@
-import Container from "@material-ui/core/Container";
 import {Divider, Button} from "@material-ui/core";
 import Link from "next/link";
-import {textAlign} from "@material-ui/system";
 
-const auLogo = require("../img/aulogo.png");
+const auLogo = require("../../img/aulogo.png");
 
 /** CSS Properties can be defiend as constants and applied as style={name}*/
 const headerStyles = {
@@ -11,13 +9,13 @@ const headerStyles = {
     gridTemplateColumns: '50% 50%',
     marginLeft: "5px",
     marginRight: "5px"
-}
+};
 
 const textStyle = {
     marginTop: '10px',
     marginBottom: '10px',
     fontFamily: 'robotto'
-}
+};
 
 // Interface defines what items must be given this Header
 interface officeInformationProps {
@@ -28,7 +26,7 @@ const Header = (props: officeInformationProps) => (
     <div>
         <div style={headerStyles}>
             <div style={{position: "relative"}}>
-                <img src={auLogo} style={{position: "absolute", width: "250px", bottom: "10px"}}/>
+                <img src={auLogo} alt="No image" style={{position: "absolute", width: "250px", bottom: "10px"}}/>
             </div>
 
             <span style={{textAlign: "right"}}>

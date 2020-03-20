@@ -1,6 +1,6 @@
-import {setPersonById} from "../../../db/database";
+import {setStatusById} from "../../../db/database";
 
 export default (req, res) => {
-    setPersonById(req.body);
+    setStatusById(req.body);
     res.json("OK");
 };

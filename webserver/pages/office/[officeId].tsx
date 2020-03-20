@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../components/header";
+import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
@@ -13,16 +13,17 @@ export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
-    let {data, revalidate } = useSWR(() => serverName +'/api/getPersonById/' + router.query.officeId, fetcher, {
-        // revalidate the data per second
-        refreshInterval: 200
+
+    // Will get the person by ID in the URL and revalidate every 10 seconds
+    let {data, revalidate} = useSWR(() => serverName + '/api/getPersonById/' + router.query.officeId, fetcher, {
+        refreshInterval: 10000
     });
 
     useEffect(() => {
         setCurrentOffice(data);
     }, [data, revalidate]);
 
-    async function fetcher(url) {
+    async function fetcher(url: any) {
         if (router.query.officeId) {
             return fetch(url).then(r => r.json());
         }
@@ -35,7 +36,7 @@ export default function OfficeInformationId() {
             <div>
                 <Header office={currentOffice.nameId}/>
                 <div>
-                    <img src={avatar} />
+                    <img src={avatar} alt="Error loading image.."/>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>

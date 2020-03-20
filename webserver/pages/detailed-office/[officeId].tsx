@@ -2,7 +2,7 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../components/header";
+import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
@@ -10,9 +10,10 @@ import {serverName} from "../../library/constants";
 export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
-    const {data, error} = useSWR(() => serverName +'/api/getPersonById/' + router.query.officeId, fetcher, {
-        // revalidate the data per second
-        refreshInterval: 200
+
+    // Will get the person by ID in the URL and revalidate every 10 seconds
+    const {data, error} = useSWR(() => serverName + '/api/getPersonById/' + router.query.officeId, fetcher, {
+        refreshInterval: 10000
     });
 
     useEffect(() => {
