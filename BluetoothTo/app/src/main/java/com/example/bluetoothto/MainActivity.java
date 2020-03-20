@@ -14,6 +14,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,9 @@ public class MainActivity extends Activity {
 
     private ConnectedThread mConnectedThread;
 
+    private WebView webView;
+    //private WebSettings webSettings;
+
     // SPP UUID service
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -44,6 +50,12 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
+        webView = (WebView) findViewById(R.id.webView);
+        webView.setWebViewClient(new WebViewClient());
+        //WebSettings webSettings = webView.getSettings();
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
+
+        webView.loadUrl("https://www.google.com/");
         txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
 
         // Handle recieved data to string
@@ -51,17 +63,8 @@ public class MainActivity extends Activity {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
                     case RECIEVE_MESSAGE:                                                   // if receive massage
-                        byte[] readBuf = (byte[]) msg.obj;
-                        Log.d(TAG, "RECIEVED: "+ readBuf);
-                        String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
-                        sb.append(strIncom);                                                // append string
-                        int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
-                        if (endOfLineIndex > 0) {                                            // if end-of-line,
-                            String sbprint = sb.substring(0, endOfLineIndex);               // extract string
-                            sb.delete(0, sb.length());                                      // and clear
-                            txtArduino.setText("Data: " + sbprint);            // update TextView (change web-view)
-                        }
-                        Log.d(TAG, "...String:"+ sb.toString() +  "Byte:" + msg.arg1 + "...");
+                            txtArduino.setText("TRIGGER");            // update TextView (change web-view)
+                            webView.loadUrl("https://da.wikipedia.org/wiki/Forside");
                         break;
                 }
             };
@@ -69,6 +72,20 @@ public class MainActivity extends Activity {
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
         checkBTState();
+
+    }
+
+    // overwrite backpress so app does not close when pressing back buttom
+    @Override
+    public void onBackPressed() {
+
+        if(webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+
+
 
     }
 

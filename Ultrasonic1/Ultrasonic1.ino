@@ -39,11 +39,6 @@
 
 #include <Ultrasonic.h>
 
-/*
- * Pass as a parameter the trigger and echo pin, respectively,
- * or only the signal pin (for sensors 3 pins), like:
- * Ultrasonic ultrasonic(13);
- */
 Ultrasonic ultrasonic(12, 13);
 int distance;
 int counter;
@@ -52,7 +47,7 @@ int bound;
 void setup() {
   Serial.begin(9600);
   counter = 0;
-  bound = 10; // cm
+  bound = 50; // cm
 }
 
 void loop() {
@@ -72,7 +67,7 @@ void loop() {
         counter = 0;
 
         // When activating take a break
-        delay(2000);
+        delay(1000);
       }
   } else {
     // reset counter
