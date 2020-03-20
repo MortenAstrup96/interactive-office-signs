@@ -20,14 +20,14 @@ export function getUserById(id: any) {
 }
 
 export function setStatusById(statusRequest: OfficeAvailabilityProps) {
-    if(statusRequest) {
+    if (statusRequest) {
         db.push("/person/" + statusRequest.nameId + "/status", statusRequest.status)
     }
 }
 
 // TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
 export function addUser(personToAdd: OfficeInformationProps) {
-    if(personToAdd) {
+    if (personToAdd) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
         db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
