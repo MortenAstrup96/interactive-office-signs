@@ -52,6 +52,7 @@ public class MainActivity extends Activity {
                 switch (msg.what) {
                     case RECIEVE_MESSAGE:                                                   // if receive massage
                         byte[] readBuf = (byte[]) msg.obj;
+                        Log.d(TAG, "RECIEVED: "+ readBuf);
                         String strIncom = new String(readBuf, 0, msg.arg1);                 // create string from bytes array
                         sb.append(strIncom);                                                // append string
                         int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
