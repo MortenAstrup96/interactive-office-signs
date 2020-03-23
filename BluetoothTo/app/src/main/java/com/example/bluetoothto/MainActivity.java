@@ -60,9 +60,10 @@ public class MainActivity extends Activity {
         WebSettings webSettings = webView.getSettings();
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
 
-        //webView.loadUrl(mainURL);
-        webView.loadUrl("http://192.168.87.166:3000/");
+        webView.loadUrl(mainURL);
+        //webView.loadUrl("http://192.168.87.166:3000/");
         //webView.loadUrl("http://google.com");
         //webView.loadUrl("http://192.168.87.166:3000/office/2");
 
@@ -101,16 +102,16 @@ public class MainActivity extends Activity {
                             Log.d(TAG, "officeID: "+officeID);
 
 
-                            if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/detailedOffice")) {
+                            if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/detailed-office")) {
                                 if (sbprint.equals("1") && lastRecieved.equals("0")) {
-                                    webView.loadUrl(mainURL+"detailedOffice"+officeID);
-                                    Log.d(TAG, "detailedOffice ");
+                                    webView.loadUrl(mainURL+"/detailed-office"+officeID);
+                                    Log.d(TAG, "DETAILEDOFFICE :" + mainURL+"/detailed-office"+officeID);
                                     lastRecieved = "1";
                                 }
 
                                 if (sbprint.equals("0") && lastRecieved.equals("1")) {
-                                    webView.loadUrl(mainURL+"office"+officeID);
-                                    Log.d(TAG, "office");
+                                    webView.loadUrl(mainURL+"/office"+officeID);
+                                    Log.d(TAG, "OFFICE");
                                     lastRecieved = "0";
                                 }
 
