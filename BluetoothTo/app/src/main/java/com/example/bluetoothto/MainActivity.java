@@ -35,6 +35,8 @@ public class MainActivity extends Activity {
     private ConnectedThread mConnectedThread;
 
     private WebView webView;
+    private String lastRecieved;
+
     //private WebSettings webSettings;
 
     // SPP UUID service
@@ -49,12 +51,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
+        lastRecieved = "0";
         webView = (WebView) findViewById(R.id.webView);
         webView.setWebViewClient(new WebViewClient());
-        //WebSettings webSettings = webView.getSettings();
+        WebSettings webSettings = webView.getSettings();
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-
+        webSettings.setJavaScriptEnabled(true);
         webView.loadUrl("https://www.google.com/");
         txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
 
@@ -62,9 +64,39 @@ public class MainActivity extends Activity {
         h = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
-                    case RECIEVE_MESSAGE:                                                   // if receive massage
-                            txtArduino.setText("TRIGGER");            // update TextView (change web-view)
-                            webView.loadUrl("https://da.wikipedia.org/wiki/Forside");
+                    case RECIEVE_MESSAGE:
+                        byte[] readBuf = (byte[]) msg.obj;
+                        String strIncom = new String(readBuf, 0, msg.arg1); // create string from bytes array
+                        sb.append(strIncom);                                                // append string
+                        int endOfLineIndex = sb.indexOf("\r\n");                            // determine the end-of-line
+                        if (endOfLineIndex > 0) {                                            // if end-of-line,
+                            String sbprint = sb.substring(0, endOfLineIndex);               // extract string
+                            sb.delete(0, sb.length());                                      // and clear
+                            Log.d(TAG, "RECIEVED: "+sbprint);
+
+                           // boolean isnew = !sbprint.equals(lastRecieved);
+                            boolean near = sbprint.equals("1");
+                            boolean far = sbprint.equals("0");
+
+                            Log.d(TAG, "near: "+near);
+                            Log.d(TAG, "far: "+far);
+                            Log.d(TAG, "last: "+lastRecieved);
+
+
+                            if(sbprint.equals("1") && lastRecieved.equals("0")) {
+                                webView.loadUrl("https://da.wikipedia.org/wiki/Forside");
+                                Log.d(TAG, "WIKI ");
+                                lastRecieved = "1";
+                            }
+
+                            if(sbprint.equals("0") && lastRecieved.equals("1")) {
+                                webView.loadUrl("https://www.google.com/");
+                                Log.d(TAG, "GOOOGLE");
+                                lastRecieved = "0";
+                            }
+
+                        }
+
                         break;
                 }
             };
@@ -75,7 +107,7 @@ public class MainActivity extends Activity {
 
     }
 
-    // overwrite backpress so app does not close when pressing back buttom
+    // overwrite backpress so app does not close when pressing back key
     @Override
     public void onBackPressed() {
 

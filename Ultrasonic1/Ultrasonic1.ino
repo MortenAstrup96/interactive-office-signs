@@ -41,12 +41,14 @@
 
 Ultrasonic ultrasonic(12, 13);
 int distance;
-int counter;
+int cUnder;
+int cOver;
 int bound;
 
 void setup() {
   Serial.begin(9600);
-  counter = 0;
+  cOver = 0;
+  cUnder = 0;
   bound = 50; // cm
 }
 
@@ -56,22 +58,26 @@ void loop() {
 
   // If mesures is under bound increase counter
   if(distance < bound) {
-    //Serial.println("Under bound");
-
-    counter++;
+    cOver = 0;
+    cUnder++;
     // If 3 mesures in a row under bound
-    if(counter > 3) {
+    if(cUnder > 4) {
         //Activate
         //Serial.println("ACTIVATE");
         Serial.println(1);
-        counter = 0;
-
+        cUnder = 0;
         // When activating take a break
         delay(1000);
       }
-  } else {
+  } else if (distance > bound) {
     // reset counter
-    counter = 0;
+    cUnder = 0;
+    cOver++;
+    if(cOver > 4) {
+        Serial.println(0);
+        cOver = 0;
+      delay(1000);
+      }
   }
   //Serial.print("Distance in CM: ");
   //Serial.println(distance);
