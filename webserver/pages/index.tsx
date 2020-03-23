@@ -54,7 +54,6 @@ export default function Index() {
                         <ListItemLink key={index} nameId={result.nameId} name={result.name}/>
                     )}
                 </List>
-                <Form addUser={addUserToDB}/>
             </Container>
         </div>
     );

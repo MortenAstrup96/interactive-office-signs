@@ -6,6 +6,8 @@ import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
+import VegaLite from "react-vega/lib/VegaLite";
+
 
 export default function OfficeInformationId() {
     const router = useRouter();
@@ -27,10 +29,30 @@ export default function OfficeInformationId() {
     }
 
 
+    const spec = {
+        "description": "A simple bar chart with embedded data.",
+        "mark": "bar",
+        "encoding": {
+            "x": {"field": "a", "type": "ordinal"},
+            "y": {"field": "b", "type": "quantitative"}
+        }
+    };
+
+    const barData = {
+        "values": [
+            {"a": "A", "b": 28}, {"a": "B", "b": 55}, {"a": "C", "b": 43},
+            {"a": "D", "b": 91}, {"a": "E", "b": 81}, {"a": "F", "b": 53},
+            {"a": "G", "b": 19}, {"a": "H", "b": 87}, {"a": "I", "b": 52}
+        ]
+    };
+
+
     if (error) return (<div> Failed to load </div>);
     if (!data || !currentOffice) return (<div> Loading... </div>);
 
+
     return (
+
         <Container>
             <div>
                 <Header office={currentOffice.nameId}/>
@@ -39,6 +61,9 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
+
+                <VegaLite spec={spec} data={barData}/>
+
             </div>
         </Container>
     );
