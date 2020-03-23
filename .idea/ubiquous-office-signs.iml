@@ -2,6 +2,11 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/BluetoothTo" />
+      <excludeFolder url="file://$MODULE_DIR$/NativeAndroidWebview" />
+      <excludeFolder url="file://$MODULE_DIR$/ProxiSensor" />
+      <excludeFolder url="file://$MODULE_DIR$/hc06" />
+      <excludeFolder url="file://$MODULE_DIR$/webserver/.next" />
       <excludePattern pattern="react" />
     </content>
     <orderEntry type="inheritedJdk" />

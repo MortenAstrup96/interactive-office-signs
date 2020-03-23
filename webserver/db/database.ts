@@ -1,38 +1,38 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
+import {OfficeAvailabilityProps, OfficeInformationProps} from "../library/general_interfaces";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
 
 export function getAll() {
-    let data = db.getData("/");
-    return data;
+    return db.getData("/");
 }
 
-export function getOfficeInformation(id: string) {
-
-    let person = db.getData("/person/" + id);
-    const office = db.getData("/office");
-
-    return person;
+export function getUserList() {
+    return db.getData("/personList");
 }
 
-export function generateGenericDatabase() {
-    db.push("/office/Ada-247/nameId", "7913");
-    db.push("/person/7913/nameId", "7913");
-    db.push("/person/7913/name", "Jo Vermeulen");
-    db.push("/person/7913/mail", "Jo@gmail.com");
-    db.push("/person/7913/status", "busy");
+export function getUserById(id: any) {
+    if (id) {
+        return db.getData("/person/" + id);
+    }
+}
 
-    db.push("/office/Hopper-129/nameId", "5922");
-    db.push("/person/5922/nameId", "5922");
-    db.push("/person/5922/name", "Martin Kjær");
-    db.push("/person/5922/mail", "m.Kjaer@facebook.com");
-    db.push("/person/5922/status", "available");
+export function setStatusById(statusRequest: OfficeAvailabilityProps) {
+    if (statusRequest) {
+        db.push("/person/" + statusRequest.nameId + "/status", statusRequest.status)
+    }
+}
 
-    db.push("/office/Ada-299/nameId", "3559");
-    db.push("/person/3559/nameId", "3559");
-    db.push("/person/3559/name", "Niels Oluf Bouvin");
-    db.push("/person/3559/mail", "Boivin@cs.au.dk");
-    db.push("/person/3559/status", "available");
+// TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
+export function addUser(personToAdd: OfficeInformationProps) {
+    if (personToAdd) {
+        db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
+        db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
+        db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
+        db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
+        db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/personList[]/", {name: personToAdd.name, nameId: personToAdd.nameId});
+    }
 }

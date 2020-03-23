@@ -5,3 +5,8 @@ export interface OfficeInformationProps {
     mail: string;
     status: string;
 }
+
+export interface OfficeAvailabilityProps {
+    nameId: string;
+    status: string;
+}

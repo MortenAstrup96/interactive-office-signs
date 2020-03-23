@@ -37,9 +37,12 @@ public class MainActivity extends Activity {
     private WebView webView;
     private String lastRecieved;
 
+    private String localIP = "192.168.87.166";
+    private String mainURL = "http://" + localIP+ ":3000";
+
     //private WebSettings webSettings;
 
-    // SPP UUID service
+    // SPP UUID service.
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // MAC-address of Bluetooth module (Must be changed to match module) can på found when connecting to module via bluetooth
@@ -57,7 +60,12 @@ public class MainActivity extends Activity {
         WebSettings webSettings = webView.getSettings();
         webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSettings.setJavaScriptEnabled(true);
-        webView.loadUrl("https://www.google.com/");
+
+        //webView.loadUrl(mainURL);
+        webView.loadUrl("http://192.168.87.166:3000/");
+        //webView.loadUrl("http://google.com");
+        //webView.loadUrl("http://192.168.87.166:3000/office/2");
+
         txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
 
         // Handle recieved data to string
@@ -81,19 +89,33 @@ public class MainActivity extends Activity {
                             Log.d(TAG, "near: "+near);
                             Log.d(TAG, "far: "+far);
                             Log.d(TAG, "last: "+lastRecieved);
+                            String webURL = webView.getUrl();
+                            Log.d(TAG, "webURL: "+webURL);
+
+                            int index =webURL.lastIndexOf('/');
+                            String webURLWithoutOfficeID = webURL.substring(0,index);
+                            Log.d(TAG, "webURLWithoutOfficeID: "+webURLWithoutOfficeID);
 
 
-                            if(sbprint.equals("1") && lastRecieved.equals("0")) {
-                                webView.loadUrl("https://da.wikipedia.org/wiki/Forside");
-                                Log.d(TAG, "WIKI ");
-                                lastRecieved = "1";
+                            String officeID = webURL.substring(webURL.lastIndexOf("/"));
+                            Log.d(TAG, "officeID: "+officeID);
+
+
+                            if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/detailedOffice")) {
+                                if (sbprint.equals("1") && lastRecieved.equals("0")) {
+                                    webView.loadUrl(mainURL+"detailedOffice"+officeID);
+                                    Log.d(TAG, "detailedOffice ");
+                                    lastRecieved = "1";
+                                }
+
+                                if (sbprint.equals("0") && lastRecieved.equals("1")) {
+                                    webView.loadUrl(mainURL+"office"+officeID);
+                                    Log.d(TAG, "office");
+                                    lastRecieved = "0";
+                                }
+
                             }
 
-                            if(sbprint.equals("0") && lastRecieved.equals("1")) {
-                                webView.loadUrl("https://www.google.com/");
-                                Log.d(TAG, "GOOOGLE");
-                                lastRecieved = "0";
-                            }
 
                         }
 

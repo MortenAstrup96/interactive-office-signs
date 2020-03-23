@@ -1,22 +1,21 @@
-import Container from "@material-ui/core/Container";
 import {Divider, Button} from "@material-ui/core";
 import Link from "next/link";
 
-const auLogo = require("../img/aulogo.png");
+const auLogo = require("../../img/aulogo.png");
 
 /** CSS Properties can be defiend as constants and applied as style={name}*/
 const headerStyles = {
     display: 'grid',
     gridTemplateColumns: '50% 50%',
-    marginLeft: "20px",
-    marginRight: "20px"
-}
+    marginLeft: "5px",
+    marginRight: "5px"
+};
 
 const textStyle = {
     marginTop: '10px',
     marginBottom: '10px',
-    fontFamily: 'sans-serif'
-}
+    fontFamily: 'robotto'
+};
 
 // Interface defines what items must be given this Header
 interface officeInformationProps {
@@ -27,10 +26,10 @@ const Header = (props: officeInformationProps) => (
     <div>
         <div style={headerStyles}>
             <div style={{position: "relative"}}>
-                <img src={auLogo} style={{position: "absolute", width: "250px", bottom: "10px"}}/>
+                <img src={auLogo} alt="No image" style={{position: "absolute", width: "250px", bottom: "10px"}}/>
             </div>
 
-            <span style={{textAlign: "right", minHeight: "80px"}}>
+            <span style={{textAlign: "right"}}>
                 <h1 style={textStyle}>{props.office}</h1>
                 <p style={textStyle}>Department of Computer Science</p>
             </span>
@@ -49,8 +48,6 @@ const Header = (props: officeInformationProps) => (
         </Link>
         <Divider/>
     </div>
-
-
-)
+);
 
 export default Header
