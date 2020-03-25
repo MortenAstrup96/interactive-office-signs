@@ -17,14 +17,12 @@ import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 import android.widget.Toast;
 
 //http://solderer.tv/data-transfer-between-android-and-arduino-via-bluetooth/
 public class MainActivity extends Activity {
     private static final String TAG = "bluetooth2";
 
-    TextView txtArduino;
     Handler h;
 
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
@@ -40,12 +38,10 @@ public class MainActivity extends Activity {
     private String localIP = "192.168.87.166";
     private String mainURL = "http://" + localIP+ ":3000";
 
-    //private WebSettings webSettings;
-
-    // SPP UUID service.
+    // SPP UUID service. Fixed to HC-06 module
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
-    // MAC-address of Bluetooth module (Must be changed to match module) can på found when connecting to module via bluetooth
+    // MAC-address of Bluetooth module (Must be changed to match module) can på found when connecting to HC-06 module via bluetooth
     private static String address = "98:D3:31:F7:47:2A";
 
     /** Called when the activity is first created. */
@@ -54,22 +50,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        lastRecieved = "0";
+        lastRecieved = "0"; // Arduino sends "0" and "1" based on proximity
         webView = (WebView) findViewById(R.id.webView);
-        webView.setWebViewClient(new WebViewClient());
-        WebSettings webSettings = webView.getSettings();
-        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
 
-        webView.loadUrl(mainURL);
-        //webView.loadUrl("http://192.168.87.166:3000/");
-        //webView.loadUrl("http://google.com");
-        //webView.loadUrl("http://192.168.87.166:3000/office/2");
+        setUpWebView(webView);
 
-        txtArduino = (TextView) findViewById(R.id.txtArduino);      // for display the received data from the Arduino
-
-        // Handle recieved data to string
+        // Handle received data from Arduino
         h = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
@@ -83,54 +69,53 @@ public class MainActivity extends Activity {
                             sb.delete(0, sb.length());                                      // and clear
                             Log.d(TAG, "RECIEVED: "+sbprint);
 
-                           // boolean isnew = !sbprint.equals(lastRecieved);
-                            boolean near = sbprint.equals("1");
-                            boolean far = sbprint.equals("0");
-
-                            Log.d(TAG, "near: "+near);
-                            Log.d(TAG, "far: "+far);
-                            Log.d(TAG, "last: "+lastRecieved);
-                            String webURL = webView.getUrl();
+                            String webURL = webView.getUrl(); // Get the current URL in the webview
                             Log.d(TAG, "webURL: "+webURL);
 
-                            int index =webURL.lastIndexOf('/');
+                            int index =webURL.lastIndexOf('/'); // Get the URL without the last dash (officeID)
                             String webURLWithoutOfficeID = webURL.substring(0,index);
                             Log.d(TAG, "webURLWithoutOfficeID: "+webURLWithoutOfficeID);
 
-
-                            String officeID = webURL.substring(webURL.lastIndexOf("/"));
+                            String officeID = webURL.substring(webURL.lastIndexOf("/")); // Get the URL from the last dash
                             Log.d(TAG, "officeID: "+officeID);
 
-
+                            // If the webview is showing a users officesign start reacting to proxemity sensor
                             if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/detailed-office")) {
+                                // If proxemity is close and it was far before
                                 if (sbprint.equals("1") && lastRecieved.equals("0")) {
-                                    webView.loadUrl(mainURL+"/detailed-office"+officeID);
+                                    webView.loadUrl(mainURL+"/detailed-office"+officeID); // load URL for officesign but in close mode
                                     Log.d(TAG, "DETAILEDOFFICE :" + mainURL+"/detailed-office"+officeID);
                                     lastRecieved = "1";
                                 }
-
+                                // ... opposite
                                 if (sbprint.equals("0") && lastRecieved.equals("1")) {
                                     webView.loadUrl(mainURL+"/office"+officeID);
                                     Log.d(TAG, "OFFICE");
                                     lastRecieved = "0";
                                 }
-
                             }
-
-
                         }
-
                         break;
                 }
             };
         };
 
-        btAdapter = BluetoothAdapter.getDefaultAdapter();       // get Bluetooth adapter
+        btAdapter = BluetoothAdapter.getDefaultAdapter();       // Get Bluetooth adapter
         checkBTState();
 
     }
+    // Set up webview security setting and load URL
+    private void setUpWebView(WebView webView) {
+        webView.setWebViewClient(new WebViewClient());
+        WebSettings webSettings = webView.getSettings();
+        webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH); // Performance
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true); // Needs to be enabled to run our website in webview. Possible something with React
 
-    // overwrite backpress so app does not close when pressing back key
+        webView.loadUrl(mainURL);
+    }
+
+    // Overwrite backpress so app does not close when pressing back key
     @Override
     public void onBackPressed() {
 
@@ -139,19 +124,15 @@ public class MainActivity extends Activity {
         } else {
             super.onBackPressed();
         }
-
-
-
     }
 
+    // Create socket
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        if(Build.VERSION.SDK_INT >= 10){
-            try {
-                final Method  m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
-                return (BluetoothSocket) m.invoke(device, MY_UUID);
-            } catch (Exception e) {
-                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
-            }
+        try {
+            final Method  m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
+            return (BluetoothSocket) m.invoke(device, MY_UUID);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not create Insecure RFComm Connection",e);
         }
         return  device.createRfcommSocketToServiceRecord(MY_UUID);
     }
