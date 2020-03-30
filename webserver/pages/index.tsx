@@ -39,11 +39,9 @@ export default function Index() {
         return fetch(url).then(r => r.json());
     }
 
-    console.log(data);
-
 
     if (!data) return (
-        <div><Form addUser={addUserToDB}/></div>
+        <div></div>
     );
 
     return (

@@ -4,6 +4,13 @@ export interface OfficeInformationProps {
     name: string;
     mail: string;
     status: string;
+    topView: CustomObject
+    bottomView: CustomObject
+}
+
+export interface CustomObject {
+    viewType: string;
+    data: string;
 }
 
 export interface OfficeAvailabilityProps {

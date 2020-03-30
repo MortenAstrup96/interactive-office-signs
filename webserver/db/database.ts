@@ -19,9 +19,11 @@ export function getUserById(id: any) {
     }
 }
 
-export function setStatusById(statusRequest: OfficeAvailabilityProps) {
-    if (statusRequest) {
-        db.push("/person/" + statusRequest.nameId + "/status", statusRequest.status)
+export function setUserById(changeRequest: OfficeInformationProps) {
+    console.log(changeRequest);
+    if (changeRequest) {
+        db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
+        db.push("/person/" + changeRequest.nameId + "/topView", changeRequest.topView);
     }
 }
 
