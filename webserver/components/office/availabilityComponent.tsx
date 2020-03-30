@@ -12,7 +12,7 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
 
     // Updates database via API on status change
     useEffect(() => {
-        fetch(serverName + '/api/setUserById/' + props.nameId, {
+        fetch(serverName + '/api/setStatusById/' + props.nameId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(Object.assign({nameId}, {status}))

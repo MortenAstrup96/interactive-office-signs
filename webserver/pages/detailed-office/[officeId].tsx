@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/office/header";
-import {Button, Container, TextareaAutosize, TextField} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
 import {VegaLite} from "react-vega/lib";
@@ -20,8 +20,15 @@ export default function OfficeInformationId() {
     });
 
     useEffect(() => {
+        console.log(data);
         setCurrentOffice(data);
     }, [data]);
+
+    useEffect(() => {
+        if (currentOffice && currentOffice.topView && currentOffice.topView.data) {
+            setVega(currentOffice.topView.data);
+        }
+    }, [currentOffice]);
 
 
     function getJSON() {
