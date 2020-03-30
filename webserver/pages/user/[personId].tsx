@@ -77,7 +77,7 @@ export default function Index() {
 
     function getImgView() {
         try {
-            return (<img src={imagePath} width="200px"/>)
+            return (<img src={imagePath} height="300px"/>)
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
@@ -119,7 +119,7 @@ export default function Index() {
             </div>
 
             <FormControl component="fieldset">
-                <FormLabel component="legend">Gender</FormLabel>
+                <FormLabel component="legend">Type to display on tablet</FormLabel>
                 <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
                             onChange={handleRadioChange}>
                     <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>

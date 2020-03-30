@@ -1,13 +1,13 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../library/general_interfaces";
+import {OfficeInformationProps} from "../../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../components/office/header";
+import Header from "../../../components/office/header";
 import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../components/office/availabilityComponent";
-import {serverName} from "../../library/constants";
+import {AvailabilityComponent} from "../../../components/office/availabilityComponent";
+import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
-import {ViewType} from "../../library/enums";
+import {ViewType} from "../../../library/enums";
 
 
 export default function OfficeInformationId() {
@@ -51,7 +51,7 @@ export default function OfficeInformationId() {
 
     function getImgView() {
         try {
-            return (<img src={vega} width="200px"/>)
+            return (<img src={vega} height="400px"/>)
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
@@ -66,7 +66,7 @@ export default function OfficeInformationId() {
 
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div> Loading... </div>);
+    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
 
 
     return (

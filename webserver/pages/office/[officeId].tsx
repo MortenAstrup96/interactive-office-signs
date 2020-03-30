@@ -44,7 +44,7 @@ export default function OfficeInformationId() {
         }
     }
 
-    if (!data || !currentOffice) return (<div> Loading... </div>);
+    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
 
     return (
         <Container>
