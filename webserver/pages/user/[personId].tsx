@@ -1,7 +1,17 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import useSWR from "swr";
-import {Button, Container, TextareaAutosize, TextField} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Radio,
+    RadioGroup,
+    TextareaAutosize,
+    TextField
+} from "@material-ui/core";
 import {serverName} from "../../library/constants";
 import {VegaLite} from "react-vega/lib";
 import Link from "next/link";
@@ -15,6 +25,9 @@ export default function Index() {
     const [currentStatus, setCurrentStatus] = useState("");
     const [currentNameId, setCurrentNameId] = useState("");
     const [vegaData, setVegaData] = useState<any>("");
+    const [imagePath, setImagePath] = useState<string>("");
+    const [topViewDisplay, setTopViewDisplay] = useState<ViewType>(ViewType.EMPTY);
+
     let {data} = useSWR(() => serverName + '/api/getUserById/' + router.query.personId, fetcher);
 
     useEffect(() => {
@@ -28,10 +41,7 @@ export default function Index() {
     // Updates database via API on status change
     function saveChanges() {
         // Create object to Post
-        const topView = {
-            viewType: ViewType.VEGA,
-            data: vegaData
-        };
+        const topView = getSelectedObject();
         const status = currentStatus;
 
 
@@ -43,7 +53,19 @@ export default function Index() {
         });
     }
 
-    function getJSON() {
+    function getSelectedObject() {
+        switch (topViewDisplay) {
+            case ViewType.VEGA:
+                return ({viewType: ViewType.VEGA, data: vegaData});
+                break;
+            case ViewType.IMAGE:
+                return ({viewType: ViewType.IMAGE, data: imagePath});
+            default:
+                return ({viewType: ViewType.EMPTY, data: ""});
+        }
+    }
+
+    function getVegaView() {
         try {
             const parsedVega = JSON.parse(vegaData);
             return (<VegaLite spec={parsedVega}/>);
@@ -51,6 +73,19 @@ export default function Index() {
             return (<h4>Visualisation unable to compile</h4>)
         }
 
+    }
+
+    function getImgView() {
+        try {
+            return (<img src={imagePath} width="200px"/>)
+        } catch (e) {
+            return (<h4>Unable to display image</h4>)
+        }
+
+    }
+
+    function handleRadioChange(event: any) {
+        setTopViewDisplay(event.target.value);
     }
 
     async function fetcher(url: any) {
@@ -83,10 +118,30 @@ export default function Index() {
                            label="Status Message"/>
             </div>
 
-            <TextareaAutosize value={vegaData}
-                              onChange={(e) => setVegaData(e.target.value)}/>
+            <FormControl component="fieldset">
+                <FormLabel component="legend">Gender</FormLabel>
+                <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
+                            onChange={handleRadioChange}>
+                    <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>
+                    <FormControlLabel value={ViewType.VEGA} control={<Radio/>} label="Vega-Lite"/>
+                    <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
+                </RadioGroup>
+            </FormControl>
 
-            {getJSON()}
+            <div style={{alignContent: "center"}}>
+                <div>
+                    <TextareaAutosize value={vegaData}
+                                      onChange={(e) => setVegaData(e.target.value)}/>
+
+                    {getVegaView()}
+                </div>
+                <div>
+                    <TextField label="Image" value={imagePath}
+                               onChange={(e) => setImagePath(e.target.value)}/>
+                    {getImgView()}
+                </div>
+            </div>
+
         </Container>
     );
 }

@@ -7,6 +7,7 @@ import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
 import {VegaLite} from "react-vega/lib";
+import {ViewType} from "../../library/enums";
 
 
 export default function OfficeInformationId() {
@@ -20,7 +21,6 @@ export default function OfficeInformationId() {
     });
 
     useEffect(() => {
-        console.log(data);
         setCurrentOffice(data);
     }, [data]);
 
@@ -31,12 +31,29 @@ export default function OfficeInformationId() {
     }, [currentOffice]);
 
 
-    function getJSON() {
+    function getCustomView() {
+        if (currentOffice.topView.viewType === ViewType.VEGA) {
+            return getVegaView();
+        } else if (currentOffice.topView.viewType === ViewType.IMAGE) {
+            return getImgView();
+        }
+    }
+
+    function getVegaView() {
         try {
             const parsedVega = JSON.parse(vega);
             return (<VegaLite spec={parsedVega}/>);
         } catch (e) {
             return (<h4>Visualisation unable to compile</h4>)
+        }
+
+    }
+
+    function getImgView() {
+        try {
+            return (<img src={vega} width="200px"/>)
+        } catch (e) {
+            return (<h4>Unable to display image</h4>)
         }
 
     }
@@ -63,7 +80,7 @@ export default function OfficeInformationId() {
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
-            {getJSON()}
+            {getCustomView()}
         </Container>
     );
 }

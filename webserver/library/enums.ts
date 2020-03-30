@@ -1,4 +1,5 @@
 export enum ViewType {
     VEGA = "vega",
-    IMAGE = "image"
+    IMAGE = "image",
+    EMPTY = "empty"
 }
