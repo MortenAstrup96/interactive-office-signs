@@ -30,11 +30,14 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
             case "Available":
                 setButtonColor({background: colors.green["500"], text: colors.common.white});
                 break;
+            case "Be right back":
+                setButtonColor({background: colors.yellow.A700, text: colors.common.white});
+                break;
             case "Busy":
                 setButtonColor({background: colors.red.A700, text: colors.common.white});
                 break;
             default:
-                setButtonColor({background: colors.yellow.A700, text: colors.common.black});
+                setButtonColor({background: colors.common.white, text: colors.common.black});
         }
     }, [status]);
 
@@ -47,7 +50,7 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
     return (
         <div>
             <Button variant="contained" onClick={changeStatus}
-                    style={{backgroundColor: buttonColor.background, color: buttonColor.text}}>
+                    style={{backgroundColor: buttonColor.background, color: buttonColor.text, width: 200, height: 50}}>
                 {status}
             </Button>
         </div>
