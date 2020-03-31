@@ -8,7 +8,9 @@ import {AvailabilityComponent} from "../../components/office/availabilityCompone
 import {serverName} from "../../library/constants";
 import {textAlign} from "@material-ui/system";
 
-const avatar = require("../../img/avataricon.png");
+
+const avatarFake = require("../../img/avataricon.png");
+
 const style = {
     display: 'flex',
     justifyContent: 'center',
@@ -22,12 +24,15 @@ const textStyle = {
     width: '50%',
     margin: '0 auto',
     fontFamily: 'Roboto',
-}
+};
+
+const circularImg = {};
 
 export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     let {data, revalidate} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
@@ -37,6 +42,24 @@ export default function OfficeInformationId() {
     useEffect(() => {
         setCurrentOffice(data);
     }, [data, revalidate]);
+
+
+    function getProfileImage() {
+        if (currentOffice?.nameId) {
+            try {
+                const avatarReal = require("../../img/profile/" + currentOffice.nameId + ".jpg");
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "500px",
+                    width: "500px"
+                }} src={avatarReal} alt={avatarFake}/>)
+            } catch (e) {
+                return (<img src={avatarFake} alt={avatarFake} width="500px"/>);
+            }
+            return (<img src={avatarFake} alt={avatarFake} width="500px"/>);
+        }
+    }
 
     async function fetcher(url: any) {
         if (router.query.officeId) {
@@ -51,7 +74,7 @@ export default function OfficeInformationId() {
             <div>
                 <Header office={currentOffice.nameId}/>
                 <div style={style}>
-                    <img src={avatar} alt="Error loading image.." width="500"/>
+                    {getProfileImage()}
                 </div>
                 <div style={textStyle}>
                     <h1>{currentOffice.name}</h1>

@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {
     Button,
-    Container,
+    Container, Divider,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -94,10 +94,21 @@ export default function Index() {
         }
     }
 
+    const uploadFile = async (e: any) => {
+        const file = e.currentTarget.files[0];
+        await fetch("/api/uploadImageById/" + currentUser.nameId, {
+            method: "POST",
+            headers: {
+                "Content-Type": file.type
+            },
+            body: file
+        });
+    };
+
     if (!data) return (<div> Loading... </div>);
 
     return (
-        <Container>
+        <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{margin: "30px"}}>
                 <h1>User Dashboard</h1>
                 <Button variant="contained" color="primary"
@@ -127,7 +138,7 @@ export default function Index() {
                     <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
                 </RadioGroup>
             </FormControl>
-
+            <Divider/>
             <div style={{alignContent: "center"}}>
                 <div>
                     <TextareaAutosize value={vegaData}
@@ -140,6 +151,9 @@ export default function Index() {
                                onChange={(e) => setImagePath(e.target.value)}/>
                     {getImgView()}
                 </div>
+            </div>
+            <div>
+                <input type="file" onChange={uploadFile}/>
             </div>
 
         </Container>

@@ -32,9 +32,9 @@ export default function OfficeInformationId() {
 
 
     function getCustomView() {
-        if (currentOffice.topView.viewType === ViewType.VEGA) {
+        if (currentOffice?.topView?.viewType === ViewType.VEGA) {
             return getVegaView();
-        } else if (currentOffice.topView.viewType === ViewType.IMAGE) {
+        } else if (currentOffice?.topView?.viewType === ViewType.IMAGE) {
             return getImgView();
         }
     }
@@ -66,7 +66,7 @@ export default function OfficeInformationId() {
 
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={"Testing"}/></div>);
 
 
     return (
