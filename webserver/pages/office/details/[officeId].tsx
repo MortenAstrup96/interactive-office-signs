@@ -76,9 +76,12 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    // Simple Calendar from outlook
+                    <iframe src="https://outlook.live.com/calendar/published/8b7e4858-fb96-494a-9f6a-92f2f78424d5/2e1a95c1-d3fd-4928-949a-b26020cbcbbb/cid-C17783A928EABA93/calendar.html" width={1000} height={700}></iframe>
                 </div>
             </div>
             {getCustomView()}
+
         </Container>
     );
 }
