@@ -40,7 +40,7 @@ export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props =>
                 setButtonColor({background: colors.common.white, text: colors.common.black});
         }
     }, [status]);
-
+ 
 
     // Will switch between available/busy - If neither switch to available
     function changeStatus() {
