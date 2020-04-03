@@ -1,8 +1,6 @@
 import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
-import {OfficeInformationProps} from "../library/general_interfaces";
-import {CreateAccountForm} from "../components/create-account/createAccountForm";
 import {serverName} from "../library/constants";
 
 interface NameProp {
@@ -15,7 +13,7 @@ export default function Tablets() {
 
 
     // This function returns a Material UI List-item with a link, linking to /office/nameId
-    function ListItemLink(props) {
+    function ListItemLink(props: any) {
         return (
             <Link href={"/office/" + props.nameId}>
                 <ListItem button component="a" {...props.id}>
@@ -32,7 +30,8 @@ export default function Tablets() {
 
 
     if (!data) return (
-        <div></div>
+        <div>
+        </div>
     );
 
     return (

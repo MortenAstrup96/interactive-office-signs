@@ -1,14 +1,7 @@
-import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
-import useSWR from "swr";
-import Link from "next/link";
+import {Container} from "@material-ui/core";
 import {OfficeInformationProps} from "../library/general_interfaces";
-import {CreateAccountForm} from "../components/create-account/createAccountForm";
+import {CreateAccountForm} from "../components/createAccount/createAccountForm";
 import {serverName} from "../library/constants";
-
-interface NameProp {
-    name: string,
-    nameId: string
-}
 
 export default function CreateAccount() {
 

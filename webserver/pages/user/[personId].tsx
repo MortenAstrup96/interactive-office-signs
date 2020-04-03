@@ -58,7 +58,6 @@ export default function Index() {
         switch (topViewDisplay) {
             case ViewType.VEGA:
                 return ({viewType: ViewType.VEGA, data: vegaData});
-                break;
             case ViewType.IMAGE:
                 return ({viewType: ViewType.IMAGE, data: imagePath});
             default:
@@ -78,7 +77,7 @@ export default function Index() {
 
     function getImgView() {
         try {
-            return (<img src={imagePath} height="300px"/>)
+            return (<img src={imagePath} height="300px" alt="Unable to display image"/>)
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
@@ -90,17 +89,20 @@ export default function Index() {
     }
 
     function getProfilePicture() {
-        try {
-            const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
-            return (<img style={{
-                objectFit: "cover",
-                borderRadius: "50%",
-                height: "150px",
-                width: "150px"
-            }} src={avatarReal} alt={avatarFake}/>)
-        } catch (e) {
-            return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+        if (currentUser) {
+            try {
+                const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "150px",
+                    width: "150px"
+                }} src={avatarReal} alt={avatarFake}/>)
+            } catch (e) {
+                return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+            }
         }
+        return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
     }
 
     async function fetcher(url: any) {
@@ -111,13 +113,16 @@ export default function Index() {
 
     const uploadFile = async (e: any) => {
         const file = e.currentTarget.files[0];
-        await fetch("/api/uploadImageById/" + currentUser.nameId, {
-            method: "POST",
-            headers: {
-                "Content-Type": file.type
-            },
-            body: file
-        });
+        if (currentUser) {
+            await fetch("/api/uploadImageById/" + currentUser.nameId, {
+                method: "POST",
+                headers: {
+                    "Content-Type": file.type
+                },
+                body: file
+            });
+        }
+
     };
 
     if (!data) return (<div> Loading... </div>);

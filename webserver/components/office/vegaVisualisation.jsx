@@ -1,7 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {ReactDOM} from 'react';
 import {Vega} from 'react-vega';
-import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 
 const spec = {
     "description": "A simple bar chart with embedded data.",
