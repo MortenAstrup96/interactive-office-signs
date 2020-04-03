@@ -105,5 +105,5 @@ dist
 
 .now
 
-
-db/officeDB.json
+/img/profile/
+/db/officeDB.json
