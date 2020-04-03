@@ -24,7 +24,7 @@ export default function Tablets() {
     }
 
     // Leave me alone!!
-    async function fetcher(url) {
+    async function fetcher(url: string) {
         return fetch(url).then(r => r.json());
     }
 

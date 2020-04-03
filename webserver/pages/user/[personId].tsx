@@ -133,12 +133,9 @@ export default function Index() {
                 <h1>PROFILE SETTINGS</h1>
 
 
-                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
+                <div style={{display: "grid", gridTemplateColumns: "200px 300px"}}>
                     {getProfilePicture()}
                     <input type="file" onChange={uploadFile}/>
-                </div>
-
-                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
                     <TextField id="outlined-basic" label="Name" variant="outlined" size="small"
                                style={{width: 200, margin: "10px"}}/>
 

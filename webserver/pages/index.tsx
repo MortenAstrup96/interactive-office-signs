@@ -37,7 +37,7 @@ export default function Index() {
                     <Button variant="contained" color="primary" style={{width: 180, height: 45}}>Sign In</Button>
                 </Link>
             </Grid>
-            <Link href={"/createAccount/"}>
+            <Link href={"/create-account/"}>
                 <Grid item>
                     <Button variant="outlined" color="primary" style={{width: 180, height: 45}}>Create Account</Button>
                 </Grid>
