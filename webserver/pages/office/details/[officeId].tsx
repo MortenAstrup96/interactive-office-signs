@@ -46,7 +46,6 @@ export default function OfficeInformationId() {
         } catch (e) {
             return (<h4>Visualisation unable to compile</h4>)
         }
-
     }
 
     function getImgView() {
@@ -55,7 +54,6 @@ export default function OfficeInformationId() {
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
-
     }
 
     async function fetcher(url) {
@@ -66,7 +64,7 @@ export default function OfficeInformationId() {
 
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={"Testing"}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
 
 
     return (

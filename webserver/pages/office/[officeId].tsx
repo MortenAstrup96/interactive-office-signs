@@ -51,13 +51,13 @@ export default function OfficeInformationId() {
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "500px",
-                    width: "500px"
+                    height: "400px",
+                    width: "400px"
                 }} src={avatarReal} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="500px"/>);
+                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
             }
-            return (<img src={avatarFake} alt={avatarFake} width="500px"/>);
+            return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
         }
     }
 

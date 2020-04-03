@@ -18,6 +18,8 @@ import Link from "next/link";
 import {ViewType} from "../../library/enums";
 import {OfficeInformationProps} from "../../library/general_interfaces";
 
+const avatarFake = require("../../img/avataricon.png");
+
 
 export default function Index() {
     const router = useRouter();
@@ -43,7 +45,6 @@ export default function Index() {
         // Create object to Post
         const topView = getSelectedObject();
         const status = currentStatus;
-
 
         // Posting data
         fetch(serverName + '/api/setUserById/' + currentNameId, {
@@ -88,6 +89,20 @@ export default function Index() {
         setTopViewDisplay(event.target.value);
     }
 
+    function getProfilePicture() {
+        try {
+            const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "150px",
+                width: "150px"
+            }} src={avatarReal} alt={avatarFake}/>)
+        } catch (e) {
+            return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+        }
+    }
+
     async function fetcher(url: any) {
         if (router.query.personId) {
             return fetch(url).then(r => r.json());
@@ -109,8 +124,26 @@ export default function Index() {
 
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <div style={{margin: "30px"}}>
-                <h1>User Dashboard</h1>
+            <div style={{margin: "30px", width: "600px"}}>
+                <h1>PROFILE SETTINGS</h1>
+
+
+                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
+                    {getProfilePicture()}
+                    <input type="file" onChange={uploadFile}/>
+                </div>
+
+                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
+                    <TextField id="outlined-basic" label="Name" variant="outlined" size="small"
+                               style={{width: 200, margin: "10px"}}/>
+
+                    <TextField id="outlined-basic" label="Mail" variant="outlined" size="small"
+                               style={{width: 200, margin: "10px"}}/>
+                </div>
+
+                <Divider variant="middle"/>
+
+
                 <Button variant="contained" color="primary"
                         onClick={() => saveChanges()}>Save</Button>
                 <h2>Currently Status:</h2>
@@ -118,28 +151,29 @@ export default function Index() {
                 <Link href="https://vega.github.io/editor/#/">https://vega.github.io/editor/#/</Link>
             </div>
 
-            <div style={{margin: "30px"}}>
+            <div style={{margin: "30px", width: "600px"}}>
                 <Button variant="contained" color="primary"
                         onClick={() => setCurrentStatus("Available")}>Available</Button>
                 <Button variant="contained" color="secondary" onClick={() => setCurrentStatus("Busy")}>Busy</Button>
             </div>
-            <div style={{margin: "30px"}}>
+            <div style={{margin: "30px", width: "600px"}}>
                 <TextField type="text" value={currentStatus}
                            onChange={(e) => setCurrentStatus(e.target.value)} variant="outlined"
                            label="Status Message"/>
             </div>
-
-            <FormControl component="fieldset">
-                <FormLabel component="legend">Type to display on tablet</FormLabel>
-                <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
-                            onChange={handleRadioChange}>
-                    <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>
-                    <FormControlLabel value={ViewType.VEGA} control={<Radio/>} label="Vega-Lite"/>
-                    <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
-                </RadioGroup>
-            </FormControl>
-            <Divider/>
-            <div style={{alignContent: "center"}}>
+            <div style={{margin: "30px", width: "600px"}}>
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Type to display on tablet</FormLabel>
+                    <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
+                                onChange={handleRadioChange}>
+                        <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>
+                        <FormControlLabel value={ViewType.VEGA} control={<Radio/>} label="Vega-Lite"/>
+                        <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
+                    </RadioGroup>
+                </FormControl>
+                <Divider variant="middle"/>
+            </div>
+            <div style={{alignContent: "center", width: "600px"}}>
                 <div>
                     <TextareaAutosize value={vegaData}
                                       onChange={(e) => setVegaData(e.target.value)}/>
@@ -152,9 +186,7 @@ export default function Index() {
                     {getImgView()}
                 </div>
             </div>
-            <div>
-                <input type="file" onChange={uploadFile}/>
-            </div>
+
 
         </Container>
     );
