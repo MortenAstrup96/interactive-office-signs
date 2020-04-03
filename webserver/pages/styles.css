@@ -1,0 +1,14 @@
+.style {
+    display: flex;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.textStyle {
+    display: flex;
+    alignItems: center;
+    justifyContent: center;
+    width: 50%;
+    margin: 0 auto;
+    fontFamily: 'Roboto';
+}

@@ -7,22 +7,10 @@ import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
 import {textAlign} from "@material-ui/system";
+import style from "./css.module.css";
+import textStyle from "./css.module.css";
 
 const avatar = require("../../img/avataricon.png");
-const style = {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '0 auto',
-    width: '50%',
-}
-const textStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '50%',
-    margin: '0 auto',
-    fontFamily: 'Roboto',
-}
 
 export default function OfficeInformationId() {
 
@@ -50,16 +38,16 @@ export default function OfficeInformationId() {
         <Container>
             <div>
                 <Header office={currentOffice.nameId}/>
-                <div style={style}>
+                <div className="style">
                     <img src={avatar} alt="Error loading image.." width="500"/>
                 </div>
-                <div style={textStyle}>
+                <div className="style">
                     <h1>{currentOffice.name}</h1>
                 </div>
-                <div style={textStyle}>
+                <div className="textStyle">
                     <h2>{currentOffice.mail}</h2>
                 </div>
-                <div style={textStyle}>
+                <div className="textStyle">
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
