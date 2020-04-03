@@ -2,7 +2,7 @@ import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
 import {OfficeInformationProps} from "../library/general_interfaces";
-import {Form} from "../components/index/form";
+import {CreateAccountForm} from "../components/create-account/createAccountForm";
 import {serverName} from "../library/constants";
 
 interface NameProp {

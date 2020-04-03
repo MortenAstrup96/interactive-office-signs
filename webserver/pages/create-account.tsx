@@ -2,7 +2,7 @@ import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
 import {OfficeInformationProps} from "../library/general_interfaces";
-import {Form} from "../components/index/form";
+import {CreateAccountForm} from "../components/create-account/createAccountForm";
 import {serverName} from "../library/constants";
 
 interface NameProp {
@@ -26,7 +26,7 @@ export default function CreateAccount() {
                 <h1>Create Account</h1>
                 <h3>Please enter account information</h3>
                 <div>
-                    <Form addUser={addUserToDB}/>
+                    <CreateAccountForm addUser={addUserToDB}/>
                 </div>
 
             </Container>

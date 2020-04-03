@@ -7,7 +7,7 @@ const gridStyle = {
 
 };
 
-export const Form = ({addUser}) => {
+export const CreateAccountForm = ({addUser}) => {
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
