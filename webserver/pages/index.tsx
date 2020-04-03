@@ -1,60 +1,61 @@
-import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
+import {Button, Container, Divider, Grid, GridList, List, ListItem, ListItemText, TextField,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
 import {OfficeInformationProps} from "../library/general_interfaces";
 import {Form} from "../components/index/form";
 import {serverName} from "../library/constants";
+import {useState} from "react";
 
-interface NameProp {
-    name: string,
-    nameId: string
-}
 
 export default function Index() {
-    const {data} = useSWR(() => serverName + '/api/getUserData', fetcher);
+    const [username, setUsername] = useState<string>("");
 
-
-    const addUserToDB = (prop: OfficeInformationProps) => {
-        fetch(serverName + '/api/addUser', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(prop)
-        });
-    };
-
-
-    /** This function returns a Material UI Listitem with a link, linking to /office/nameId */
-    function ListItemLink(props) {
-        return (
-            <Link href={"/office/" + props.nameId}>
-                <ListItem button component="a" {...props.id}>
-                    <ListItemText primary={props.name}/>
-                </ListItem>
-            </Link>
-        );
-    }
-
-    // Leave me alone!!
-    async function fetcher(url) {
-        return fetch(url).then(r => r.json());
-    }
-
-    console.log(data);
-
-
-    if (!data) return (
-        <div><Form addUser={addUserToDB}/></div>
-    );
 
     return (
-        <div>
-            <Container>
-                <List>
-                    {data.map((result: NameProp, index: number) =>
-                        <ListItemLink key={index} nameId={result.nameId} name={result.name}/>
-                    )}
-                </List>
-            </Container>
-        </div>
+        <Grid container
+              direction="column"
+              justify="space-between"
+              alignItems="center"
+              spacing={2}>
+            <Grid item>
+                <h1>LOGIN TO YOUR ACCOUNT</h1>
+            </Grid>
+            <div style={{marginBottom: "2%"}}>
+                <form noValidate autoComplete="off">
+                    <Grid container direction="column" justify="space-between" alignItems="center" spacing={2}>
+                        <Grid item>
+                            <TextField id="outlined-basic" label="Username" variant="outlined" value={username}
+                                       onChange={event => setUsername(event.target.value)}
+                                       style={{width: 300, height: 40, margin: "10px"}}/>
+                        </Grid>
+                        <Grid item>
+                            <TextField id="outlined-basic" label="Pincode" variant="outlined"
+                                       style={{width: 300, height: 40, margin: "10px"}}/>
+                        </Grid>
+                    </Grid>
+                </form>
+            </div>
+
+            <Grid item>
+                <Link href={"/user/" + username}>
+                    <Button variant="contained" color="primary" style={{width: 180, height: 45}}>Sign In</Button>
+                </Link>
+            </Grid>
+            <Link href={"/create-account/"}>
+                <Grid item>
+                    <Button variant="outlined" color="primary" style={{width: 180, height: 45}}>Create Account</Button>
+                </Grid>
+            </Link>
+
+            <Grid item>
+                <Link href={"/tablets/"}>
+                    <Button variant="contained" color="primary" style={{width: 250, height: 45, marginTop: "20px"}}>Tablet
+                        Overview</Button>
+                </Link>
+
+            </Grid>
+
+
+        </Grid>
     );
 }

@@ -7,15 +7,21 @@ import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
 import {textAlign} from "@material-ui/system";
-import style from "./css.module.css";
-import textStyle from "./css.module.css";
 
-const avatar = require("../../img/avataricon.png");
+const avatarFake = require("../../img/avataricon.png");
+
+const style = {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '0 auto',
+    width: '50%',
+}
 
 export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     let {data, revalidate} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
@@ -26,20 +32,38 @@ export default function OfficeInformationId() {
         setCurrentOffice(data);
     }, [data, revalidate]);
 
+
+    function getProfileImage() {
+        if (currentOffice?.nameId) {
+            try {
+                const avatarReal = require("../../img/profile/" + currentOffice.nameId + ".jpg");
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "400px",
+                    width: "400px"
+                }} src={avatarReal} alt={avatarFake}/>)
+            } catch (e) {
+                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+            }
+            return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+        }
+    }
+
     async function fetcher(url: any) {
         if (router.query.officeId) {
             return fetch(url).then(r => r.json());
         }
     }
 
-    if (!data || !currentOffice) return (<div> Loading... </div>);
+    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
 
     return (
         <Container>
             <div>
                 <Header office={currentOffice.nameId}/>
-                <div className="style">
-                    <img src={avatar} alt="Error loading image.." width="500"/>
+                <div style={style}>
+                    {getProfileImage()}
                 </div>
                 <div className="style">
                     <h1>{currentOffice.name}</h1>
