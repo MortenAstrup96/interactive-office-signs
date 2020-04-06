@@ -5,13 +5,7 @@ import {serverName} from "../library/constants";
 
 export default function CreateAccount() {
 
-    const addUserToDB = (prop: OfficeInformationProps) => {
-        fetch(serverName + '/api/addUser', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(prop)
-        });
-    };
+
 
     return (
         <div>
@@ -19,9 +13,8 @@ export default function CreateAccount() {
                 <h1>Create Account</h1>
                 <h3>Please enter account information</h3>
                 <div>
-                    <CreateAccountForm addUser={addUserToDB}/>
+                    <CreateAccountForm/>
                 </div>
-
             </Container>
         </div>
     );

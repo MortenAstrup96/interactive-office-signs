@@ -1,5 +1,7 @@
 import {useState} from "react";
 import {colors, OutlinedInput, TextField} from "@material-ui/core";
+import {OfficeInformationProps} from "../../library/general_interfaces";
+import {serverName} from "../../library/constants";
 
 const gridStyle = {
     display: "grid",
@@ -7,7 +9,16 @@ const gridStyle = {
 
 };
 
-export const CreateAccountForm = (addUser: any) => {
+export const CreateAccountForm = () => {
+    const addUser = (prop: OfficeInformationProps) => {
+        fetch(serverName + '/api/addUser', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(prop)
+        });
+    };
+
+
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
@@ -15,7 +26,15 @@ export const CreateAccountForm = (addUser: any) => {
     const [pin, setPin] = useState("");
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        addUser({office: office, nameId: nameId, name: name, mail: mail, status: "Available"});
+        addUser({
+            officeId: office,
+            nameId: nameId,
+            name: name,
+            mail: mail,
+            status: "Available",
+            topView: {viewType: "", data: ""},
+            bottomView: {viewType: "", data: ""}
+        });
         setName("");
         setNameId("");
         setOffice("");

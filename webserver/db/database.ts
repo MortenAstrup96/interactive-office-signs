@@ -1,6 +1,6 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
-import { OfficeInformationProps} from "../library/general_interfaces";
+import {OfficeInformationProps} from "../library/general_interfaces";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
