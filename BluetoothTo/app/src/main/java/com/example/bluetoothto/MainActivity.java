@@ -35,9 +35,9 @@ public class MainActivity extends Activity {
     private WebView webView;
     private String lastRecieved;
 
-    //private String localIP = "192.168.87.166";
-    //private String mainURL = "http://" + localIP+ ":3000"; // SKAL MÅSKE ÆNDRES TIL LOCALHOST
-    private String mainURL = "http://localhost:3000";
+    private String localIP = "192.168.87.166";
+    private String mainURL = "http://" + localIP+ ":3000"; // SKAL MÅSKE ÆNDRES TIL LOCALHOST
+    //private String mainURL = "http://localhost:3000";
 
     // SPP UUID service. Fixed to HC-06 module
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
