@@ -1,6 +1,6 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
-import { OfficeInformationProps} from "../library/general_interfaces";
+import {OfficeInformationProps} from "../library/general_interfaces";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
@@ -33,7 +33,7 @@ export function setStatusById(changeRequest: OfficeInformationProps) {
 }
 
 // TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
-export function addUser(personToAdd: OfficeInformationProps) {
+export function addUser(personToAdd: Objec) {
     if (personToAdd) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
