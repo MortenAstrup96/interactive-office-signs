@@ -33,7 +33,7 @@ export function setStatusById(changeRequest: OfficeInformationProps) {
 }
 
 // TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
-export function addUser(personToAdd: Objec) {
+export function addUser(personToAdd: OfficeInformationProps) {
     if (personToAdd) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
