@@ -1,4 +1,4 @@
-import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
+import {Button, Container, Grid, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
 import {OfficeInformationProps} from "../library/general_interfaces";
@@ -28,6 +28,14 @@ export default function CreateAccount() {
                 <div>
                     <Form addUser={addUserToDB}/>
                 </div>
+
+                <div>
+                    <Link href={"/tablets/"}>
+                        <Button variant="contained" color="primary" style={{width: 250, height: 45, marginTop: "20px"}}>Tablet
+                            Overview</Button>
+                    </Link>
+                </div>
+
 
             </Container>
         </div>
