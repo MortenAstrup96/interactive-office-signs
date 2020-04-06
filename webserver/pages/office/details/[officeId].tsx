@@ -50,13 +50,13 @@ export default function OfficeInformationId() {
 
     function getImgView() {
         try {
-            return (<img src={vega} height="400px"/>)
+            return (<img src={vega} height="400px" alt="Unable to display image"/>)
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
     }
 
-    async function fetcher(url) {
+    async function fetcher(url: string) {
         if (router.query.officeId) {
             return fetch(url).then(r => r.json());
         }

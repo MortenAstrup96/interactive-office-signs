@@ -6,7 +6,7 @@ import {
     Container, Divider,
     FormControl,
     FormControlLabel,
-    FormLabel,
+    FormLabel, Input,
     Radio,
     RadioGroup,
     TextareaAutosize,
@@ -17,6 +17,9 @@ import {VegaLite} from "react-vega/lib";
 import Link from "next/link";
 import {ViewType} from "../../library/enums";
 import {OfficeInformationProps} from "../../library/general_interfaces";
+
+import IconPerson from "../../components/icons/iconPerson";
+import IconMail from "../../components/icons/iconMail";
 
 const avatarFake = require("../../img/avataricon.png");
 
@@ -58,7 +61,6 @@ export default function Index() {
         switch (topViewDisplay) {
             case ViewType.VEGA:
                 return ({viewType: ViewType.VEGA, data: vegaData});
-                break;
             case ViewType.IMAGE:
                 return ({viewType: ViewType.IMAGE, data: imagePath});
             default:
@@ -78,7 +80,7 @@ export default function Index() {
 
     function getImgView() {
         try {
-            return (<img src={imagePath} height="300px"/>)
+            return (<img src={imagePath} height="300px" alt="Unable to display image"/>)
         } catch (e) {
             return (<h4>Unable to display image</h4>)
         }
@@ -90,17 +92,20 @@ export default function Index() {
     }
 
     function getProfilePicture() {
-        try {
-            const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
-            return (<img style={{
-                objectFit: "cover",
-                borderRadius: "50%",
-                height: "150px",
-                width: "150px"
-            }} src={avatarReal} alt={avatarFake}/>)
-        } catch (e) {
-            return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+        if (currentUser) {
+            try {
+                const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "150px",
+                    width: "150px"
+                }} src={avatarReal} alt={avatarFake}/>)
+            } catch (e) {
+                return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+            }
         }
+        return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
     }
 
     async function fetcher(url: any) {
@@ -111,13 +116,16 @@ export default function Index() {
 
     const uploadFile = async (e: any) => {
         const file = e.currentTarget.files[0];
-        await fetch("/api/uploadImageById/" + currentUser.nameId, {
-            method: "POST",
-            headers: {
-                "Content-Type": file.type
-            },
-            body: file
-        });
+        if (currentUser) {
+            await fetch("/api/uploadImageById/" + currentUser.nameId, {
+                method: "POST",
+                headers: {
+                    "Content-Type": file.type
+                },
+                body: file
+            });
+        }
+
     };
 
     if (!data) return (<div> Loading... </div>);
@@ -126,22 +134,43 @@ export default function Index() {
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{margin: "30px", width: "600px"}}>
                 <h1>PROFILE SETTINGS</h1>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
+                    <div>
+                        {getProfilePicture()}
+                        <Button
+                            variant="contained"
+                            component="label"
+                        >
+                            Change Picture
+                            <input
+                                type="file"
+                                onChange={uploadFile}
+                                style={{display: "none"}}
+                            />
+                        </Button>
+                    </div>
+
+                    <div style={{marginRight: "20px", marginTop: "30px"}}>
+                        <div>
+                            <IconMail/>
+                            <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
+                                       size="small"
+                                       style={{width: "280px"}}/>
+                        </div>
+
+                        <div>
+                            <IconPerson/>
+                            <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
+                                       size="small"
+                                       style={{width: "280px"}}/>
+                        </div>
 
 
-                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
-                    {getProfilePicture()}
-                    <input type="file" onChange={uploadFile}/>
+                    </div>
+
                 </div>
 
-                <div style={{alignItems: "center", gridTemplateColumns: "1fr 1fr"}}>
-                    <TextField id="outlined-basic" label="Name" variant="outlined" size="small"
-                               style={{width: 200, margin: "10px"}}/>
-
-                    <TextField id="outlined-basic" label="Mail" variant="outlined" size="small"
-                               style={{width: 200, margin: "10px"}}/>
-                </div>
-
-                <Divider variant="middle"/>
+                <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
 
 
                 <Button variant="contained" color="primary"
@@ -186,8 +215,6 @@ export default function Index() {
                     {getImgView()}
                 </div>
             </div>
-
-
         </Container>
     );
 }

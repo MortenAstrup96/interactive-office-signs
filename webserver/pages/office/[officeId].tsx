@@ -6,7 +6,6 @@ import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
-import {textAlign} from "@material-ui/system";
 
 
 const avatarFake = require("../../img/avataricon.png");
@@ -16,7 +15,7 @@ const style = {
     justifyContent: 'center',
     margin: '0 auto',
     width: '50%',
-}
+};
 const textStyle = {
     display: 'flex',
     alignItems: 'center',
@@ -25,8 +24,6 @@ const textStyle = {
     margin: '0 auto',
     fontFamily: 'Roboto',
 };
-
-const circularImg = {};
 
 export default function OfficeInformationId() {
 
@@ -57,8 +54,9 @@ export default function OfficeInformationId() {
             } catch (e) {
                 return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
             }
-            return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+
         }
+        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
     }
 
     async function fetcher(url: any) {

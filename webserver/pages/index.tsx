@@ -1,15 +1,10 @@
-import {Button, Container, Divider, Grid, GridList, List, ListItem, ListItemText, TextField,} from "@material-ui/core";
-import useSWR from "swr";
+import {Button, Grid, TextField,} from "@material-ui/core";
 import Link from "next/link";
-import {OfficeInformationProps} from "../library/general_interfaces";
-import {Form} from "../components/index/form";
-import {serverName} from "../library/constants";
 import {useState} from "react";
 
 
 export default function Index() {
     const [username, setUsername] = useState<string>("");
-
 
 
     return (
@@ -53,10 +48,7 @@ export default function Index() {
                     <Button variant="contained" color="primary" style={{width: 250, height: 45, marginTop: "20px"}}>Tablet
                         Overview</Button>
                 </Link>
-
             </Grid>
-
-
         </Grid>
     );
 }

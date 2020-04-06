@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Button, colors, Input, OutlinedInput, TextField} from "@material-ui/core";
+import {colors, OutlinedInput, TextField} from "@material-ui/core";
 
 const gridStyle = {
     display: "grid",
@@ -7,13 +7,13 @@ const gridStyle = {
 
 };
 
-export const Form = ({addUser}) => {
+export const CreateAccountForm = (addUser: any) => {
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         addUser({office: office, nameId: nameId, name: name, mail: mail, status: "Available"});
         setName("");
