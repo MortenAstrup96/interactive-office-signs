@@ -13,7 +13,7 @@ export default function CreateAccount() {
                 <h1>Create Account</h1>
                 <h3>Please enter account information</h3>
                 <div>
-                    <CreateAccountForm addUser={addUserToDB}/>
+                    <CreateAccountForm/>
                 </div>
             </Container>
         </div>
