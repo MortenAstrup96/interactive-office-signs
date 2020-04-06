@@ -6,16 +6,10 @@ import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
 import {AvailabilityComponent} from "../../components/office/availabilityComponent";
 import {serverName} from "../../library/constants";
-import {textAlign} from "@material-ui/system";
+import * as styles from "/webserver/pages/main.scss";
 
 const avatarFake = require("../../img/avataricon.png");
 
-const style = {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '0 auto',
-    width: '50%',
-}
 
 export default function OfficeInformationId() {
 
@@ -60,18 +54,18 @@ export default function OfficeInformationId() {
 
     return (
         <Container>
-            <div>
+            <div className={styles.container}>
                 <Header office={currentOffice.nameId}/>
-                <div style={style}>
+                <div>
                     {getProfileImage()}
                 </div>
-                <div className="style">
+                <div>
                     <h1>{currentOffice.name}</h1>
                 </div>
-                <div className="textStyle">
+                <div>
                     <h2>{currentOffice.mail}</h2>
                 </div>
-                <div className="textStyle">
+                <div>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
