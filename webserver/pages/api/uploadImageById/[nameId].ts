@@ -3,7 +3,7 @@ import path from "path";
 
 ;
 
-export default async (req, res) => {
+export default async (req: any, res: any) => {
     // for the pipe to work, we need to disable "bodyParser" (see below)
     const {
         query: {nameId},
