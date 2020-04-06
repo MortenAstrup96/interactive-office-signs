@@ -1,6 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "baseUrl": ".",
+    "paths": {
+      "main/*": [
+        "webserver/pages/main/*"
+      ]
+    },
     "lib": [
       "dom",
       "dom.iterable",
