@@ -3,12 +3,14 @@ import React, {useEffect, useState} from "react";
 import {OfficeInformationProps} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/office/header";
-import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../../components/office/availabilityComponent";
+import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
+import {Availability} from "../../../components/office/availability";
 import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
 import {ViewType} from "../../../library/enums";
-import {Image} from "../../../components/office/image";
+import {ImageCard} from "../../../components/office/imageCard";
+import Masonry from "react-masonry-component";
+import {makeStyles} from "@material-ui/core/styles";
 
 
 export default function OfficeInformationId() {
@@ -16,10 +18,12 @@ export default function OfficeInformationId() {
     const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
     const [vega, setVega] = useState<any>();
 
+
     // Will get the person by ID in the URL and revalidate every 10 seconds
     const {data, error} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
+
 
     useEffect(() => {
         setCurrentOffice(data);
@@ -30,25 +34,6 @@ export default function OfficeInformationId() {
             setVega(currentOffice.topView.data);
         }
     }, [currentOffice]);
-
-
-    function getCustomView() {
-        if (currentOffice?.topView?.viewType === ViewType.VEGA) {
-            return getVegaView();
-        } else if (currentOffice?.topView?.viewType === ViewType.IMAGE) {
-            console.log("Should return image!");
-            return <Image src={vega}/>;
-        }
-    }
-
-    function getVegaView() {
-        try {
-            const parsedVega = JSON.parse(vega);
-            return (<VegaLite spec={parsedVega}/>);
-        } catch (e) {
-            return (<h4>Visualisation unable to compile</h4>)
-        }
-    }
 
 
     async function fetcher(url: string) {
@@ -70,12 +55,26 @@ export default function OfficeInformationId() {
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
-                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
-            {getCustomView()}
 
+            <Masonry
+                className={''} // default ''
+                elementType={'div'} // default 'div'
+                options={{}} // default {}
+                disableImagesLoaded={false} // default false
+                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
+            >
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+
+            </Masonry>
         </Container>
-    );
-}
-
+    )
+        ;
+};

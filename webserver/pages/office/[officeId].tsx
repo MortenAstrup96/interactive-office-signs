@@ -4,7 +4,7 @@ import {OfficeInformationProps} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../components/office/availabilityComponent";
+import {Availability} from "../../components/office/availability";
 import {serverName} from "../../library/constants";
 
 
@@ -81,7 +81,7 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.mail}</h2>
                 </div>
                 <div style={textStyle}>
-                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
         </Container>

@@ -195,7 +195,7 @@ export default function Index() {
                     <FormLabel component="legend">Type to display on tablet</FormLabel>
                     <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
                                 onChange={handleRadioChange}>
-                        <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>
+                        <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="ImageCard"/>
                         <FormControlLabel value={ViewType.VEGA} control={<Radio/>} label="Vega-Lite"/>
                         <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
                     </RadioGroup>
@@ -210,7 +210,7 @@ export default function Index() {
                     {getVegaView()}
                 </div>
                 <div>
-                    <TextField label="Image" value={imagePath}
+                    <TextField label="ImageCard" value={imagePath}
                                onChange={(e) => setImagePath(e.target.value)}/>
                     {getImgView()}
                 </div>
