@@ -65,12 +65,12 @@ export default function OfficeInformationId() {
         }
     }
 
-    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
 
     return (
         <Container>
             <div>
-                <Header office={currentOffice.nameId}/>
+                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
                 <div style={style}>
                     {getProfileImage()}
                 </div>
