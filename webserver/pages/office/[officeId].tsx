@@ -36,6 +36,7 @@ export default function OfficeInformationId() {
         refreshInterval: 10000
     });
 
+
     useEffect(() => {
         setCurrentOffice(data);
     }, [data, revalidate]);

@@ -14,7 +14,7 @@ interface ImageInformation {
 }
 
 const useStyles = makeStyles({
-    root: {margin: 5, maxWidth: 400, maxHeight: 600},
+    root: {margin: 5, maxWidth: 1600, maxHeight: 1000},
     media: {display: "block"}
 
 });
