@@ -4,10 +4,6 @@ export interface UserInformation {
     name: string;
     mail: string;
     status: string;
-    customView: TabletViewInformation;
-}
-
-export interface TabletViewInformation {
     viewType: string;
     firstView: ViewData;
     secondView: ViewData;

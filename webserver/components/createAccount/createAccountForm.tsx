@@ -32,13 +32,12 @@ export const CreateAccountForm = () => {
             name: name,
             mail: mail,
             status: "Available",
-            customView: {
-                viewType: "",
-                firstView: {dataType: "", data: ""},
-                secondView: {dataType: "", data: ""},
-                thirdView: {dataType: "", data: ""},
-                fourthView: {dataType: "", data: ""}
-            }
+            viewType: "",
+            firstView: {dataType: "", data: ""},
+            secondView: {dataType: "", data: ""},
+            thirdView: {dataType: "", data: ""},
+            fourthView: {dataType: "", data: ""}
+
         });
         setName("");
         setNameId("");

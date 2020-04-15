@@ -10,7 +10,7 @@ import {VegaLite} from "react-vega/lib";
 
 interface ImageInformation {
     src: string
-    viewType: string
+    dataType: string
 }
 
 const imageStyles = makeStyles({
@@ -28,9 +28,9 @@ export const ImageCard = (props: ImageInformation) => {
     const vegaClasses = vegaStyles();
 
     function getCustomView() {
-        if (props.viewType === DataType.VEGA) {
+        if (props.dataType === DataType.VEGA) {
             return getVegaView();
-        } else if (props.viewType === DataType.IMAGE) {
+        } else if (props.dataType === DataType.IMAGE) {
             return (
                 <div>
                     <Card variant="outlined" className={imgClasses.root}>

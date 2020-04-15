@@ -29,8 +29,8 @@ export default function OfficeInformationId() {
     }, [data]);
 
     useEffect(() => {
-        if (currentOffice && currentOffice.topView && currentOffice.topView.data) {
-            setVega(currentOffice.topView.data);
+        if (currentOffice && currentOffice.firstView && currentOffice.firstView.data) {
+            setVega(currentOffice.firstView.data);
         }
     }, [currentOffice]);
 
@@ -57,29 +57,6 @@ export default function OfficeInformationId() {
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
-
-            <Masonry
-                className={''} // default ''
-                elementType={'div'} // default 'div'
-                options={{}} // default {}
-                disableImagesLoaded={false} // default false
-                updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
-            >
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.dataType}/>
-                <ImageCard src={"https://png.pngitem.com/pimgs/s/49-497482_random-cartoon-png-transparent-png.png"}
-                           viewType={DataType.IMAGE}/>
-
-                <ImageCard
-                    src={"https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"}
-                    viewType={DataType.IMAGE}/>
-                <ImageCard src={"https://png.pngitem.com/pimgs/s/49-498069_talk-about-random-wiki-shy-guy-mario-hd.png"}
-                           viewType={DataType.IMAGE}/>
-                <ImageCard
-                    src={"https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
-                    viewType={DataType.IMAGE}/>
-                <ImageCard src={"https://www.zwani.com/graphics/hello_funny/images/56467.jpg"}
-                           viewType={DataType.IMAGE}/>
-            </Masonry>
         </Container>
     );
 };

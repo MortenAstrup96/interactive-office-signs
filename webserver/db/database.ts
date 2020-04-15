@@ -1,6 +1,7 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
 import {UserInformation} from "../library/general_interfaces";
+import {DataType, ViewType} from "../library/enums";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
@@ -22,7 +23,6 @@ export function getUserById(id: any) {
 export function setUserById(changeRequest: UserInformation) {
     if (changeRequest) {
         db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
-        db.push("/person/" + changeRequest.nameId + "/topView", changeRequest.topView);
     }
 }
 
@@ -40,6 +40,17 @@ export function addUser(personToAdd: UserInformation) {
         db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/person/" + personToAdd.nameId + "/viewType", ViewType.SINGLE);
+        db.push("/person/" + personToAdd.nameId + "/firstView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/firstView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/secondView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/secondView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/thirdView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/thirdView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/fourthView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/fourthView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/customView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/customView/data", "");
         db.push("/personList[]/", {name: personToAdd.name, nameId: personToAdd.nameId});
     }
 }

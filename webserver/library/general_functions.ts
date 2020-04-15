@@ -5,9 +5,7 @@ export function fetcher(url: any) {
 }
 
 export function setPropValue(prop: any, field: string, change: string) {
-    let propCopy = JSON.parse(JSON.stringify(prop));
-    propCopy.field = change;
-    return propCopy;
+
 }
 
 export function getPropString(prop: any, field: string) {
