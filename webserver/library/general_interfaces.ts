@@ -1,15 +1,22 @@
-export interface OfficeInformationProps {
+export interface UserInformation {
     officeId: string;
     nameId: string;
     name: string;
     mail: string;
     status: string;
-    topView: CustomObject;
-    bottomView: CustomObject;
+    customView: TabletViewInformation;
 }
 
-export interface CustomObject {
+export interface TabletViewInformation {
     viewType: string;
+    firstView: ViewData;
+    secondView: ViewData;
+    thirdView: ViewData;
+    fourthView: ViewData;
+}
+
+export interface ViewData {
+    dataType: string;
     data: string;
 }
 

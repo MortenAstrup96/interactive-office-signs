@@ -1,13 +1,13 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../../library/general_interfaces";
+import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/office/header";
 import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
 import {Availability} from "../../../components/office/availability";
 import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
-import {ViewType} from "../../../library/enums";
+import {DataType} from "../../../library/enums";
 import {ImageCard} from "../../../components/office/imageCard";
 import Masonry from "react-masonry-component";
 import {makeStyles} from "@material-ui/core/styles";
@@ -15,7 +15,7 @@ import {makeStyles} from "@material-ui/core/styles";
 
 export default function OfficeInformationId() {
     const router = useRouter();
-    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+    const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     const [vega, setVega] = useState<any>();
 
 
@@ -65,20 +65,20 @@ export default function OfficeInformationId() {
                 disableImagesLoaded={false} // default false
                 updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
             >
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.dataType}/>
                 <ImageCard src={"https://png.pngitem.com/pimgs/s/49-497482_random-cartoon-png-transparent-png.png"}
-                           viewType={ViewType.IMAGE}/>
+                           viewType={DataType.IMAGE}/>
 
                 <ImageCard
                     src={"https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"}
-                    viewType={ViewType.IMAGE}/>
+                    viewType={DataType.IMAGE}/>
                 <ImageCard src={"https://png.pngitem.com/pimgs/s/49-498069_talk-about-random-wiki-shy-guy-mario-hd.png"}
-                           viewType={ViewType.IMAGE}/>
+                           viewType={DataType.IMAGE}/>
                 <ImageCard
                     src={"https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
-                    viewType={ViewType.IMAGE}/>
+                    viewType={DataType.IMAGE}/>
                 <ImageCard src={"https://www.zwani.com/graphics/hello_funny/images/56467.jpg"}
-                           viewType={ViewType.IMAGE}/>
+                           viewType={DataType.IMAGE}/>
             </Masonry>
         </Container>
     );

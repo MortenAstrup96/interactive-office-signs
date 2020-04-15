@@ -1,6 +1,6 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../library/general_interfaces";
+import {UserInformation} from "../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../components/office/header";
 import {Container} from "@material-ui/core";
@@ -29,7 +29,7 @@ const textStyle = {
 export default function OfficeInformationId() {
 
     const router = useRouter();
-    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+    const [currentOffice, setCurrentOffice] = useState<UserInformation>();
 
 
     // Will get the person by ID in the URL and revalidate every 10 seconds

@@ -4,7 +4,7 @@ import {Box, Button, Card, CardContent, CardMedia, colors} from "@material-ui/co
 import {serverName} from "../../library/constants";
 import {makeStyles} from '@material-ui/core/styles';
 import Masonry from "react-masonry-component";
-import {ViewType} from "../../library/enums";
+import {DataType} from "../../library/enums";
 import {VegaLite} from "react-vega/lib";
 
 
@@ -28,9 +28,9 @@ export const ImageCard = (props: ImageInformation) => {
     const vegaClasses = vegaStyles();
 
     function getCustomView() {
-        if (props.viewType === ViewType.VEGA) {
+        if (props.viewType === DataType.VEGA) {
             return getVegaView();
-        } else if (props.viewType === ViewType.IMAGE) {
+        } else if (props.viewType === DataType.IMAGE) {
             return (
                 <div>
                     <Card variant="outlined" className={imgClasses.root}>
