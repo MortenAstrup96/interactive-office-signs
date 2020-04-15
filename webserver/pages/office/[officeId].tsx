@@ -16,6 +16,7 @@ const style = {
     margin: '0 auto',
     width: '50%',
 };
+
 const textStyle = {
     display: 'flex',
     alignItems: 'center',

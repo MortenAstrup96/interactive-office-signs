@@ -49,7 +49,7 @@ export default function OfficeInformationId() {
     return (
 
         <Container>
-            <div >
+            <div>
                 <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
@@ -66,14 +66,20 @@ export default function OfficeInformationId() {
                 updateOnEachImageLoad={false} // default false and works only if disableImagesLoaded is false
             >
                 <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
-                <ImageCard src={currentOffice?.topView.data} viewType={currentOffice?.topView.viewType}/>
+                <ImageCard src={"https://png.pngitem.com/pimgs/s/49-497482_random-cartoon-png-transparent-png.png"}
+                           viewType={ViewType.IMAGE}/>
 
+                <ImageCard
+                    src={"https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"}
+                    viewType={ViewType.IMAGE}/>
+                <ImageCard src={"https://png.pngitem.com/pimgs/s/49-498069_talk-about-random-wiki-shy-guy-mario-hd.png"}
+                           viewType={ViewType.IMAGE}/>
+                <ImageCard
+                    src={"https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"}
+                    viewType={ViewType.IMAGE}/>
+                <ImageCard src={"https://www.zwani.com/graphics/hello_funny/images/56467.jpg"}
+                           viewType={ViewType.IMAGE}/>
             </Masonry>
         </Container>
-    )
-        ;
+    );
 };

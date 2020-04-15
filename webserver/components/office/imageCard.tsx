@@ -13,29 +13,36 @@ interface ImageInformation {
     viewType: string
 }
 
-const useStyles = makeStyles({
-    root: {margin: 5, maxWidth: 1600, maxHeight: 1000},
-    media: {display: "block"}
-
+const imageStyles = makeStyles({
+    root: {margin: 5, maxWidth: 400, maxHeight: 400},
+    media: {maxWidth: "100%", maxHeight: "100%"}
+});
+const vegaStyles = makeStyles({
+    root: {margin: 5, maxWidth: 600, maxHeight: 600},
+    media: {maxWidth: "100%", maxHeight: "100%"}
 });
 
 
 export const ImageCard = (props: ImageInformation) => {
-    const classes = useStyles();
+    const imgClasses = imageStyles();
+    const vegaClasses = vegaStyles();
 
     function getCustomView() {
         if (props.viewType === ViewType.VEGA) {
             return getVegaView();
         } else if (props.viewType === ViewType.IMAGE) {
             return (
-                <Card className={classes.root}>
-                    <CardMedia
-                        component="img"
-                        className={classes.media}
-                        image={props.src}
-                        title="Contemplative Reptile"
-                    />
-                </Card>
+                <div>
+                    <Card variant="outlined" className={imgClasses.root}>
+                        <CardMedia
+                            component="img"
+                            className={imgClasses.media}
+                            image={props.src}
+                            title="Contemplative Reptile"
+                        />
+                    </Card>
+                </div>
+
             )
         }
     }
@@ -44,11 +51,14 @@ export const ImageCard = (props: ImageInformation) => {
         try {
             const parsedVega = JSON.parse(props.src);
             return (
-                <Card variant="outlined" className={classes.root}>
-                    <CardContent>
-                        <VegaLite spec={parsedVega}/>
-                    </CardContent>
-                </Card>);
+                <div>
+                    <Card variant="outlined" className={vegaClasses.root}>
+                        <CardContent className={vegaClasses.media}>
+                            <VegaLite spec={parsedVega}/>
+                        </CardContent>
+                    </Card>
+                </div>
+            );
         } catch (e) {
         }
     }
