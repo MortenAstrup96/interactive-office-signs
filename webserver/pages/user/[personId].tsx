@@ -10,13 +10,11 @@ import {serverName} from "../../library/constants";
 import Link from "next/link";
 import {UserInformation} from "../../library/general_interfaces";
 
-import IconPerson from "../../components/icons/iconPerson";
-import IconMail from "../../components/icons/iconMail";
+
 import {setPropValue} from "../../library/general_functions";
 import {ViewControls} from "../../components/userConsole/viewControls";
 import {ImageView} from "../../components/userConsole/imageView";
-
-const avatarFake = require("../../img/avataricon.png");
+import {ProfileSettings} from "../../components/userConsole/profileSettings";
 
 
 export default function Index() {
@@ -54,19 +52,6 @@ export default function Index() {
         }
     }
 
-    const uploadFile = async (e: any) => {
-        const file = e.currentTarget.files[0];
-        if (currentUser) {
-            await fetch("/api/uploadImageById/" + currentUser.nameId, {
-                method: "POST",
-                headers: {
-                    "Content-Type": file.type
-                },
-                body: file
-            });
-        }
-    };
-
     async function fetcher(url: any) {
         if (router.query.personId) {
             return fetch(url).then(r => r.json());
@@ -74,22 +59,7 @@ export default function Index() {
     }
 
     /** ----- USER INTERFACE ----- */
-    function getProfilePicture() {
-        if (currentUser) {
-            try {
-                const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "150px",
-                    width: "150px"
-                }} src={avatarReal} alt={avatarFake}/>)
-            } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
-            }
-        }
-        return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
-    }
+
 
     function updateViewType(viewType: string) {
         setCurrentUser((prevState: any) => ({
@@ -106,56 +76,19 @@ export default function Index() {
 
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <div style={{margin: "30px", width: "600px"}}>
-                <h1>PROFILE SETTINGS</h1>
-                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
-                    <div>
-                        {getProfilePicture()}
-                        <Button
-                            variant="contained"
-                            component="label"
-                        >
-                            Change Picture
-                            <input
-                                type="file"
-                                onChange={uploadFile}
-                                style={{display: "none"}}
-                            />
-                        </Button>
-                    </div>
 
-                    <div style={{marginRight: "20px", marginTop: "30px"}}>
-                        <div>
-                            <IconMail/>
-                            <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
-                                       size="small"
-                                       style={{width: "280px"}}/>
-                        </div>
+            <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
 
-                        <div>
-                            <IconPerson/>
-                            <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
-                                       size="small"
-                                       style={{width: "280px"}}/>
-                        </div>
+            <ProfileSettings user={currentUser}/>
+            <ViewControls currentViewType={currentViewType} updateViewType={updateViewType}/>
+            <ImageView currentUser={currentUser}/>
 
-
-                    </div>
-
-                </div>
-
-                <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
-
-                <ViewControls currentViewType={currentViewType} updateViewType={updateViewType}/>
-                <ImageView currentUser={currentUser}/>
-
-                <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
-                <Button variant="contained" color="primary"
-                        onClick={() => saveChanges()}>Save</Button>
-                <h2>Currently Status:</h2>
-                <h3>{currentUser.status}</h3>
-                <Link href="https://vega.github.io/editor/#/">https://vega.github.io/editor/#/</Link>
-            </div>
+            <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
+            <Button variant="contained" color="primary"
+                    onClick={() => saveChanges()}>Save</Button>
+            <h2>Currently Status:</h2>
+            <h3>{currentUser.status}</h3>
+            <Link href="https://vega.github.io/editor/#/">https://vega.github.io/editor/#/</Link>
 
             <div style={{margin: "30px", width: "600px"}}>
                 <Button variant="contained" color="primary"
