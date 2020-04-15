@@ -9,6 +9,7 @@ export interface UserInformation {
     secondView: ViewData;
     thirdView: ViewData;
     fourthView: ViewData;
+    customView: ViewData;
 }
 
 export interface ViewData {

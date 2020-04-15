@@ -15,6 +15,12 @@ import {setPropValue} from "../../library/general_functions";
 import {ViewControls} from "../../components/userConsole/viewControls";
 import {ImageView} from "../../components/userConsole/imageView";
 import {ProfileSettings} from "../../components/userConsole/profileSettings";
+import {DoubleView} from "../../components/userConsole/viewTypes/doubleView";
+import {ViewType} from "../../library/enums";
+import {SingleView} from "../../components/userConsole/viewTypes/singleView";
+import {TripleView} from "../../components/userConsole/viewTypes/tripleView";
+import {QuadrupleView} from "../../components/userConsole/viewTypes/quadrupleView";
+import {CustomView} from "../../components/userConsole/viewTypes/customView";
 
 
 export default function Index() {
@@ -29,9 +35,16 @@ export default function Index() {
         if (data) {
             setCurrentUser(data);
             setCurrentStatus(data?.status);
-            setCurrentViewType(data?.customView);
+            setCurrentViewType(data?.viewType);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (currentUser) {
+            setCurrentViewType(currentUser.viewType);
+        }
+
+    }, [currentUser]);
 
     /** ----- API ----- */
     // Updates database via API on status change
@@ -59,16 +72,35 @@ export default function Index() {
     }
 
     /** ----- USER INTERFACE ----- */
-
-
     function updateViewType(viewType: string) {
         setCurrentUser((prevState: any) => ({
             ...prevState,
-            customView: {
-                ...prevState.customView,
-                viewType: viewType,
-            }
+            viewType: viewType,
         }))
+    }
+
+    function getCards() {
+        if (!currentUser) {
+            return <h4>Unable to load cards</h4>
+        } else {
+            console.log(currentViewType);
+            switch (currentViewType) {
+                case ViewType.SINGLE:
+                    return <SingleView firstView={currentUser.firstView}/>;
+                case ViewType.DOUBLE:
+                    return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}/>;
+                case ViewType.TRIPLE:
+                    return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                       thirdView={currentUser.thirdView}/>
+                case ViewType.QUADRUPLE:
+                    return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                          thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}/>;
+                case ViewType.CUSTOM:
+                    return <CustomView customView={currentUser.customView}/>;
+                default:
+                    return <h4>Unable to load the cards</h4>
+            }
+        }
     }
 
 
@@ -81,7 +113,8 @@ export default function Index() {
 
             <ProfileSettings user={currentUser}/>
             <ViewControls currentViewType={currentViewType} updateViewType={updateViewType}/>
-            <ImageView currentUser={currentUser}/>
+            {getCards()}
+
 
             <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
             <Button variant="contained" color="primary"

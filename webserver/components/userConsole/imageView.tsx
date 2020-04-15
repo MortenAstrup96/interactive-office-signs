@@ -1,33 +1,36 @@
 import React, {useState} from "react";
-import {Box, Button, Card} from "@material-ui/core";
+import {Box, Button, Card, CardContent, CardMedia} from "@material-ui/core";
 import {DataType, ViewType} from "../../library/enums";
 import {ImageCard} from "../office/imageCard";
 import {UserInformation, ViewData} from "../../library/general_interfaces";
 import {makeStyles} from "@material-ui/core/styles";
-
-const cardStyles = makeStyles({
-    root: {margin: 10, width: 600, height: 600}
-});
+import IconAdd from "../icons/iconAdd";
 
 interface ImageViewProps {
-    currentUser: UserInformation;
+    viewData: ViewData;
+    cardStyles: any;
 }
 
 export const ImageView = (props: ImageViewProps) => {
-    const classes = cardStyles();
-    const [currentData, setCurrentData] = useState<ViewData>({
-        dataType: props.currentUser.firstView.dataType,
-        data: props.currentUser.firstView.data
+    const classes = props.cardStyles();
+
+    const [currentData] = useState<ViewData>({
+        dataType: props.viewData.dataType,
+        data: props.viewData.data
     });
 
     if (!currentData.dataType || currentData.dataType === DataType.EMPTY) {
-        return <Card variant="outlined" className={classes.root}/>
+
+        return (
+            <Button variant="outlined" className={classes.root}>
+                <IconAdd/>
+            </Button>);
     }
     return (
-        <Box>
+        <div>
             <Button>
                 <ImageCard src={currentData.data} dataType={currentData.dataType}/>
             </Button>
-        </Box>
+        </div>
     );
 };
