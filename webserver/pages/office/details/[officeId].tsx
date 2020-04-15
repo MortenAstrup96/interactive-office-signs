@@ -8,6 +8,7 @@ import {AvailabilityComponent} from "../../../components/office/availabilityComp
 import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
 import {ViewType} from "../../../library/enums";
+import {Image} from "../../../components/office/image";
 
 
 export default function OfficeInformationId() {
@@ -35,7 +36,8 @@ export default function OfficeInformationId() {
         if (currentOffice?.topView?.viewType === ViewType.VEGA) {
             return getVegaView();
         } else if (currentOffice?.topView?.viewType === ViewType.IMAGE) {
-            return getImgView();
+            console.log("Should return image!");
+            return <Image src={vega}/>;
         }
     }
 
@@ -48,13 +50,6 @@ export default function OfficeInformationId() {
         }
     }
 
-    function getImgView() {
-        try {
-            return (<img src={vega} height="400px" alt="Unable to display image"/>)
-        } catch (e) {
-            return (<h4>Unable to display image</h4>)
-        }
-    }
 
     async function fetcher(url: string) {
         if (router.query.officeId) {
@@ -64,20 +59,18 @@ export default function OfficeInformationId() {
 
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
 
 
     return (
 
         <Container>
             <div>
-                <Header office={currentOffice.nameId}/>
+                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
-                    // Simple Calendar from outlook
-                    <iframe src="https://outlook.live.com/calendar/published/8b7e4858-fb96-494a-9f6a-92f2f78424d5/2e1a95c1-d3fd-4928-949a-b26020cbcbbb/cid-C17783A928EABA93/calendar.html" width={1000} height={700}></iframe>
                 </div>
             </div>
             {getCustomView()}
