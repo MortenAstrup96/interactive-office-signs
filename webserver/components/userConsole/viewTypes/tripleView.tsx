@@ -3,11 +3,13 @@ import {ImageView} from "../imageView";
 import {ViewData} from "../../../library/general_interfaces";
 import {Grid} from "@material-ui/core";
 import {halfCardStyle, quarterCardStyle} from "../../../styles/userConsoleStyles";
+import {ViewId} from "../../../library/enums";
 
 interface TripleViewProps {
     firstView: ViewData;
     secondView: ViewData;
     thirdView: ViewData;
+    updateView(viewId: ViewId): void;
 }
 
 export const TripleView = (props: TripleViewProps) => {
@@ -16,13 +18,13 @@ export const TripleView = (props: TripleViewProps) => {
             <Grid container justify="center"
                   alignItems="center">
                 <Grid item>
-                    <ImageView viewData={props.firstView} cardStyles={quarterCardStyle}/>
+                    <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={quarterCardStyle} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
-                    <ImageView viewData={props.secondView} cardStyles={quarterCardStyle}/>
+                    <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={quarterCardStyle} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
-                    <ImageView viewData={props.thirdView} cardStyles={halfCardStyle}/>
+                    <ImageView viewData={props.thirdView} viewId={ViewId.THIRD} cardStyles={halfCardStyle} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>

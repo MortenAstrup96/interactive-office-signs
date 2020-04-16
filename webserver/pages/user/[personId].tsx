@@ -16,7 +16,7 @@ import {ViewControls} from "../../components/userConsole/viewControls";
 import {ImageView} from "../../components/userConsole/imageView";
 import {ProfileSettings} from "../../components/userConsole/profileSettings";
 import {DoubleView} from "../../components/userConsole/viewTypes/doubleView";
-import {ViewType} from "../../library/enums";
+import {ViewId, ViewType} from "../../library/enums";
 import {SingleView} from "../../components/userConsole/viewTypes/singleView";
 import {TripleView} from "../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../components/userConsole/viewTypes/quadrupleView";
@@ -79,21 +79,28 @@ export default function Index() {
         }))
     }
 
+    function postViewData(viewId: ViewId) {
+
+        console.log(viewId);
+    }
+
     function getCards() {
         if (!currentUser) {
             return <h4>Unable to load cards</h4>
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:
-                    return <SingleView firstView={currentUser.firstView}/>;
+                    return <SingleView firstView={currentUser.firstView} updateView={postViewData}/>;
                 case ViewType.DOUBLE:
-                    return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}/>;
+                    return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                       updateView={postViewData}/>;
                 case ViewType.TRIPLE:
                     return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       thirdView={currentUser.thirdView}/>
+                                       thirdView={currentUser.thirdView} updateView={postViewData}/>
                 case ViewType.QUADRUPLE:
                     return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                          thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}/>;
+                                          thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}
+                                          updateView={postViewData}/>;
                 case ViewType.CUSTOM:
                     return <CustomView customView={currentUser.customView}/>;
                 default:

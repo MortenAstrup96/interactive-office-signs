@@ -11,3 +11,10 @@ export enum ViewType {
     QUADRUPLE = "quadruple",
     CUSTOM = "custom"
 }
+
+export enum ViewId {
+    FIRST = 0,
+    SECOND = 1,
+    THIRD = 2,
+    FOURTH = 3
+}
