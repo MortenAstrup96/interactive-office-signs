@@ -36,8 +36,8 @@ export const CreateAccountForm = () => {
             firstView: {dataType: "", data: ""},
             secondView: {dataType: "", data: ""},
             thirdView: {dataType: "", data: ""},
-            fourthView: {dataType: "", data: ""}
-
+            fourthView: {dataType: "", data: ""},
+            customView: {dataType: "", data: ""}
         });
         setName("");
         setNameId("");
