@@ -16,7 +16,7 @@ import {ViewControls} from "../../components/userConsole/viewControls";
 import {ImageView} from "../../components/userConsole/imageView";
 import {ProfileSettings} from "../../components/userConsole/profileSettings";
 import {DoubleView} from "../../components/userConsole/viewTypes/doubleView";
-import {ViewId, ViewType} from "../../library/enums";
+import {DataType, ViewId, ViewType} from "../../library/enums";
 import {SingleView} from "../../components/userConsole/viewTypes/singleView";
 import {TripleView} from "../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../components/userConsole/viewTypes/quadrupleView";
@@ -80,7 +80,8 @@ export default function Index() {
     }
 
     function postViewData(viewId: ViewId) {
-
+        //currentUser?.firstView.dataType = DataType.IMAGE;
+        //currentUser?.secondView.data = "https://cdn.pixabay.com/photo/2018/05/31/15/06/not-hear-3444212_960_720.jpg"
         console.log(viewId);
     }
 
