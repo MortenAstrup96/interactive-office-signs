@@ -1,5 +1,22 @@
 import {makeStyles} from "@material-ui/core/styles";
+import {createStyles, Theme} from "@material-ui/core";
 
+export const modalPopupStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        paper: {
+            width: 400,
+            backgroundColor: "#ffffff",
+            border: '2px solid #000',
+            boxShadow: "0 0 2 0",
+            padding: 5,
+        },
+        window: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+    }),
+);
 
 /** ----- CARDS ----- */
 export const singleCardStyle = makeStyles({

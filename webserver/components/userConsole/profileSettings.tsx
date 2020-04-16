@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, TextField} from "@material-ui/core";
-import IconMail from "../icons/iconMail";
-import IconPerson from "../icons/iconPerson";
+import IconMail from "../../img/icons/iconMail";
+import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
 
 interface ProfileSettingsProps {
@@ -12,7 +12,8 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
     const [currentUser] = useState<UserInformation>(props.user);
     const avatarFake = require("../../img/avataricon.png");
 
-    const uploadFile = async (e: any) => {
+
+    const postProfileImage = async (e: any) => {
         const file = e.currentTarget.files[0];
         if (currentUser) {
             await fetch("/api/uploadImageById/" + currentUser.nameId, {
@@ -25,8 +26,7 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
         }
     };
 
-
-    function getProfilePicture() {
+    function getProfileImage() {
         if (currentUser) {
             try {
                 const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
@@ -48,7 +48,7 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
             <h1>PROFILE SETTINGS</h1>
             <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
                 <div>
-                    {getProfilePicture()}
+                    {getProfileImage()}
                     <Button
                         variant="contained"
                         component="label"
@@ -56,7 +56,7 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
                         Change Picture
                         <input
                             type="file"
-                            onChange={uploadFile}
+                            onChange={postProfileImage}
                             style={{display: "none"}}
                         />
                     </Button>

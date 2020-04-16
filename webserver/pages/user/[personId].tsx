@@ -83,7 +83,6 @@ export default function Index() {
         if (!currentUser) {
             return <h4>Unable to load cards</h4>
         } else {
-            console.log(currentViewType);
             switch (currentViewType) {
                 case ViewType.SINGLE:
                     return <SingleView firstView={currentUser.firstView}/>;
@@ -109,14 +108,11 @@ export default function Index() {
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
 
-            <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
-
             <ProfileSettings user={currentUser}/>
+            <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
             <ViewControls currentViewType={currentViewType} updateViewType={updateViewType}/>
             {getCards()}
-
-
-            <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
+            <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
             <Button variant="contained" color="primary"
                     onClick={() => saveChanges()}>Save</Button>
             <h2>Currently Status:</h2>

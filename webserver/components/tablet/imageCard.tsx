@@ -26,6 +26,7 @@ export const ImageCard = (props: ImageInformation) => {
     const imgClasses = imageStyles();
     const vegaClasses = vegaStyles();
 
+
     function getCustomView() {
         if (props.dataType === DataType.VEGA) {
             return getVegaView();

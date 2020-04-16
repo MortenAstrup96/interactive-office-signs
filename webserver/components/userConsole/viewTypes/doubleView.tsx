@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid} from "@material-ui/core";
+import {Grid, Modal} from "@material-ui/core";
 import {ImageView} from "../imageView";
 import {ViewData} from "../../../library/general_interfaces";
 import {halfCardStyle} from "../../../styles/userConsoleStyles";

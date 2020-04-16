@@ -2,13 +2,13 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../../components/office/header";
+import Header from "../../../components/tablet/header";
 import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
-import {Availability} from "../../../components/office/availability";
+import {Availability} from "../../../components/tablet/availability";
 import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
 import {DataType} from "../../../library/enums";
-import {ImageCard} from "../../../components/office/imageCard";
+import {ImageCard} from "../../../components/tablet/imageCard";
 import Masonry from "react-masonry-component";
 import {makeStyles} from "@material-ui/core/styles";
 

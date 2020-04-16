@@ -12,10 +12,10 @@ export default function Tablets() {
     const {data} = useSWR(() => serverName + '/api/getUserData', fetcher);
 
 
-    // This function returns a Material UI List-item with a link, linking to /office/nameId
+    // This function returns a Material UI List-item with a link, linking to /tablet/nameId
     function ListItemLink(props: any) {
         return (
-            <Link href={"/office/" + props.nameId}>
+            <Link href={"/tablet/" + props.nameId}>
                 <ListItem button component="a" {...props.id}>
                     <ListItemText primary={props.name}/>
                 </ListItem>
@@ -23,7 +23,7 @@ export default function Tablets() {
         );
     }
 
-    // Leave me alone!!
+    // Leave me alone <:-( !!
     async function fetcher(url: string) {
         return fetch(url).then(r => r.json());
     }

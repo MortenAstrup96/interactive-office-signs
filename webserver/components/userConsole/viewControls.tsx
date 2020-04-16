@@ -36,7 +36,7 @@ export const ViewControls: React.FC<ViewControlProps> = props => {
 
 
     return (
-        <Box display="flex" justifyContent="space-between" marginTop="20px" marginBottom="20px">
+        <Box width="500px" display="flex" justifyContent="space-between" marginTop="20px" marginBottom="20px">
             <ColorButton text={"Single"} viewType={ViewType.SINGLE}/>
             <ColorButton text={"Double"} viewType={ViewType.DOUBLE}/>
             <ColorButton text={"Triple"} viewType={ViewType.TRIPLE}/>
