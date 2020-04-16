@@ -2,11 +2,20 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {ImageView} from "../imageView";
 import {ViewData} from "../../../library/general_interfaces";
-import {Box} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 
 
 const cardStyles = makeStyles({
-    root: {alignContent: "center", justifyContent: "center", display: "grid", margin: 10, width: 350, height: 350},
+    root: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        margin: 10,
+        width: 340,
+        height: 340
+    },
+    rootIcon: {alignContent: "center", justifyContent: "center", display: "grid", margin: 10, width: 340, height: 340},
     media: {width: 50, height: 50}
 });
 
@@ -19,11 +28,23 @@ interface QuadrupleViewProps {
 
 export const QuadrupleView = (props: QuadrupleViewProps) => {
     return (
-        <Box display="flex">
-            <ImageView viewData={props.firstView} cardStyles={cardStyles}/>
-            <ImageView viewData={props.secondView} cardStyles={cardStyles}/>
-            <ImageView viewData={props.thirdView} cardStyles={cardStyles}/>
-            <ImageView viewData={props.fourthView} cardStyles={cardStyles}/>
-        </Box>
+        <div style={{width: "1000px"}}>
+            <Grid container justify="center"
+                  alignItems="center">
+                <Grid item>
+                    <ImageView viewData={props.firstView} cardStyles={cardStyles}/>
+                </Grid>
+                <Grid item>
+                    <ImageView viewData={props.secondView} cardStyles={cardStyles}/>
+                </Grid>
+                <Grid item>
+                    <ImageView viewData={props.thirdView} cardStyles={cardStyles}/>
+                </Grid>
+                <Grid item>
+                    <ImageView viewData={props.fourthView} cardStyles={cardStyles}/>
+                </Grid>
+            </Grid>
+        </div>
+
     );
 };

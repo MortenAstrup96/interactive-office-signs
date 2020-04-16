@@ -5,7 +5,16 @@ import {ViewData} from "../../../library/general_interfaces";
 
 
 const cardStyles = makeStyles({
-    root: {alignContent: "center", justifyContent: "center", display: "grid", margin: 10, width: 700, height: 700},
+    root: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: "hidden",
+        margin: 10,
+        width: 700,
+        height: 700
+    },
+    rootIcon: {alignContent: "center", justifyContent: "center", display: "grid", margin: 10, width: 700, height: 700},
     media: {width: 50, height: 50}
 });
 
