@@ -1,19 +1,23 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../../library/general_interfaces";
+import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../../components/office/header";
-import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../../components/office/availabilityComponent";
+import Header from "../../../components/tablet/header";
+import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
+import {Availability} from "../../../components/tablet/availability";
 import {serverName} from "../../../library/constants";
 import {VegaLite} from "react-vega/lib";
-import {ViewType} from "../../../library/enums";
+import {DataType} from "../../../library/enums";
+import {ImageCard} from "../../../components/tablet/imageCard";
+import Masonry from "react-masonry-component";
+import {makeStyles} from "@material-ui/core/styles";
 
 
 export default function OfficeInformationId() {
     const router = useRouter();
-    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+    const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     const [vega, setVega] = useState<any>();
+
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     const {data, error} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
@@ -25,36 +29,11 @@ export default function OfficeInformationId() {
     }, [data]);
 
     useEffect(() => {
-        if (currentOffice && currentOffice.topView && currentOffice.topView.data) {
-            setVega(currentOffice.topView.data);
+        if (currentOffice && currentOffice.firstView && currentOffice.firstView.data) {
+            setVega(currentOffice.firstView.data);
         }
     }, [currentOffice]);
 
-
-    function getCustomView() {
-        if (currentOffice?.topView?.viewType === ViewType.VEGA) {
-            return getVegaView();
-        } else if (currentOffice?.topView?.viewType === ViewType.IMAGE) {
-            return getImgView();
-        }
-    }
-
-    function getVegaView() {
-        try {
-            const parsedVega = JSON.parse(vega);
-            return (<VegaLite spec={parsedVega}/>);
-        } catch (e) {
-            return (<h4>Visualisation unable to compile</h4>)
-        }
-    }
-
-    function getImgView() {
-        try {
-            return (<img src={vega} height="400px" alt="Unable to display image"/>)
-        } catch (e) {
-            return (<h4>Unable to display image</h4>)
-        }
-    }
 
     async function fetcher(url: string) {
         if (router.query.officeId) {
@@ -64,25 +43,20 @@ export default function OfficeInformationId() {
 
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
 
 
     return (
 
         <Container>
             <div>
-                <Header office={currentOffice.nameId}/>
+                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
-                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
-                    // Simple Calendar from outlook
-                    <iframe src="https://outlook.live.com/calendar/published/8b7e4858-fb96-494a-9f6a-92f2f78424d5/2e1a95c1-d3fd-4928-949a-b26020cbcbbb/cid-C17783A928EABA93/calendar.html" width={1000} height={700}></iframe>
+                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
-            {getCustomView()}
-
         </Container>
     );
-}
-
+};

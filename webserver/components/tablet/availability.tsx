@@ -4,7 +4,7 @@ import {Button, colors} from "@material-ui/core";
 import {serverName} from "../../library/constants";
 
 
-export const AvailabilityComponent: React.FC<OfficeAvailabilityProps> = props => {
+export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     const [status, setStatus] = useState<string>(props.status);
     const [buttonColor, setButtonColor] = useState<any>({background: colors.green["500"], text: colors.common.black});
     const [nameId] = useState<string>(props.nameId);

@@ -1,26 +1,42 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
-import {OfficeInformationProps} from "../../library/general_interfaces";
+import {UserInformation} from "../../library/general_interfaces";
 import useSWR from "swr";
-import Header from "../../components/office/header";
+import Header from "../../components/tablet/header";
 import {Container} from "@material-ui/core";
-import {AvailabilityComponent} from "../../components/office/availabilityComponent";
+import {Availability} from "../../components/tablet/availability";
 import {serverName} from "../../library/constants";
-import * as styles from "/webserver/pages/main.scss";
+
 
 const avatarFake = require("../../img/avataricon.png");
 
+const style = {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '0 auto',
+    width: '50%',
+};
+
+const textStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50%',
+    margin: '0 auto',
+    fontFamily: 'Roboto',
+};
 
 export default function OfficeInformationId() {
 
     const router = useRouter();
-    const [currentOffice, setCurrentOffice] = useState<OfficeInformationProps>();
+    const [currentOffice, setCurrentOffice] = useState<UserInformation>();
 
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     let {data, revalidate} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
+
 
     useEffect(() => {
         setCurrentOffice(data);
@@ -51,23 +67,23 @@ export default function OfficeInformationId() {
         }
     }
 
-    if (!data || !currentOffice) return (<div><Header office={""}/></div>);
+    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
 
     return (
         <Container>
-            <div className={styles.container}>
-                <Header office={currentOffice.nameId}/>
-                <div>
+            <div>
+                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
+                <div style={style}>
                     {getProfileImage()}
                 </div>
-                <div>
+                <div style={textStyle}>
                     <h1>{currentOffice.name}</h1>
                 </div>
-                <div>
+                <div style={textStyle}>
                     <h2>{currentOffice.mail}</h2>
                 </div>
-                <div>
-                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
+                <div style={textStyle}>
+                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>
         </Container>

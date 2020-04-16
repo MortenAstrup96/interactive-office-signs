@@ -7,7 +7,8 @@ const textColor = '#002546';
 
 // Interface defines what items must be given this Header
 interface officeInformationProps {
-    office: string
+    office: string,
+    nameId: string
 }
 
 export default function Header(props: officeInformationProps) {
@@ -41,13 +42,13 @@ export default function Header(props: officeInformationProps) {
             </span>
             </div>
 
-            <Link href={"/office/" + props.office}>
+            <Link href={"/tablet/" + props.nameId}>
                 <Button variant="contained">
                     Far
                 </Button>
             </Link>
 
-            <Link href={"/office/details/" + props.office}>
+            <Link href={"/tablet/details/" + props.nameId}>
                 <Button variant="contained">
                     Close
                 </Button>
