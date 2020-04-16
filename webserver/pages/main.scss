@@ -1,11 +1,15 @@
+$font-stack: Roboto, sans-serif;
 
-.container {
+body {
+    font: 100% $font-stack;
+    height: 100%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
 }
+
 
 /*.textStyle {
     display: flex;
