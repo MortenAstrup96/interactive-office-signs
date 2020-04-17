@@ -15,7 +15,7 @@ export default function Tablets() {
     // This function returns a Material UI List-item with a link, linking to /tablet/nameId
     function ListItemLink(props: any) {
         return (
-            <Link href={"/tablet/" + props.nameId}>
+            <Link href={"/office/" + props.nameId}>
                 <ListItem button component="a" {...props.id}>
                     <ListItemText primary={props.name}/>
                 </ListItem>
