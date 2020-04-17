@@ -42,13 +42,13 @@ export default function Header(props: officeInformationProps) {
             </span>
             </div>
 
-            <Link href={"/tablet/" + props.nameId}>
+            <Link href={"/office/" + props.nameId}>
                 <Button variant="contained">
                     Far
                 </Button>
             </Link>
 
-            <Link href={"/tablet/details/" + props.nameId}>
+            <Link href={"/office/details/" + props.nameId}>
                 <Button variant="contained">
                     Close
                 </Button>
