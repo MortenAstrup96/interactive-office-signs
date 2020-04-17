@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {colors, OutlinedInput, TextField} from "@material-ui/core";
-import {OfficeInformationProps} from "../../library/general_interfaces";
+import {UserInformation} from "../../library/general_interfaces";
 import {serverName} from "../../library/constants";
 
 const gridStyle = {
@@ -10,7 +10,7 @@ const gridStyle = {
 };
 
 export const CreateAccountForm = () => {
-    const addUser = (prop: OfficeInformationProps) => {
+    const addUser = (prop: UserInformation) => {
         fetch(serverName + '/api/addUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -36,6 +36,12 @@ export const CreateAccountForm = () => {
             calenderURL: calenderURL,
             topView: {viewType: "", data: ""},
             bottomView: {viewType: "", data: ""}
+            viewType: "",
+            firstView: {dataType: "", data: ""},
+            secondView: {dataType: "", data: ""},
+            thirdView: {dataType: "", data: ""},
+            fourthView: {dataType: "", data: ""},
+            customView: {dataType: "", data: ""}
         });
         setName("");
         setNameId("");

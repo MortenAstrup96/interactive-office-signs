@@ -1,6 +1,7 @@
 import {JsonDB} from 'node-json-db';
 import {Config} from 'node-json-db/dist/lib/JsonDBConfig'
-import {OfficeInformationProps} from "../library/general_interfaces";
+import {UserInformation} from "../library/general_interfaces";
+import {DataType, ViewType} from "../library/enums";
 
 // https://www.npmjs.com/package/node-json-db
 var db = new JsonDB(new Config("db/officeDB", true, false, '/'));
@@ -19,28 +20,38 @@ export function getUserById(id: any) {
     }
 }
 
-export function setUserById(changeRequest: OfficeInformationProps) {
+export function setUserById(changeRequest: UserInformation) {
     if (changeRequest) {
         db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
-        db.push("/person/" + changeRequest.nameId + "/topView", changeRequest.topView);
     }
 }
 
-export function setStatusById(changeRequest: OfficeInformationProps) {
+export function setStatusById(changeRequest: UserInformation) {
     if (changeRequest) {
         db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
     }
 }
 
 // TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
-export function addUser(personToAdd: OfficeInformationProps) {
+export function addUser(personToAdd: UserInformation) {
     if (personToAdd) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
-        db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
+        db.push("/person/" + personToAdd.nameId + "/tablet", personToAdd.officeId);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
         db.push("/person/" + personToAdd.nameId + "/calenderURL", personToAdd.calenderURL);
+        db.push("/person/" + personToAdd.nameId + "/viewType", ViewType.SINGLE);
+        db.push("/person/" + personToAdd.nameId + "/firstView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/firstView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/secondView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/secondView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/thirdView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/thirdView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/fourthView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/fourthView/data", "");
+        db.push("/person/" + personToAdd.nameId + "/customView/dataType", DataType.EMPTY);
+        db.push("/person/" + personToAdd.nameId + "/customView/data", "");
         db.push("/personList[]/", {name: personToAdd.name, nameId: personToAdd.nameId});
     }
 }

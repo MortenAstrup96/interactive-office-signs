@@ -1,5 +1,5 @@
 import {Container} from "@material-ui/core";
-import {OfficeInformationProps} from "../library/general_interfaces";
+import {UserInformation} from "../library/general_interfaces";
 import {CreateAccountForm} from "../components/createAccount/createAccountForm";
 import {serverName} from "../library/constants";
 

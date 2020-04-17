@@ -4,108 +4,65 @@ import useSWR from "swr";
 import {
     Button,
     Container, Divider,
-    FormControl,
-    FormControlLabel,
-    FormLabel, Input,
-    Radio,
-    RadioGroup,
-    TextareaAutosize,
     TextField
 } from "@material-ui/core";
 import {serverName} from "../../library/constants";
-import {VegaLite} from "react-vega/lib";
 import Link from "next/link";
-import {ViewType} from "../../library/enums";
-import {OfficeInformationProps} from "../../library/general_interfaces";
+import {UserInformation} from "../../library/general_interfaces";
 
-import IconPerson from "../../components/icons/iconPerson";
-import IconMail from "../../components/icons/iconMail";
 
-const avatarFake = require("../../img/avataricon.png");
+import {setPropValue} from "../../library/general_functions";
+import {ViewControls} from "../../components/userConsole/viewControls";
+import {ImageView} from "../../components/userConsole/imageView";
+import {ProfileSettings} from "../../components/userConsole/profileSettings";
+import {DoubleView} from "../../components/userConsole/viewTypes/doubleView";
+import {DataType, ViewId, ViewType} from "../../library/enums";
+import {SingleView} from "../../components/userConsole/viewTypes/singleView";
+import {TripleView} from "../../components/userConsole/viewTypes/tripleView";
+import {QuadrupleView} from "../../components/userConsole/viewTypes/quadrupleView";
+import {CustomView} from "../../components/userConsole/viewTypes/customView";
 
 
 export default function Index() {
     const router = useRouter();
-    const [currentUser, setCurrentUser] = useState<OfficeInformationProps>();
-    const [currentStatus, setCurrentStatus] = useState("");
-    const [currentNameId, setCurrentNameId] = useState("");
-    const [vegaData, setVegaData] = useState<any>("");
-    const [imagePath, setImagePath] = useState<string>("");
-    const [topViewDisplay, setTopViewDisplay] = useState<ViewType>(ViewType.EMPTY);
+    const [currentUser, setCurrentUser] = useState<UserInformation>();
+    const [currentStatus, setCurrentStatus] = useState<string>("");
+    const [currentViewType, setCurrentViewType] = useState<string>("");
 
     let {data} = useSWR(() => serverName + '/api/getUserById/' + router.query.personId, fetcher);
 
     useEffect(() => {
         if (data) {
             setCurrentUser(data);
-            setCurrentStatus(data.status);
-            setCurrentNameId(data.nameId);
+            setCurrentStatus(data?.status);
+            setCurrentViewType(data?.viewType);
         }
     }, [data]);
 
+    useEffect(() => {
+        if (currentUser) {
+            setCurrentViewType(currentUser.viewType);
+        }
+
+    }, [currentUser]);
+
+    /** ----- API ----- */
     // Updates database via API on status change
     function saveChanges() {
         // Create object to Post
-        const topView = getSelectedObject();
-        const status = currentStatus;
+        const status = currentUser?.status;
+        const nameId = currentUser?.nameId;
 
         // Posting data
-        fetch(serverName + '/api/setUserById/' + currentNameId, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(Object.assign({nameId: currentNameId}, {status}, {topView}))
-        });
-    }
-
-    function getSelectedObject() {
-        switch (topViewDisplay) {
-            case ViewType.VEGA:
-                return ({viewType: ViewType.VEGA, data: vegaData});
-            case ViewType.IMAGE:
-                return ({viewType: ViewType.IMAGE, data: imagePath});
-            default:
-                return ({viewType: ViewType.EMPTY, data: ""});
+        if (nameId) {
+            fetch(serverName + '/api/setUserById/' + nameId, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(Object.assign({nameId: nameId}, {status}))
+            });
+        } else {
+            console.log("Error posting data");
         }
-    }
-
-    function getVegaView() {
-        try {
-            const parsedVega = JSON.parse(vegaData);
-            return (<VegaLite spec={parsedVega}/>);
-        } catch (e) {
-            return (<h4>Visualisation unable to compile</h4>)
-        }
-
-    }
-
-    function getImgView() {
-        try {
-            return (<img src={imagePath} height="300px" alt="Unable to display image"/>)
-        } catch (e) {
-            return (<h4>Unable to display image</h4>)
-        }
-
-    }
-
-    function handleRadioChange(event: any) {
-        setTopViewDisplay(event.target.value);
-    }
-
-    function getProfilePicture() {
-        if (currentUser) {
-            try {
-                const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "150px",
-                    width: "150px"
-                }} src={avatarReal} alt={avatarFake}/>)
-            } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
-            }
-        }
-        return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
     }
 
     async function fetcher(url: any) {
@@ -114,108 +71,80 @@ export default function Index() {
         }
     }
 
-    const uploadFile = async (e: any) => {
-        const file = e.currentTarget.files[0];
-        if (currentUser) {
-            await fetch("/api/uploadImageById/" + currentUser.nameId, {
-                method: "POST",
-                headers: {
-                    "Content-Type": file.type
-                },
-                body: file
-            });
+    /** ----- USER INTERFACE ----- */
+    function updateViewType(viewType: string) {
+        setCurrentUser((prevState: any) => ({
+            ...prevState,
+            viewType: viewType,
+        }))
+    }
+
+    function postViewData(viewId: ViewId) {
+        //currentUser?.firstView.dataType = DataType.IMAGE;
+        //currentUser?.secondView.data = "https://cdn.pixabay.com/photo/2018/05/31/15/06/not-hear-3444212_960_720.jpg"
+        console.log(viewId);
+    }
+
+    function getCards() {
+        if (!currentUser) {
+            return <h4>Unable to load cards</h4>
+        } else {
+            switch (currentViewType) {
+                case ViewType.SINGLE:
+                    return <SingleView firstView={currentUser.firstView} updateView={postViewData}/>;
+                case ViewType.DOUBLE:
+                    return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                       updateView={postViewData}/>;
+                case ViewType.TRIPLE:
+                    return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                       thirdView={currentUser.thirdView} updateView={postViewData}/>
+                case ViewType.QUADRUPLE:
+                    return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
+                                          thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}
+                                          updateView={postViewData}/>;
+                case ViewType.CUSTOM:
+                    return <CustomView customView={currentUser.customView}/>;
+                default:
+                    return <h4>Unable to load the cards</h4>
+            }
         }
+    }
 
-    };
 
-    if (!data) return (<div> Loading... </div>);
+    if (!currentUser) return (<div> Loading... </div>);
 
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <div style={{margin: "30px", width: "600px"}}>
-                <h1>PROFILE SETTINGS</h1>
-                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
-                    <div>
-                        {getProfilePicture()}
-                        <Button
-                            variant="contained"
-                            component="label"
-                        >
-                            Change Picture
-                            <input
-                                type="file"
-                                onChange={uploadFile}
-                                style={{display: "none"}}
-                            />
-                        </Button>
-                    </div>
 
-                    <div style={{marginRight: "20px", marginTop: "30px"}}>
-                        <div>
-                            <IconMail/>
-                            <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
-                                       size="small"
-                                       style={{width: "280px"}}/>
-                        </div>
-
-                        <div>
-                            <IconPerson/>
-                            <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
-                                       size="small"
-                                       style={{width: "280px"}}/>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-                <Divider variant="fullWidth" style={{marginTop: "30px", marginBottom: "20px"}}/>
-
-
-                <Button variant="contained" color="primary"
-                        onClick={() => saveChanges()}>Save</Button>
-                <h2>Currently Status:</h2>
-                <h3>{currentStatus}</h3>
-                <Link href="https://vega.github.io/editor/#/">https://vega.github.io/editor/#/</Link>
-            </div>
+            <ProfileSettings user={currentUser}/>
+            <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
+            <ViewControls currentViewType={currentViewType} updateViewType={updateViewType}/>
+            {getCards()}
+            <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
+            <Button variant="contained" color="primary"
+                    onClick={() => saveChanges()}>Save</Button>
+            <h2>Currently Status:</h2>
+            <h3>{currentUser.status}</h3>
+            <Link href="https://vega.github.io/editor/#/">https://vega.github.io/editor/#/</Link>
 
             <div style={{margin: "30px", width: "600px"}}>
                 <Button variant="contained" color="primary"
-                        onClick={() => setCurrentStatus("Available")}>Available</Button>
-                <Button variant="contained" color="secondary" onClick={() => setCurrentStatus("Busy")}>Busy</Button>
+                        onClick={() => setPropValue(currentUser, "status", "Available")}>Available</Button>
+                <Button variant="contained" color="secondary"
+                        onClick={() => setPropValue(currentUser, "status", "Busy")}>Busy</Button>
             </div>
             <div style={{margin: "30px", width: "600px"}}>
-                <TextField type="text" value={currentStatus}
-                           onChange={(e) => setCurrentStatus(e.target.value)} variant="outlined"
+                <TextField type="text" value={currentUser?.status}
+                           variant="outlined"
                            label="Status Message"/>
-            </div>
-            <div style={{margin: "30px", width: "600px"}}>
-                <FormControl component="fieldset">
-                    <FormLabel component="legend">Type to display on tablet</FormLabel>
-                    <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay" value={topViewDisplay}
-                                onChange={handleRadioChange}>
-                        <FormControlLabel value={ViewType.IMAGE} control={<Radio/>} label="Image"/>
-                        <FormControlLabel value={ViewType.VEGA} control={<Radio/>} label="Vega-Lite"/>
-                        <FormControlLabel value={ViewType.EMPTY} control={<Radio/>} label="Empty"/>
-                    </RadioGroup>
-                </FormControl>
-                <Divider variant="middle"/>
-            </div>
-            <div style={{alignContent: "center", width: "600px"}}>
-                <div>
-                    <TextareaAutosize value={vegaData}
-                                      onChange={(e) => setVegaData(e.target.value)}/>
-
-                    {getVegaView()}
-                </div>
-                <div>
-                    <TextField label="Image" value={imagePath}
-                               onChange={(e) => setImagePath(e.target.value)}/>
-                    {getImgView()}
-                </div>
             </div>
         </Container>
     );
 }
 
+/** https://stackoverflow.com/questions/54150783/react-hooks-usestate-with-object
+ *
+ onChange={(e) => setCurrentUser((prevState: any) => ({
+                               ...prevState,
+                               status: e.target.value, })
+                           }*/
