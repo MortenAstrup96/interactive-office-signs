@@ -10,7 +10,7 @@ const gridStyle = {
 };
 
 export const CreateAccountForm = () => {
-    const addUser = (prop: UserInformation) => {
+    const addUser = (prop: { mail: string; calenderURL: string; bottomView: { data: string; viewType: string }; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; topView: { data: string; viewType: string }; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         fetch(serverName + '/api/addUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -35,7 +35,7 @@ export const CreateAccountForm = () => {
             status: "Available",
             calenderURL: calenderURL,
             topView: {viewType: "", data: ""},
-            bottomView: {viewType: "", data: ""}
+            bottomView: {viewType: "", data: ""},
             viewType: "",
             firstView: {dataType: "", data: ""},
             secondView: {dataType: "", data: ""},

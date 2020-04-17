@@ -54,9 +54,8 @@ export default function OfficeInformationId() {
                 <div style={{textAlign: "center"}}>
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
-                    <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
-                    <iframe src={currentOffice?.calenderURL} width={500} height={600} frameBorder={0}></iframe>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    <iframe src={currentOffice?.calenderURL} width={500} height={600} frameBorder={0}></iframe>
                 </div>
             </div>
         </Container>

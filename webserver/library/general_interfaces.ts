@@ -6,6 +6,7 @@ export interface UserInformation {
     status: string;
     calenderURL: string;
     topView: CustomObject;
+    firstView: ViewData;
     bottomView: CustomObject;
 }
 
