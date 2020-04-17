@@ -71,13 +71,11 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <AvailabilityComponent nameId={currentOffice.nameId} status={currentOffice.status}/>
-                    <iframe src={currentOffice?.calenderURL} width={700} height={700} frameBorder={0}></iframe>
+                    <iframe src={currentOffice?.calenderURL} width={500} height={600} frameBorder={0}></iframe>
                 </div>
             </div>
             {getCustomView()}
 
         </Container>
     );
-}
-
-//<iframe src={"https://outlook.live.com/calendar/published/8b7e4858-fb96-494a-9f6a-92f2f78424d5/3daa9f87-4eff-4d64-98a5-f65ff1ee9bf0/cid-C17783A928EABA93/calendar.html#authRedirect=true"} width={700} height={700} frameBorder={0}></iframe>
+};
