@@ -68,7 +68,7 @@ export const CreateAccountForm = () => {
 
                 <TextField type="text" value={calenderURL} required onChange={(e) => setCalenderURL(e.target.value)}
                            variant="outlined"
-                           label="Mail" style={{margin: "10px", marginBottom: "60px"}}/>
+                           label="Calendar HTML URL" style={{margin: "10px", marginBottom: "60px"}}/>
             </div>
 
             <OutlinedInput type="submit" value="Create Account"
