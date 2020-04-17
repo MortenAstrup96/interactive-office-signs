@@ -24,6 +24,7 @@ export const CreateAccountForm = () => {
     const [office, setOffice] = useState("");
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
+    const [calenderURL, setCalenderURL] = useState("");
     const handleSubmit = (e: any) => {
         e.preventDefault();
         addUser({
@@ -32,6 +33,7 @@ export const CreateAccountForm = () => {
             name: name,
             mail: mail,
             status: "Available",
+            calenderURL: calenderURL,
             topView: {viewType: "", data: ""},
             bottomView: {viewType: "", data: ""}
         });
@@ -40,6 +42,7 @@ export const CreateAccountForm = () => {
         setOffice("");
         setMail("");
         setPin("")
+        setCalenderURL("")
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -60,6 +63,10 @@ export const CreateAccountForm = () => {
                            variant="outlined" label="Office" style={{margin: "10px"}}/>
 
                 <TextField type="text" value={mail} required onChange={(e) => setMail(e.target.value)}
+                           variant="outlined"
+                           label="Mail" style={{margin: "10px", marginBottom: "60px"}}/>
+
+                <TextField type="text" value={calenderURL} required onChange={(e) => setCalenderURL(e.target.value)}
                            variant="outlined"
                            label="Mail" style={{margin: "10px", marginBottom: "60px"}}/>
             </div>

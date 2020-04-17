@@ -4,6 +4,7 @@ export interface OfficeInformationProps {
     name: string;
     mail: string;
     status: string;
+    calenderURL: string;
     topView: CustomObject;
     bottomView: CustomObject;
 }

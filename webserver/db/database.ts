@@ -40,6 +40,7 @@ export function addUser(personToAdd: OfficeInformationProps) {
         db.push("/person/" + personToAdd.nameId + "/office", personToAdd.officeId);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/person/" + personToAdd.nameId + "/calenderURL", personToAdd.calenderURL);
         db.push("/personList[]/", {name: personToAdd.name, nameId: personToAdd.nameId});
     }
 }
