@@ -10,7 +10,7 @@ interface DoubleViewProps {
     firstView: ViewData;
     secondView: ViewData;
 
-    updateView(viewId: ViewId): void;
+    updateView(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const DoubleView = (props: DoubleViewProps) => {

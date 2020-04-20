@@ -9,7 +9,7 @@ interface TripleViewProps {
     firstView: ViewData;
     secondView: ViewData;
     thirdView: ViewData;
-    updateView(viewId: ViewId): void;
+    updateView(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const TripleView = (props: TripleViewProps) => {

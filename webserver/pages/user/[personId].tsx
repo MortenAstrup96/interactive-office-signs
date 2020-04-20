@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import {serverName} from "../../library/constants";
 import Link from "next/link";
-import {UserInformation} from "../../library/general_interfaces";
+import {UserInformation, ViewData} from "../../library/general_interfaces";
 
 
 import {setPropValue} from "../../library/general_functions";
@@ -65,6 +65,35 @@ export default function Index() {
         }
     }
 
+    function updateImage(viewId: ViewId, viewData: ViewData) {
+        switch (viewId) {
+            case ViewId.FIRST:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    firstView: viewData
+                }));
+                break;
+            case ViewId.SECOND:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    secondView: viewData
+                }));
+                break;
+            case ViewId.THIRD:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    thirdView: viewData
+                }));
+                break;
+            case ViewId.FOURTH:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    fourthView: viewData
+                }));
+                break;
+        }
+    }
+
     async function fetcher(url: any) {
         if (router.query.personId) {
             return fetch(url).then(r => r.json());
@@ -79,11 +108,6 @@ export default function Index() {
         }))
     }
 
-    function postViewData(viewId: ViewId) {
-        //currentUser?.firstView.dataType = DataType.IMAGE;
-        //currentUser?.secondView.data = "https://cdn.pixabay.com/photo/2018/05/31/15/06/not-hear-3444212_960_720.jpg"
-        console.log(viewId);
-    }
 
     function getCards() {
         if (!currentUser) {
@@ -91,17 +115,17 @@ export default function Index() {
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:
-                    return <SingleView firstView={currentUser.firstView} updateView={postViewData}/>;
+                    return <SingleView firstView={currentUser.firstView} updateView={updateImage}/>;
                 case ViewType.DOUBLE:
                     return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       updateView={postViewData}/>;
+                                       updateView={updateImage}/>;
                 case ViewType.TRIPLE:
                     return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       thirdView={currentUser.thirdView} updateView={postViewData}/>
+                                       thirdView={currentUser.thirdView} updateView={updateImage}/>
                 case ViewType.QUADRUPLE:
                     return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
                                           thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}
-                                          updateView={postViewData}/>;
+                                          updateView={updateImage}/>;
                 case ViewType.CUSTOM:
                     return <CustomView customView={currentUser.customView}/>;
                 default:
