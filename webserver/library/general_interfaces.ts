@@ -5,12 +5,6 @@ export interface UserInformation {
     mail: string;
     status: string;
     calenderURL: string;
-    topView: CustomObject;
-    firstView: ViewData;
-    bottomView: CustomObject;
-}
-
-export interface CustomObject {
     viewType: string;
     firstView: ViewData;
     secondView: ViewData;
