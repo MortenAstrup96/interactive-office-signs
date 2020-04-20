@@ -24,6 +24,7 @@ interface ImageViewProps {
     viewData: ViewData;
     viewId: ViewId;
     cardStyles: any;
+    consoleMode: boolean;
 
     updateView(viewId: ViewId, viewData: ViewData): void;
 }
@@ -73,7 +74,7 @@ export const ImageView = (props: ImageViewProps) => {
         }
     }
 
-    if (!currentData.dataType || currentData.dataType === DataType.EMPTY) {
+    if (!currentData.dataType || currentData.dataType === DataType.EMPTY && props.consoleMode) {
         return (
             <div>
                 <Button variant="outlined" className={classes.rootIcon} onClick={() => setShowModal(true)}>

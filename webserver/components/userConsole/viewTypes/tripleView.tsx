@@ -9,6 +9,8 @@ interface TripleViewProps {
     firstView: ViewData;
     secondView: ViewData;
     thirdView: ViewData;
+    consoleMode: boolean;
+
     updateView(viewId: ViewId, viewData: ViewData): void;
 }
 
@@ -18,13 +20,16 @@ export const TripleView = (props: TripleViewProps) => {
             <Grid container justify="center"
                   alignItems="center">
                 <Grid item>
-                    <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={quarterCardStyle} updateView={props.updateView}/>
+                    <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={quarterCardStyle}
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
-                    <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={quarterCardStyle} updateView={props.updateView}/>
+                    <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={quarterCardStyle}
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
-                    <ImageView viewData={props.thirdView} viewId={ViewId.THIRD} cardStyles={halfCardStyle} updateView={props.updateView}/>
+                    <ImageView viewData={props.thirdView} viewId={ViewId.THIRD} cardStyles={halfCardStyle}
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>

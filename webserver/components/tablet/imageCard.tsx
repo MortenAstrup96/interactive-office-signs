@@ -45,6 +45,10 @@ export const ImageCard = (props: ImageInformation) => {
 
             )
         }
+        return (
+            <div className={cardClasses.root}>
+
+            </div>)
     }
 
     function getVegaView() {

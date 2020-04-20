@@ -9,7 +9,7 @@ import {ViewId} from "../../../library/enums";
 interface DoubleViewProps {
     firstView: ViewData;
     secondView: ViewData;
-
+    consoleMode: boolean;
     updateView(viewId: ViewId, viewData: ViewData): void;
 }
 
@@ -21,11 +21,11 @@ export const DoubleView = (props: DoubleViewProps) => {
                   alignItems="center">
                 <Grid item>
                     <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={halfCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={halfCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>
