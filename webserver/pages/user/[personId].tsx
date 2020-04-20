@@ -108,9 +108,8 @@ export default function Index() {
 
 
     function getCards() {
-        console.log(currentUser);
         if (!currentUser) {
-            return <h4>Unable to lofad cards</h4>
+            return <h4>Unable to load cards</h4>
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:

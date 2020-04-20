@@ -11,7 +11,7 @@ interface TripleViewProps {
     thirdView: ViewData;
     consoleMode: boolean;
 
-    updateView(viewId: ViewId, viewData: ViewData): void;
+    updateView?(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const TripleView = (props: TripleViewProps) => {

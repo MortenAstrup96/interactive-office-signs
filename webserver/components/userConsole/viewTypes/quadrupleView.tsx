@@ -12,7 +12,7 @@ interface QuadrupleViewProps {
     thirdView: ViewData;
     fourthView: ViewData;
     consoleMode: boolean;
-    updateView(viewId: ViewId, viewData: ViewData): void;
+    updateView?(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const QuadrupleView = (props: QuadrupleViewProps) => {

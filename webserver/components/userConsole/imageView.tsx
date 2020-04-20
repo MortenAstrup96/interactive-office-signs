@@ -26,7 +26,7 @@ interface ImageViewProps {
     cardStyles: any;
     consoleMode: boolean;
 
-    updateView(viewId: ViewId, viewData: ViewData): void;
+    updateView?(viewId: ViewId, viewData: ViewData): void;
 }
 
 
@@ -47,7 +47,9 @@ export const ImageView = (props: ImageViewProps) => {
             data: selectedData
         };
 
-        props.updateView(props.viewId, newData);
+        if(props.updateView) {
+            props.updateView(props.viewId, newData);
+        }
         setCurrentData(newData);    // Required to force an update of component
     }
 
