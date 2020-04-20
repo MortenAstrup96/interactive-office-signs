@@ -3,6 +3,7 @@ import {Button, TextField} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
+import {modalPopupStyles} from "../../styles/userConsoleStyles";
 
 interface ProfileSettingsProps {
     user: UserInformation;
@@ -11,7 +12,6 @@ interface ProfileSettingsProps {
 export const ProfileSettings = (props: ProfileSettingsProps) => {
     const [currentUser] = useState<UserInformation>(props.user);
     const avatarFake = require("../../img/avataricon.png");
-
 
     const postProfileImage = async (e: any) => {
         const file = e.currentTarget.files[0];
