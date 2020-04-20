@@ -3,7 +3,6 @@ import {Button, TextField} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
-import {modalPopupStyles} from "../../styles/userConsoleStyles";
 
 interface ProfileSettingsProps {
     user: UserInformation;

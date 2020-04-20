@@ -43,7 +43,7 @@ export const ImageView = (props: ImageViewProps) => {
     function saveChanges() {
         const newData = {
             dataType: selectedRadio,
-            data: "https://images.pexels.com/photos/9198/nature-sky-twilight-grass-9198.jpg?cs=srgb&dl=nature-sky-clouds-field-9198.jpg&fm=jpg"
+            data: selectedData
         };
 
         props.updateView(props.viewId, newData);

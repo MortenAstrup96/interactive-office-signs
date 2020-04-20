@@ -4,7 +4,9 @@ import {createStyles, Theme} from "@material-ui/core";
 export const modalPopupStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
-            width: 500,
+            minWidth: 500,
+            maxWidth: 1200,
+            overflowY: "auto"
         },
         window: {
             display: 'flex',
