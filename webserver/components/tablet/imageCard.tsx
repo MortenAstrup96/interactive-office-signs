@@ -1,14 +1,16 @@
 import React from "react";
-import {Card, CardContent, CardMedia} from "@material-ui/core";
+import {Card, CardContent, CardHeader, CardMedia, IconButton} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import {DataType} from "../../library/enums";
 import {VegaLite} from "react-vega/lib";
+import IconMail from "../../img/icons/iconMail";
 
 
 interface ImageInformation {
-    src: string
-    dataType: string
+    src: string;
+    dataType: string;
     cardStyles: any;
+    consoleView?: boolean;
 }
 
 const imageStyles = makeStyles({
@@ -38,13 +40,15 @@ export const ImageCard = (props: ImageInformation) => {
                             component="img"
                             className={imgClasses.media}
                             image={props.src}
-                            title="Contemplative Reptile"
                         />
                     </Card>
                 </div>
-
             )
         }
+        return (
+            <div className={cardClasses.root}>
+
+            </div>)
     }
 
     function getVegaView() {

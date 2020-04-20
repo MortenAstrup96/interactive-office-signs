@@ -4,6 +4,7 @@ export interface UserInformation {
     name: string;
     mail: string;
     status: string;
+    calendarURL: string;
     viewType: string;
     firstView: ViewData;
     secondView: ViewData;

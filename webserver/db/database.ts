@@ -22,7 +22,7 @@ export function getUserById(id: any) {
 
 export function setUserById(changeRequest: UserInformation) {
     if (changeRequest) {
-        db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
+        db.push("/person/" + changeRequest.nameId, changeRequest);
     }
 }
 
@@ -34,12 +34,14 @@ export function setStatusById(changeRequest: UserInformation) {
 
 // TODO: Is it possible to add an a person as object instead of wasting multiple lines on this?
 export function addUser(personToAdd: UserInformation) {
+    console.log(personToAdd);
     if (personToAdd) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
         db.push("/person/" + personToAdd.nameId + "/tablet", personToAdd.officeId);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/person/" + personToAdd.nameId + "/calendarURL", personToAdd.calendarURL);
         db.push("/person/" + personToAdd.nameId + "/viewType", ViewType.SINGLE);
         db.push("/person/" + personToAdd.nameId + "/firstView/dataType", DataType.EMPTY);
         db.push("/person/" + personToAdd.nameId + "/firstView/data", "");

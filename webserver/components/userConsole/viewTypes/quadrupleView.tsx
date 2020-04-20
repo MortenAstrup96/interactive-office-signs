@@ -11,8 +11,8 @@ interface QuadrupleViewProps {
     secondView: ViewData;
     thirdView: ViewData;
     fourthView: ViewData;
-
-    updateView(viewId: ViewId): void;
+    consoleMode: boolean;
+    updateView?(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const QuadrupleView = (props: QuadrupleViewProps) => {
@@ -22,19 +22,19 @@ export const QuadrupleView = (props: QuadrupleViewProps) => {
                   alignItems="center">
                 <Grid item>
                     <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={quarterCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={quarterCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.thirdView} viewId={ViewId.THIRD} cardStyles={quarterCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.fourthView} viewId={ViewId.FOURTH} cardStyles={quarterCardStyle}
-                               updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>

@@ -12,7 +12,6 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
     const [currentUser] = useState<UserInformation>(props.user);
     const avatarFake = require("../../img/avataricon.png");
 
-
     const postProfileImage = async (e: any) => {
         const file = e.currentTarget.files[0];
         if (currentUser) {

@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import {serverName} from "../../library/constants";
 import Link from "next/link";
-import {UserInformation} from "../../library/general_interfaces";
+import {UserInformation, ViewData} from "../../library/general_interfaces";
 
 
 import {setPropValue} from "../../library/general_functions";
@@ -49,19 +49,46 @@ export default function Index() {
     /** ----- API ----- */
     // Updates database via API on status change
     function saveChanges() {
-        // Create object to Post
-        const status = currentUser?.status;
         const nameId = currentUser?.nameId;
 
         // Posting data
         if (nameId) {
             fetch(serverName + '/api/setUserById/' + nameId, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(Object.assign({nameId: nameId}, {status}))
+                body: JSON.stringify(currentUser)
             });
         } else {
             console.log("Error posting data");
+        }
+    }
+
+    function updateImage(viewId: ViewId, viewData: ViewData) {
+        switch (viewId) {
+            case ViewId.FIRST:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    firstView: viewData
+                }));
+                break;
+            case ViewId.SECOND:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    secondView: viewData
+                }));
+                break;
+            case ViewId.THIRD:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    thirdView: viewData
+                }));
+                break;
+            case ViewId.FOURTH:
+                setCurrentUser((prevState: any) => ({
+                    ...prevState,
+                    fourthView: viewData
+                }));
+                break;
         }
     }
 
@@ -79,11 +106,6 @@ export default function Index() {
         }))
     }
 
-    function postViewData(viewId: ViewId) {
-        //currentUser?.firstView.dataType = DataType.IMAGE;
-        //currentUser?.secondView.data = "https://cdn.pixabay.com/photo/2018/05/31/15/06/not-hear-3444212_960_720.jpg"
-        console.log(viewId);
-    }
 
     function getCards() {
         if (!currentUser) {
@@ -91,17 +113,17 @@ export default function Index() {
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:
-                    return <SingleView firstView={currentUser.firstView} updateView={postViewData}/>;
+                    return <SingleView firstView={currentUser.firstView} consoleMode={true} updateView={updateImage}/>;
                 case ViewType.DOUBLE:
                     return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       updateView={postViewData}/>;
+                                       consoleMode={true} updateView={updateImage}/>;
                 case ViewType.TRIPLE:
                     return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       thirdView={currentUser.thirdView} updateView={postViewData}/>
+                                       thirdView={currentUser.thirdView} consoleMode={true} updateView={updateImage}/>
                 case ViewType.QUADRUPLE:
                     return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
                                           thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}
-                                          updateView={postViewData}/>;
+                                          consoleMode={true} updateView={updateImage}/>;
                 case ViewType.CUSTOM:
                     return <CustomView customView={currentUser.customView}/>;
                 default:
@@ -111,6 +133,7 @@ export default function Index() {
     }
 
 
+    console.log(currentUser);
     if (!currentUser) return (<div> Loading... </div>);
 
     return (
