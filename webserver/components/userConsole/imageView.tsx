@@ -35,8 +35,8 @@ export const ImageView = (props: ImageViewProps) => {
     const modalClasses = modalPopupStyles();
     const [showModal, setShowModal] = useState(false);
     const [currentData, setCurrentData] = useState<ViewData>({
-        dataType: props.viewData.dataType,
-        data: props.viewData.data
+        dataType: props.viewData?.dataType,
+        data: props.viewData?.data
     });
     const [selectedRadio, setSelectedRadio] = useState<string>(DataType.EMPTY);
     const [selectedData, setSelectedData] = useState("");

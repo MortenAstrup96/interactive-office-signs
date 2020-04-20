@@ -22,7 +22,7 @@ export function getUserById(id: any) {
 
 export function setUserById(changeRequest: UserInformation) {
     if (changeRequest) {
-        db.push("/person/" + changeRequest.nameId + "/status", changeRequest.status);
+        db.push("/person/" + changeRequest.nameId, changeRequest);
     }
 }
 

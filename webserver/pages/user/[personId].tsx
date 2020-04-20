@@ -49,16 +49,14 @@ export default function Index() {
     /** ----- API ----- */
     // Updates database via API on status change
     function saveChanges() {
-        // Create object to Post
-        const status = currentUser?.status;
         const nameId = currentUser?.nameId;
 
         // Posting data
         if (nameId) {
             fetch(serverName + '/api/setUserById/' + nameId, {
-                method: 'POST',
+                method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(Object.assign({nameId: nameId}, {status}))
+                body: JSON.stringify(currentUser)
             });
         } else {
             console.log("Error posting data");
@@ -110,8 +108,9 @@ export default function Index() {
 
 
     function getCards() {
+        console.log(currentUser);
         if (!currentUser) {
-            return <h4>Unable to load cards</h4>
+            return <h4>Unable to lofad cards</h4>
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:
