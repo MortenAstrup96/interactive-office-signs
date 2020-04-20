@@ -10,7 +10,7 @@ const gridStyle = {
 };
 
 export const CreateAccountForm = () => {
-    const addUser = (prop: { mail: string; calenderURL: string; bottomView: { data: string; viewType: string }; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; topView: { data: string; viewType: string }; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
+    const addUser = (prop: { mail: string; calendarURL: string; bottomView: { data: string; viewType: string }; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; topView: { data: string; viewType: string }; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         fetch(serverName + '/api/addUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -24,7 +24,7 @@ export const CreateAccountForm = () => {
     const [office, setOffice] = useState("");
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
-    const [calenderURL, setCalenderURL] = useState("");
+    const [calendarURL, setCalenderURL] = useState("");
     const handleSubmit = (e: any) => {
         e.preventDefault();
         addUser({
@@ -33,7 +33,7 @@ export const CreateAccountForm = () => {
             name: name,
             mail: mail,
             status: "Available",
-            calenderURL: calenderURL,
+            calendarURL: calendarURL,
             topView: {viewType: "", data: ""},
             bottomView: {viewType: "", data: ""},
             viewType: "",
@@ -72,7 +72,7 @@ export const CreateAccountForm = () => {
                            variant="outlined"
                            label="Mail" style={{margin: "10px", marginBottom: "60px"}}/>
 
-                <TextField type="text" value={calenderURL} required onChange={(e) => setCalenderURL(e.target.value)}
+                <TextField type="text" value={calendarURL} required onChange={(e) => setCalenderURL(e.target.value)}
                            variant="outlined"
                            label="Calendar HTML URL" style={{margin: "10px", marginBottom: "60px"}}/>
             </div>

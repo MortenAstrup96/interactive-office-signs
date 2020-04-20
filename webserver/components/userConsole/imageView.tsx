@@ -76,7 +76,6 @@ export const ImageView = (props: ImageViewProps) => {
         }
     }
 
-    console.log(props);
     if ((!currentData.dataType || currentData.dataType === DataType.EMPTY) && props.consoleMode) {
         return (
             <div>

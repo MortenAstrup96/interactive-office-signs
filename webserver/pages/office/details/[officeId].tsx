@@ -76,7 +76,7 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
-                    <iframe src={currentOffice?.calenderURL} width={500} height={600} frameBorder={0}></iframe>
+                    <iframe src={currentOffice?.calendarURL} width={500} height={600} frameBorder={0}></iframe>
                     {getImages()}
                 </div>
             </div>

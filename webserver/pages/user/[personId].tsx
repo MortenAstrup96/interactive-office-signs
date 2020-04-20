@@ -113,17 +113,17 @@ export default function Index() {
         } else {
             switch (currentViewType) {
                 case ViewType.SINGLE:
-                    return <SingleView firstView={currentUser.firstView} consoleMode={false} updateView={updateImage}/>;
+                    return <SingleView firstView={currentUser.firstView} consoleMode={true} updateView={updateImage}/>;
                 case ViewType.DOUBLE:
                     return <DoubleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       consoleMode={false} updateView={updateImage}/>;
+                                       consoleMode={true} updateView={updateImage}/>;
                 case ViewType.TRIPLE:
                     return <TripleView firstView={currentUser.firstView} secondView={currentUser.secondView}
-                                       thirdView={currentUser.thirdView} consoleMode={false} updateView={updateImage}/>
+                                       thirdView={currentUser.thirdView} consoleMode={true} updateView={updateImage}/>
                 case ViewType.QUADRUPLE:
                     return <QuadrupleView firstView={currentUser.firstView} secondView={currentUser.secondView}
                                           thirdView={currentUser.thirdView} fourthView={currentUser.fourthView}
-                                          consoleMode={false} updateView={updateImage}/>;
+                                          consoleMode={true} updateView={updateImage}/>;
                 case ViewType.CUSTOM:
                     return <CustomView customView={currentUser.customView}/>;
                 default:
@@ -133,6 +133,7 @@ export default function Index() {
     }
 
 
+    console.log(currentUser);
     if (!currentUser) return (<div> Loading... </div>);
 
     return (
