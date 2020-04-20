@@ -9,7 +9,7 @@ import {ViewId} from "../../../library/enums";
 
 interface DoubleViewProps {
     firstView: ViewData;
-    updateView(viewId: ViewId): void;
+    updateView(viewId: ViewId, viewData: ViewData): void;
 }
 
 export const SingleView = (props: DoubleViewProps) => {
