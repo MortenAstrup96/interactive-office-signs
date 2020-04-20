@@ -47,7 +47,7 @@ export const ImageView = (props: ImageViewProps) => {
             data: selectedData
         };
 
-        if(props.updateView) {
+        if (props.updateView) {
             props.updateView(props.viewId, newData);
         }
         setCurrentData(newData);    // Required to force an update of component
@@ -76,7 +76,8 @@ export const ImageView = (props: ImageViewProps) => {
         }
     }
 
-    if (!currentData.dataType || currentData.dataType === DataType.EMPTY && props.consoleMode) {
+    console.log(props);
+    if ((!currentData.dataType || currentData.dataType === DataType.EMPTY) && props.consoleMode) {
         return (
             <div>
                 <Button variant="outlined" className={classes.rootIcon} onClick={() => setShowModal(true)}>
