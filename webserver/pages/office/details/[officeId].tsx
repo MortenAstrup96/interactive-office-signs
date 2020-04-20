@@ -3,22 +3,28 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Container} from "@material-ui/core";
+import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
 import {Availability} from "../../../components/tablet/availability";
 import {serverName} from "../../../library/constants";
+import {VegaLite} from "react-vega/lib";
 import {DataType, ViewType} from "../../../library/enums";
+import {ImageCard} from "../../../components/tablet/imageCard";
+import Masonry from "react-masonry-component";
+import {makeStyles} from "@material-ui/core/styles";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
 import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../../components/userConsole/viewTypes/quadrupleView";
 import {CustomView} from "../../../components/userConsole/viewTypes/customView";
+import {generalStyle} from "../../../styles/generalStyles";
 
+const avatarFake = require("../../../img/avataricon.png");
 
 export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     const [vega, setVega] = useState<any>();
-
+    const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     const {data, error} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
@@ -35,6 +41,24 @@ export default function OfficeInformationId() {
         }
     }, [currentOffice]);
 
+
+    function getProfileImage() {
+        if (currentOffice?.nameId) {
+            try {
+                const avatarReal = require("../../../img/profile/" + currentOffice.nameId + ".jpg");
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "250px",
+                    width: "250px"
+                }} src={avatarReal} alt={avatarFake}/>)
+            } catch (e) {
+                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+            }
+
+        }
+        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+    }
 
     async function fetcher(url: string) {
         if (router.query.officeId) {
@@ -72,12 +96,16 @@ export default function OfficeInformationId() {
         <Container>
             <div>
                 <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
+                    <div className={generalStyling.officeDetail}>
+                        {getProfileImage()}
+                        <p>{currentOffice.name}</p>
+                        <p>{currentOffice.mail}</p>
+                    </div>
                 <div style={{textAlign: "center"}}>
-                    <h2>{currentOffice.name}</h2>
-                    <h2>{currentOffice.mail}</h2>
-                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                     <iframe src={currentOffice?.calendarURL} width={500} height={600} frameBorder={0}></iframe>
                     {getImages()}
+                </div>
                 </div>
             </div>
         </Container>

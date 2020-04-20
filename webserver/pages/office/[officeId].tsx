@@ -6,31 +6,16 @@ import Header from "../../components/tablet/header";
 import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
 import {serverName} from "../../library/constants";
+import {generalStyle} from "../../styles/generalStyles";
 
 
 const avatarFake = require("../../img/avataricon.png");
-
-const style = {
-    display: 'flex',
-    justifyContent: 'center',
-    margin: '0 auto',
-    width: '50%',
-};
-
-const textStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '50%',
-    margin: '0 auto',
-    fontFamily: 'Roboto',
-};
 
 export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
-
+    const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     let {data, revalidate} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
@@ -73,16 +58,16 @@ export default function OfficeInformationId() {
         <Container>
             <div>
                 <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
-                <div style={style}>
+                <div className={generalStyling.office}>
                     {getProfileImage()}
                 </div>
-                <div style={textStyle}>
+                <div className={generalStyling.office}>
                     <h1>{currentOffice.name}</h1>
                 </div>
-                <div style={textStyle}>
+                <div className={generalStyling.office}>
                     <h2>{currentOffice.mail}</h2>
                 </div>
-                <div style={textStyle}>
+                <div className={generalStyling.office}>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
             </div>

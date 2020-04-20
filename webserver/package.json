@@ -12,9 +12,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fullcalendar/core": "^4.4.0",
-    "@fullcalendar/daygrid": "^4.4.0",
-    "@fullcalendar/react": "^4.4.0",
     "@material-ui/core": "^4.9.4",
     "body-parser": "^1.19.0",
     "isomorphic-unfetch": "^3.0.0",
@@ -23,7 +20,6 @@
     "node-json-db": "^1.0.3",
     "react": "^16.13.1",
     "react-dom": "^16.12.0",
-    "react-masonry-component": "^6.2.1",
     "react-vega": "^7.3.0",
     "swr": "^0.1.17",
     "typescript": "^3.7.5",
@@ -33,6 +29,7 @@
   "devDependencies": {
     "@types/node": "^13.7.1",
     "@types/react": "^16.9.19",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "webpack": "^4.42.1"
   }
 }

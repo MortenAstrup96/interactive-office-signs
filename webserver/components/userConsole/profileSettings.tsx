@@ -3,6 +3,7 @@ import {Button, TextField} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
+import {generalStyle} from "../../styles/generalStyles";
 
 interface ProfileSettingsProps {
     user: UserInformation;
@@ -11,6 +12,7 @@ interface ProfileSettingsProps {
 export const ProfileSettings = (props: ProfileSettingsProps) => {
     const [currentUser] = useState<UserInformation>(props.user);
     const avatarFake = require("../../img/avataricon.png");
+    const generalStyling = generalStyle();
 
     const postProfileImage = async (e: any) => {
         const file = e.currentTarget.files[0];
@@ -43,11 +45,12 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
     }
 
     return (
-        <div style={{margin: "30px", width: "600px"}}>
+        <div className={generalStyling.profile}>
             <h1>PROFILE SETTINGS</h1>
             <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
                 <div>
                     {getProfileImage()}
+                    <div style={{marginTop: "10px"}}></div>
                     <Button
                         variant="contained"
                         component="label"
@@ -63,14 +66,14 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
 
                 <div style={{marginRight: "20px", marginTop: "30px"}}>
                     <div>
-                        <IconMail/>
+                        <IconPerson/>
                         <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
                                    size="small"
                                    style={{width: "280px"}}/>
                     </div>
 
                     <div>
-                        <IconPerson/>
+                        <IconMail/>
                         <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
                                    size="small"
                                    style={{width: "280px"}}/>
