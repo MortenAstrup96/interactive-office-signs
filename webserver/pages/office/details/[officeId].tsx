@@ -3,14 +3,10 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {Availability} from "../../../components/tablet/availability";
 import {serverName} from "../../../library/constants";
-import {VegaLite} from "react-vega/lib";
 import {DataType, ViewType} from "../../../library/enums";
-import {ImageCard} from "../../../components/tablet/imageCard";
-import Masonry from "react-masonry-component";
-import {makeStyles} from "@material-ui/core/styles";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
 import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
@@ -80,6 +76,7 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.name}</h2>
                     <h2>{currentOffice.mail}</h2>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    <iframe src={currentOffice?.calenderURL} width={500} height={600} frameBorder={0}></iframe>
                     {getImages()}
                 </div>
             </div>

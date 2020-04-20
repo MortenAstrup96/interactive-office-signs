@@ -40,6 +40,7 @@ export function addUser(personToAdd: UserInformation) {
         db.push("/person/" + personToAdd.nameId + "/tablet", personToAdd.officeId);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", personToAdd.status);
+        db.push("/person/" + personToAdd.nameId + "/calenderURL", personToAdd.calenderURL);
         db.push("/person/" + personToAdd.nameId + "/viewType", ViewType.SINGLE);
         db.push("/person/" + personToAdd.nameId + "/firstView/dataType", DataType.EMPTY);
         db.push("/person/" + personToAdd.nameId + "/firstView/data", "");

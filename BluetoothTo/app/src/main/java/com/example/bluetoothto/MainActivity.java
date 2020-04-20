@@ -36,7 +36,8 @@ public class MainActivity extends Activity {
     private String lastRecieved;
 
     private String localIP = "192.168.87.166";
-    private String mainURL = "http://" + localIP+ ":3000";
+    private String mainURL = "http://" + localIP+ ":3000"; // SKAL MÅSKE ÆNDRES TIL LOCALHOST
+    //private String mainURL = "http://localhost:3000";
 
     // SPP UUID service. Fixed to HC-06 module
     private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -80,11 +81,11 @@ public class MainActivity extends Activity {
                             Log.d(TAG, "officeID: "+officeID);
 
                             // If the webview is showing a users officesign start reacting to proxemity sensor
-                            if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/detailed-office")) {
+                            if(webURLWithoutOfficeID.equals(mainURL+"/office") || webURLWithoutOfficeID.equals(mainURL+"/office/details")) {
                                 // If proxemity is close and it was far before
                                 if (sbprint.equals("1") && lastRecieved.equals("0")) {
-                                    webView.loadUrl(mainURL+"/detailed-office"+officeID); // load URL for officesign but in close mode
-                                    Log.d(TAG, "DETAILEDOFFICE :" + mainURL+"/detailed-office"+officeID);
+                                    webView.loadUrl(mainURL+"/office/details"+officeID); // load URL for officesign but in close mode
+                                    Log.d(TAG, "DETAILEDOFFICE :" + mainURL+"/office/details"+officeID);
                                     lastRecieved = "1";
                                 }
                                 // ... opposite
