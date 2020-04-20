@@ -127,6 +127,13 @@ export const ImageView = (props: ImageViewProps) => {
         );
     }
 
+    if(props.consoleMode) {
+        return (
+            <div>
+                <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles} consoleView={true}/>
+            </div>
+        );
+    }
     return (
         <div>
             <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles}/>
