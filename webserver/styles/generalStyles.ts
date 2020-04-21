@@ -34,10 +34,6 @@ export default createMuiTheme({
             main: blueGrey["500"],
             light: blueGrey["100"],
         },
-        failure: {
-            main: red["500"],
-            light: red["100"],
-        }
     }
     }
 )

@@ -1,6 +1,7 @@
 export enum DataType {
     VEGA = "vega",
     IMAGE = "image",
+    CALENDAR = "calendar",
     EMPTY = "empty"
 }
 

@@ -98,7 +98,6 @@ export default function OfficeInformationId() {
                         <p>{currentOffice.mail}</p>
                     </div>
                 <div style={{textAlign: "center"}}>
-                    <iframe src={currentOffice?.calendarURL} width={500} height={600} frameBorder={0}></iframe>
                     {getImages()}
                 </div>
                 </div>

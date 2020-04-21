@@ -21,12 +21,17 @@ const vegaStyles = makeStyles({
     root: {margin: 5, maxWidth: 600, maxHeight: 600},
     media: {maxWidth: "100%", maxHeight: "100%"}
 });
+const calendarStyles = makeStyles({
+    root: {margin: 10},
+    media: {minWidth: "100%", minHeight: "100%"}
+});
 
 
 export const ImageCard = (props: ImageInformation) => {
     const cardClasses = props.cardStyles();
     const imgClasses = imageStyles();
     const vegaClasses = vegaStyles();
+    const calendarClasses = calendarStyles();
 
 
     function getCustomView() {
@@ -41,6 +46,14 @@ export const ImageCard = (props: ImageInformation) => {
                             className={imgClasses.media}
                             image={props.src}
                         />
+                    </Card>
+                </div>
+            )
+        } else if (props.dataType === DataType.CALENDAR) {
+            return (
+                <div>
+                    <Card variant="outlined" className={calendarClasses.root}>
+                        <iframe src={props.src} height={550} width={500} scrolling={'no'}></iframe>
                     </Card>
                 </div>
             )
