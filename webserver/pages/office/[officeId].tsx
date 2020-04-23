@@ -7,6 +7,7 @@ import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
 import {serverName} from "../../library/constants";
 import {generalStyle} from "../../styles/generalStyles";
+import {Calendar} from "../../components/tablet/calendar";
 
 
 const avatarFake = require("../../img/avataricon.png");
@@ -70,6 +71,7 @@ export default function OfficeInformationId() {
                 <div className={generalStyling.office}>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
                 </div>
+                <Calendar url={currentOffice?.calendarURL}/>
             </div>
         </Container>
     );

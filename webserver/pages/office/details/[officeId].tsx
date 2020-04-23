@@ -12,6 +12,7 @@ import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../../components/userConsole/viewTypes/quadrupleView";
 import {CustomView} from "../../../components/userConsole/viewTypes/customView";
 import {generalStyle} from "../../../styles/generalStyles";
+import {Calendar} from "../../../components/tablet/calendar";
 
 const avatarFake = require("../../../img/avataricon.png");
 
@@ -98,7 +99,7 @@ export default function OfficeInformationId() {
                         <p>{currentOffice.mail}</p>
                     </div>
                 <div style={{textAlign: "center"}}>
-                    <iframe src={currentOffice?.calendarURL} width={500} height={600} frameBorder={0}></iframe>
+                   <Calendar url={currentOffice?.calendarURL}/>
                     {getImages()}
                 </div>
                 </div>
