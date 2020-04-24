@@ -1,7 +1,6 @@
 import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
-import {serverName} from "../library/constants";
 
 interface NameProp {
     name: string,

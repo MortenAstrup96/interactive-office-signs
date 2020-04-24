@@ -1,7 +1,6 @@
 import {Container} from "@material-ui/core";
-import {UserInformation} from "../library/general_interfaces";
 import {CreateAccountForm} from "../components/createAccount/createAccountForm";
-import {serverName} from "../library/constants";
+
 
 export default function CreateAccount() {
 

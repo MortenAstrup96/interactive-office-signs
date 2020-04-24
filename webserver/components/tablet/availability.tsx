@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button, colors} from "@material-ui/core";
-import {serverName} from "../../library/constants";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
 import {useRouter} from "next/router";
@@ -93,7 +92,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     // Updates database via API on status change
     function putStatusUpdate(status: string) {
-        fetch(serverName + '/api/setStatusById/' + props.nameId, {
+        fetch('/api/setStatusById/' + props.nameId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(Object.assign({nameId}, {status}))

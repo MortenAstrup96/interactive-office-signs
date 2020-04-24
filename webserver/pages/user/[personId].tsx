@@ -6,7 +6,6 @@ import {
     Container, Divider,
     TextField
 } from "@material-ui/core";
-import {serverName} from "../../library/constants";
 import Link from "next/link";
 import {UserInformation, ViewData} from "../../library/general_interfaces";
 
@@ -53,7 +52,7 @@ export default function Index() {
 
         // Posting data
         if (nameId) {
-            fetch(serverName + '/api/setUserById/' + nameId, {
+            fetch('/api/setUserById/' + nameId, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(currentUser)

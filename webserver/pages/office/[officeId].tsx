@@ -5,7 +5,6 @@ import useSWR from "swr";
 import Header from "../../components/tablet/header";
 import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
-import {serverName} from "../../library/constants";
 import {generalStyle} from "../../styles/generalStyles";
 
 

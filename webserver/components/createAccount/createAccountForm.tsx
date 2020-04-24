@@ -1,17 +1,13 @@
 import {useState} from "react";
 import {colors, OutlinedInput, TextField} from "@material-ui/core";
-import {UserInformation} from "../../library/general_interfaces";
-import {serverName} from "../../library/constants";
-
 const gridStyle = {
     display: "grid",
     gridTemplateColumns: "auto"
-
 };
 
 export const CreateAccountForm = () => {
     const addUser = (prop: { mail: string; calendarURL: string; bottomView: { data: string; viewType: string }; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; topView: { data: string; viewType: string }; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
-        fetch(serverName + '/api/addUser', {
+        fetch('/api/addUser', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(prop)
