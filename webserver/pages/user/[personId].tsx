@@ -29,7 +29,7 @@ export default function Index() {
     const [currentStatus, setCurrentStatus] = useState<string>("");
     const [currentViewType, setCurrentViewType] = useState<string>("");
 
-    let {data} = useSWR(() => serverName + '/api/getUserById/' + router.query.personId, fetcher);
+    let {data} = useSWR(() => '/api/getUserById/' + router.query.personId, fetcher);
 
     useEffect(() => {
         if (data) {

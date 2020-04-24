@@ -22,7 +22,7 @@ export default function OfficeInformationId() {
     const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
-    const {data, error} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
+    const {data, error} = useSWR(() => '/api/getUserById/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
 

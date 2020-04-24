@@ -9,7 +9,7 @@ interface NameProp {
 }
 
 export default function Tablets() {
-    const {data} = useSWR(() => serverName + '/api/getUserData', fetcher);
+    const {data} = useSWR(() => '/api/getUserData', fetcher);
 
 
     // This function returns a Material UI List-item with a link, linking to /tablet/nameId

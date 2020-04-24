@@ -4,15 +4,18 @@ import {Button, colors} from "@material-ui/core";
 import {serverName} from "../../library/constants";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
+import {useRouter} from "next/router";
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
+
+
     const [status, setStatus] = useState<string>(props.status);
     const [buttonColor, setButtonColor] = useState<any>({background: colors.green["500"], text: colors.common.black});
     const [nameId] = useState<string>(props.nameId);
     const [inMeeting, setInMeeting] = useState(false);
 
-    let {data} = useSWR(() => serverName + '/api/getCalendar', fetcher, {
+    let {data} = useSWR(() => '/api/getCalendar', fetcher, {
         refreshInterval: 10000
     });
 
@@ -21,6 +24,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         if (data) {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
+            console.log(parsed);
 
             // Array of events happening at the moment
             const currentEvents = parseCalendarData(parsed.events);
@@ -97,9 +101,10 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     }
 
     // Leave me alone!!
-    async function fetcher(url: any) {
+
+    function fetcher(url: any) {
         const calendar = props.calendarURL;
-        return await fetch(url, {
+        return fetch(url, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({calendar})

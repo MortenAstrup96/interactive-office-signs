@@ -18,13 +18,14 @@ export default function OfficeInformationId() {
     const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
-    let {data, revalidate} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
+    let {data, revalidate} = useSWR(() => '/api/getUserById/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
 
 
     useEffect(() => {
         setCurrentOffice(data);
+        console.log(data);
     }, [data, revalidate]);
 
 
