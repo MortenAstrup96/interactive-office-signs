@@ -68,7 +68,8 @@ export default function OfficeInformationId() {
                     <h2>{currentOffice.mail}</h2>
                 </div>
                 <div className={generalStyling.office}>
-                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}/>
+                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}
+                                  calendarURL={currentOffice?.calendarURL}/>
                 </div>
             </div>
         </Container>

@@ -98,7 +98,12 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     // Leave me alone!!
     async function fetcher(url: any) {
-        return await fetch(url).then(r => r.text());
+        const calendar = props.calendarURL;
+        return await fetch(url, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({calendar})
+        }).then(r => r.text());
     }
 
     // Will switch between available/busy - If neither switch to available
