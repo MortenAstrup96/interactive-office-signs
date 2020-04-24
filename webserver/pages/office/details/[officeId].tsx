@@ -3,16 +3,15 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {serverName} from "../../../library/constants";
-import {DataType, ViewType} from "../../../library/enums";
+import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
 import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../../components/userConsole/viewTypes/quadrupleView";
 import {CustomView} from "../../../components/userConsole/viewTypes/customView";
 import {generalStyle} from "../../../styles/generalStyles";
-import {Calendar} from "../../../components/tablet/calendar";
 
 const avatarFake = require("../../../img/avataricon.png");
 
@@ -99,7 +98,6 @@ export default function OfficeInformationId() {
                         <p>{currentOffice.mail}</p>
                     </div>
                 <div style={{textAlign: "center"}}>
-                   <Calendar url={currentOffice?.calendarURL}/>
                     {getImages()}
                 </div>
                 </div>

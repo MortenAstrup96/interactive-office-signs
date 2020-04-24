@@ -1,8 +1,6 @@
 import {Button, Grid, TextField,} from "@material-ui/core";
 import Link from "next/link";
-import {useState} from "react";
-import fetch from 'isomorphic-unfetch'
-
+import React, {useState} from "react";
 
 function Index() {
     const [username, setUsername] = useState<string>("");
@@ -53,5 +51,6 @@ function Index() {
 
     );
 }
+
 
 export default Index;
