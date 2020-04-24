@@ -29,12 +29,12 @@ export const generalStyle = makeStyles((theme: Theme) =>
 );
 
 export default createMuiTheme({
-    palette: {
-        primary: {
-            main: blueGrey["500"],
-            light: blueGrey["100"],
-        },
-    }
+        palette: {
+            primary: {
+                main: blueGrey["500"],
+                light: blueGrey["100"],
+            }
+        }
     }
 )
 

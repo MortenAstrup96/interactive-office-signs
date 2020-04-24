@@ -21,4 +21,5 @@ export interface ViewData {
 export interface OfficeAvailabilityProps {
     nameId: string;
     status: string;
+    calendarURL: string;
 }

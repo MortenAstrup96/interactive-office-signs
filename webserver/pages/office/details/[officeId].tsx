@@ -3,9 +3,9 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Card, CardContent, CardMedia, Container} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {serverName} from "../../../library/constants";
-import {DataType, ViewType} from "../../../library/enums";
+import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
 import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
@@ -87,7 +87,6 @@ export default function OfficeInformationId() {
 
 
     return (
-
         <Container>
             <div>
                 <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>

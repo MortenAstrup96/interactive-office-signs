@@ -25,7 +25,7 @@ export const ViewControls: React.FC<ViewControlProps> = props => {
 
     // Custom button to create highlighting of current button
     const ColorButton = (props: ColorButtonProps) => {
-        if (props.viewType === currentFocus) {
+        if (props.viewType === currentFocus)  {
             return (
                 <Button variant="outlined" color="primary"
                         onClick={() => handleButtonClick(props.viewType)}>{props.text}</Button>);
