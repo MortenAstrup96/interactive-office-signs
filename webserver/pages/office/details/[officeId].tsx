@@ -87,7 +87,6 @@ export default function OfficeInformationId() {
 
 
     return (
-
         <Container>
             <div>
                 <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
