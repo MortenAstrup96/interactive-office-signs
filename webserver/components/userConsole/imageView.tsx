@@ -62,7 +62,6 @@ export const ImageView = (props: ImageViewProps) => {
         }
     }
 
-
     function getCorrectInputField() {
         if (selectedRadio === DataType.IMAGE) {
             return (
