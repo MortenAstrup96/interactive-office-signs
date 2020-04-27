@@ -21,6 +21,7 @@ export default function OfficeInformationId() {
     const [vega, setVega] = useState<any>();
     const generalStyling = generalStyle();
 
+
     // Will get the person by ID in the URL and revalidate every 10 seconds
     const {data, error} = useSWR(() => serverName + '/api/getUserById/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
