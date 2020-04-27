@@ -10,6 +10,7 @@ export default async (req: any, res: any) => {
     } = req;
 
     req.pipe(createWriteStream("./img/profile/" + nameId + ".jpg"));
+    console.log("Creating image ...");
     res.statusCode = 200;
     res.end();
 };
