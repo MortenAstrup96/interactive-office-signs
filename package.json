@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
+    "heroku-postbuild": "next build",
     "build": "next build",
     "start": "next start"
   },
