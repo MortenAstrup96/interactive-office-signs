@@ -21,7 +21,7 @@ export default function OfficeInformationId() {
     const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
-    const {data, error} = useSWR(() => '/api/getUserById/' + router.query.officeId, fetcher, {
+    const {data, error} = useSWR(() => '/api/user/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
 
@@ -56,7 +56,10 @@ export default function OfficeInformationId() {
 
     async function fetcher(url: string) {
         if (router.query.officeId) {
-            return fetch(url).then(r => r.json());
+            return fetch(url, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            }).then(r => r.json());
         }
     }
 
@@ -95,9 +98,9 @@ export default function OfficeInformationId() {
                         <p>{currentOffice.name}</p>
                         <p>{currentOffice.mail}</p>
                     </div>
-                <div style={{textAlign: "center"}}>
-                    {getImages()}
-                </div>
+                    <div style={{textAlign: "center"}}>
+                        {getImages()}
+                    </div>
                 </div>
             </div>
         </Container>

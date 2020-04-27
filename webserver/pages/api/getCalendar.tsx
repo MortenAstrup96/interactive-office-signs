@@ -3,7 +3,7 @@ export default (req: any, res: any) => {
 
     const url = req.body.calendar;
     return new Promise(resolve => {
-        if (url.includes("https://outlook.live.com/") && url.includes(".ics", (url.length - 4))) {
+        if (url && url.includes("https://outlook.live.com/") && url.includes(".ics", (url.length - 4))) {
             https.get(url, function (response: any) {
 
                 res.send(response);

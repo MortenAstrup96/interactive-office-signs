@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {colors, Button, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
+import { Button, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
 import {useRouter} from "next/router";
 
 const gridStyle = {
@@ -19,6 +19,7 @@ export const CreateAccountForm = () => {
             body: JSON.stringify(prop)
         }).then(() => router.replace("/user/" + username));
     };
+
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
@@ -173,18 +174,9 @@ export const CreateAccountForm = () => {
                             Back
                         </Button>
                         {getNextButton()}
-
                     </div>
                 )}
             </div>
-
         </div>
-
     );
 };
-
-/**
-
-
-
- */

@@ -17,7 +17,7 @@ export default function OfficeInformationId() {
     const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
-    let {data, revalidate} = useSWR(() => '/api/getUserById/' + router.query.officeId, fetcher, {
+    let {data, revalidate} = useSWR(() => '/api/user/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
 
@@ -48,7 +48,10 @@ export default function OfficeInformationId() {
 
     async function fetcher(url: any) {
         if (router.query.officeId) {
-            return fetch(url).then(r => r.json());
+            return fetch(url, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            }).then(r => r.json());
         }
     }
 

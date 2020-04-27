@@ -8,7 +8,7 @@ import {Customize} from "../../components/userConsole/customize";
 export default function Index() {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<UserInformation>();
-    let {data} = useSWR(() => '/api/getUserById/' + router.query.personId, fetcher);
+    let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
 
     useEffect(() => {
         if (data) {
