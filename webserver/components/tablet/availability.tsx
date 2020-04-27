@@ -15,7 +15,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     const [inMeeting, setInMeeting] = useState(false);
 
     let {data} = useSWR(() => '/api/getCalendar', fetcher, {
-        refreshInterval: 10000
+        refreshInterval: 120000
     });
 
     // Will parse ICS data when it is received from API.
@@ -89,7 +89,6 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         });
     }
 
-
     // Updates database via API on status change
     function putStatusUpdate(status: string) {
         fetch('/api/setStatusById/' + props.nameId, {
@@ -100,7 +99,6 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     }
 
     // Leave me alone!!
-
     function fetcher(url: any) {
         const calendar = props.calendarURL;
         return fetch(url, {
@@ -119,7 +117,6 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
             setStatus("Available");
             putStatusUpdate("Available");
         }
-
     }
 
     return (

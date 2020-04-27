@@ -1,7 +1,6 @@
 import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import useSWR from "swr";
-import {Container} from "@material-ui/core";
 import {UserInformation} from "../../library/general_interfaces";
 import {Customize} from "../../components/userConsole/customize";
 
