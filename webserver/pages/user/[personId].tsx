@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
 import {Customize} from "../../components/userConsole/customize";
-
+import CenteredTabs from "../../components/userConsole/tab";
 
 export default function Index() {
     const router = useRouter();
@@ -43,6 +43,7 @@ export default function Index() {
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
+            {CenteredTabs()}
             <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
         </div>
     );
