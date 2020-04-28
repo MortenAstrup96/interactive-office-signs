@@ -35,11 +35,12 @@ export default function Index() {
 
     useEffect(() => {
         saveChanges();
-    }, [currentUser?.statusButtons])
+    }, [currentUser?.statusButtons, currentUser?.status]);
 
-    function updateStatusButtons(buttonArray: any[]) {
+    function updateStatusButtons(buttonArray: any[], buttonStatus: any) {
         setCurrentUser((prevState: any) => ({
             ...prevState,
+            status: buttonStatus,
             statusButtons: buttonArray,
         }));
     }
@@ -51,10 +52,12 @@ export default function Index() {
         }
     }
 
+    console.log(currentUser?.status);
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
-            <Status statusButtons={currentUser?.statusButtons} saveChanges={updateStatusButtons}/>
+            <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status}
+                    saveChanges={updateStatusButtons}/>
         </div>
     );
 }
