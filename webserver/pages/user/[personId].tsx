@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
 import {Customize} from "../../components/userConsole/customize";
+import {Status} from "../../components/userConsole/status";
 
 
 export default function Index() {
@@ -43,7 +44,10 @@ export default function Index() {
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
-            <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
+            <Status/>
         </div>
     );
 }
+
+// Customize component:
+// <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
