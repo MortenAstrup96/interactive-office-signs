@@ -13,18 +13,21 @@ export const generalStyle = makeStyles((theme: Theme) =>
         },
         office: {
             fontFamily: "Roboto",
+            fontSize: "60px",
+            fontStyle: "bold",
             textAlign: "center",
-            margin: "30px",
+            margin: "10px",
             marginTop: "30px",
+            display: "flex",
+            flexDirection: "row",
         },
         officeDetail: {
             fontFamily: "Roboto",
             fontSize: "34px",
-            margin: "30px",
-            marginTop: "30px",
             display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-        }
+            gridTemplateColumns: "1fr 2fr 3fr",
+            flexDirection: "column",
+        },
     }),
 );
 
