@@ -1,8 +1,10 @@
 import {addUser, getUserById, setUserById} from "../../../db/database";
 
 export default (req: any, res: any) => {
+    console.log(req.method);
     switch (req.method) {
         case "POST":
+            console.log(req.body);
             addUser(req.body);
             res.json(200);
             break;
@@ -12,7 +14,6 @@ export default (req: any, res: any) => {
             break;
         case "GET":
             const {query: {nameId}} = req;
-            console.log(nameId);
             res.json(getUserById(nameId));
             break;
     }

@@ -2,7 +2,6 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
-import {Customize} from "../../components/userConsole/customize";
 import {Status} from "../../components/userConsole/status";
 
 
