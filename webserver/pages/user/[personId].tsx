@@ -4,6 +4,8 @@ import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
 import {Customize} from "../../components/userConsole/customize";
 import CenteredTabs from "../../components/userConsole/tab";
+import {Status} from "../../components/userConsole/status";
+
 
 export default function Index() {
     const router = useRouter();
@@ -23,7 +25,7 @@ export default function Index() {
 
         // Posting data
         if (nameId) {
-            fetch('/api/setUserById/' + nameId, {
+            fetch('/api/user/' + nameId, {
                 method: 'PUT',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(currentUser)
@@ -31,6 +33,17 @@ export default function Index() {
         } else {
             console.log("Error posting data");
         }
+    }
+
+    useEffect(() => {
+        saveChanges();
+    }, [currentUser?.statusButtons])
+
+    function updateStatusButtons(buttonArray: any[]) {
+        setCurrentUser((prevState: any) => ({
+            ...prevState,
+            statusButtons: buttonArray,
+        }));
     }
 
     // Gets profile data
@@ -45,6 +58,10 @@ export default function Index() {
         <div>
             {CenteredTabs()}
             <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
+            <Status statusButtons={currentUser?.statusButtons} saveChanges={updateStatusButtons}/>
         </div>
     );
 }
+
+// Customize component:
+// <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>

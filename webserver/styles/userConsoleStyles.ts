@@ -1,5 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {createStyles, Theme} from "@material-ui/core";
+import {colors, createStyles, Theme} from "@material-ui/core";
 
 export const modalPopupStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -57,4 +57,29 @@ export const quarterCardStyle = makeStyles({
     },
     rootIcon: {alignContent: "center", justifyContent: "center", display: "grid", margin: 10, width: 340, height: 340},
     media: {width: 50, height: 50}
+});
+
+
+export const buttonStyle = makeStyles({
+    buttonGreen: {
+        width: 200,
+        height: 50,
+        margin: "10px",
+        backgroundColor: colors.green["500"],
+        color: colors.common.white
+    },
+    buttonYellow: {
+        width: 200,
+        height: 50,
+        margin: "10px",
+        backgroundColor: colors.yellow.A700,
+        color: colors.common.white
+    },
+    buttonRed: {
+        width: 200,
+        height: 50,
+        margin: "10px",
+        backgroundColor: colors.red.A700,
+        color: colors.common.white
+    }
 });

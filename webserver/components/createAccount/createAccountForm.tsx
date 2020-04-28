@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Button, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
+import {Button, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
 import {useRouter} from "next/router";
 
 const gridStyle = {
@@ -11,9 +11,10 @@ export const CreateAccountForm = () => {
     const router = useRouter();
 
 
-    const addUser = (prop: { mail: string; calendarURL: string; bottomView: { data: string; viewType: string }; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; topView: { data: string; viewType: string }; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
+    const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         const username = prop.nameId;
-        fetch('/api/addUser', {
+
+        fetch('/api/user/0', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(prop)
@@ -34,8 +35,6 @@ export const CreateAccountForm = () => {
             mail: mail,
             status: "Available",
             calendarURL: calendarURL,
-            topView: {viewType: "", data: ""},
-            bottomView: {viewType: "", data: ""},
             viewType: "",
             firstView: {dataType: "", data: ""},
             secondView: {dataType: "", data: ""},
