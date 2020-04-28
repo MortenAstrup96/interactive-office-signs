@@ -11,6 +11,7 @@ export interface UserInformation {
     thirdView: ViewData;
     fourthView: ViewData;
     customView: ViewData;
+    statusButtons: any[];
 }
 
 export interface ViewData {
