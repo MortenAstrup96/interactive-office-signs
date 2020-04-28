@@ -27,7 +27,7 @@ export const generalStyle = makeStyles((theme: Theme) =>
             display: "grid",
             gridTemplateColumns: "1fr 2fr 3fr",
             flexDirection: "column",
-        }
+        },
     }),
 );
 
