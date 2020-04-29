@@ -59,6 +59,7 @@ export default function Index() {
         }
     }
 
+    console.log(currentUser?.status);
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
@@ -75,9 +76,10 @@ export default function Index() {
         <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
             <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status}
                     saveChanges={updateStatusButtons}/>
+            <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
         </div>
     );
 }
 
 // Customize component:
-// <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
+//
