@@ -91,6 +91,8 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
                     style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50}}>
                 {status.text}
             </Button>
+
+
         </div>
     );
 };
