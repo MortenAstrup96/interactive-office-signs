@@ -1,9 +1,8 @@
-import React from "react";
-import {Card, CardContent, CardHeader, CardMedia, IconButton} from "@material-ui/core";
+import React, {useEffect} from "react";
+import {Card, CardContent, CardMedia} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import {DataType} from "../../library/enums";
 import {VegaLite} from "react-vega/lib";
-import IconMail from "../../img/icons/iconMail";
 import {serverName} from "../../library/constants";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
@@ -33,25 +32,24 @@ const calendarStyles = makeStyles({
 export const ImageCard = (props: ImageInformation) => {
     const cardClasses = props.cardStyles();
     const imgClasses = imageStyles();
-    //const vegaClasses = vegaStyles();
-    const calendarClasses = calendarStyles();
 
-    //VEGA-------------------
+    //Calendar-------------------
     let currentTime = 0.0;
     const vegaStyles = makeStyles({
         root: {margin: 5, maxWidth: 600, maxHeight: 600},
         media: {maxWidth: "100%", maxHeight: "100%"}
     });
     const vegaClasses = vegaStyles();
-
-
     type dataType = {start: number, end: number, description: string, time: number}
     let event = new Array<dataType>();
 
-    //VEGA-------------------
-
-    async function fetcher(url: any) {
-        return await fetch(url).then(r => r.text());
+    function fetcher(url: any) {
+        const calendar = props.src;
+        return fetch(url, {
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({calendar})
+        }).then(r => r.text());
     }
 
     let {data} = useSWR(() => serverName + '/api/getCalendar', fetcher, {
@@ -111,8 +109,6 @@ export const ImageCard = (props: ImageInformation) => {
                 let end = event.dtend.value.getTime();
                 let desc = event.summary.value.toString();
 
-                console.log("status: "+ desc);
-
                 setCalendar(start, end, current, desc);
 
                 return (current >= start && current <= end)
@@ -124,7 +120,6 @@ export const ImageCard = (props: ImageInformation) => {
     }
 
     function fetchData() {
-        // event = [{start: 12, end: 12, description: "", time: 12}];
         if (data) {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
@@ -136,7 +131,7 @@ export const ImageCard = (props: ImageInformation) => {
         } else {
             console.log("fetchFailed");
         }
-    };
+    }
 
     function convertTimeToDecimal(time: any) {
         return time.getHours()+(time.getMinutes()/60);
@@ -147,12 +142,9 @@ export const ImageCard = (props: ImageInformation) => {
         let endDate = new Date(end);
         let currentDate = new Date(current);
 
-        console.log("SDay "+startDate.toDateString());
-
         // If the event is from the current day
         if(startDate.toDateString() === currentDate.toDateString()) {
             currentTime = convertTimeToDecimal(currentDate);
-            console.log("CT:" +currentTime);
             let startTime = convertTimeToDecimal(startDate)-2; //TODO: fix with timezone
             let endTime = convertTimeToDecimal(endDate)-2; //TODO: fix with timezone
 
@@ -160,16 +152,11 @@ export const ImageCard = (props: ImageInformation) => {
             if(endTime > currentTime) {
                 event.push({start: startTime, end: endTime, description: desc, time: currentTime});
             }
-
         }
-
     }
 
     function getCalendarView() {
         fetchData();
-
-        console.log("CT2:" +currentTime);
-
         return (
             <div>
                 <Card variant="outlined" className={vegaClasses.root}>
