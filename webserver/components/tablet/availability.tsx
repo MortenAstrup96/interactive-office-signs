@@ -16,17 +16,16 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     const [inMeeting, setInMeeting] = useState(false);
 
     //VEGA-------------------
+    let currentTime = 0.0;
     const vegaStyles = makeStyles({
         root: {margin: 5, maxWidth: 600, maxHeight: 600},
         media: {maxWidth: "100%", maxHeight: "100%"}
     });
     const vegaClasses = vegaStyles();
 
-    let startTime = 0;
-    let endTime = 0;
-    let currentTime = 0;
-    let desc = "";
-    let event = [{start: startTime, end: endTime, description: desc}];
+
+    type dataType = {start: number, end: number, description: string, time: number}
+    let event = new Array<dataType>();
 
     //VEGA-------------------
     let {data} = useSWR(() => serverName + '/api/getCalendar', fetcher, {
@@ -34,7 +33,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     });
 
     function fetchData() {
-        event = [{start: 0, end: 0, description: ""}];
+       // event = [{start: 12, end: 12, description: "", time: 12}];
         if (data) {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
@@ -50,7 +49,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     // Will parse ICS data when it is received from API.
     useEffect(() => {
-        event = [{start: 0, end: 0, description: ""}];
+       // event = [{start: 12, end: 12, description: "", time: 12}];
 
         if (data) {
             const ical = require('cal-parser');
@@ -102,6 +101,9 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         }
     }, [status]);
 
+    function convertTimeToDecimal(time: any) {
+        return time.getHours()+(time.getMinutes()/60);
+    }
 
     function setCalendar(start: any, end: any, current: any, desc: any) {
         let startDate = new Date(start);
@@ -110,14 +112,17 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
         console.log("SDay "+startDate.toDateString());
 
-
+        // If the event is from the current day
         if(startDate.toDateString() === currentDate.toDateString()) {
-            currentTime = currentDate.getHours()-2;
-            console.log("CT:" +currentTime)
-            startTime = startDate.getHours()-2; //TODO: fix with timezone
-            endTime = endDate.getHours()-2; //TODO: fix with timezone
+            currentTime = convertTimeToDecimal(currentDate);
+            console.log("CT:" +currentTime);
+            let startTime = convertTimeToDecimal(startDate)-2; //TODO: fix with timezone
+            let endTime = convertTimeToDecimal(endDate)-2; //TODO: fix with timezone
 
-            event.push({start: startTime, end: endTime, description: desc});
+            // If the event is not in the past: add to array
+            if(endTime > currentTime) {
+                event.push({start: startTime, end: endTime, description: desc, time: currentTime});
+            }
 
         }
 
@@ -174,9 +179,8 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     function getVegaView() {
         fetchData();
-        //console.log("events: "+events.length);
-       // console.log("events: " + events[0]+" 2: "+events[1]);
-        console.log("CT2:" +currentTime)
+
+        console.log("CT2:" +currentTime);
 
         return (
             <div>
@@ -191,28 +195,37 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
                                 "values": event
                             },
                             "encoding": {
-                            "y": {"field": "start", "type": "quantitative", "scale": {"domain": [22, 7], "padding": 0},"axis": {"title": ""}},
+                            "y": {"field": "start", "type": "quantitative", "scale": {"domain": [22, currentTime-2], "padding": 0},"axis": {"title": ""}},
                             "x": {"field":"", "type": "ordinal","axis": {"title": ""}},
                             "y2": {"field": "end"},
                             "size": {"value": 340}
 
                         },
                             "layer": [{
-                            "mark": "bar"
+                            "mark": "bar",
+                                "encoding": {"color": {"value": "#002546"}} //AU color
                         }, {
                             "mark": {
                             "type": "text",
-                            "align": "center",
+                            "align": "center", "clip": true,
                             "baseline": "top",
                             "dy": 10
                         },
                             "encoding": {
                             "text": {"field": "description", "type": "ordinal"},
-                            "size": {"value": 14}
-                        }
-
-                        }]
-
+                            "size": {"value": 14}, "color": {"value": "white"}
+                            }
+                            },
+                                {
+                                    "mark":{ "type": "point"},
+                                    "encoding": {
+                                        "y": {"field":"time", "type": "quantitative" },
+                                        "color": {"value": "red"},
+                                        "size": {"value": 130000},
+                                        "shape":{"value":"stroke"}
+                                    }
+                                }
+                                ]
                         }}/>
                     </CardContent>
                 </Card>
@@ -233,7 +246,3 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     );
 };
-
-//[
-//                                     {"start": startTime, "end": endTime}
-//                                 ]

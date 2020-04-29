@@ -12,25 +12,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@material-ui/core": "^4.9.4",
+    "@material-ui/core": "^4.9.12",
     "body-parser": "^1.19.0",
     "cal-parser": "^1.0.1",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^9.3.4",
-    "next-images": "^1.3.0",
-    "node-json-db": "^1.0.3",
+    "next": "^9.3.6",
+    "next-images": "^1.4.0",
+    "node-json-db": "^1.1.0",
     "react": "^16.13.1",
-    "react-dom": "^16.12.0",
+    "react-dom": "^16.13.1",
     "react-vega": "^7.3.0",
-    "swr": "^0.1.17",
-    "typescript": "^3.7.5",
-    "vega": "^5.10.0",
-    "vega-lite": "^4.8.1"
+    "swr": "^0.1.18",
+    "typescript": "^3.8.3",
+    "vega": "^5.11.1",
+    "vega-lite": "^4.11.0"
   },
   "devDependencies": {
     "@types/globalize": "0.0.36",
-    "@types/node": "^13.7.1",
-    "@types/react": "^16.9.19",
+    "@types/node": "^13.13.4",
+    "@types/react": "^16.9.34",
     "prettier": "^1.19.1",
     "webpack": "^4.42.1"
   }
