@@ -4,11 +4,13 @@ import {buttonStyle} from "../../styles/userConsoleStyles";
 // @ts-ignore
 import {TwitterPicker} from 'react-color'
 import {CustomButton} from "./CustomButton";
+import {getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
 
 interface StatusInfo {
     statusButtons: any[];
+    currentSelection: any;
 
-    saveChanges(customStatus: any[]): void;
+    saveChanges(customStatus: any[], currentSelection: any): void;
 }
 
 export const Status = (props: StatusInfo) => {
@@ -20,14 +22,16 @@ export const Status = (props: StatusInfo) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const open = Boolean(anchorEl);
     const [selectedColor, setSelectedColor] = useState(colors.green["500"]);
-    const defaultColors = [colors.green["500"], colors.yellow.A700, colors.red.A700, "#0693E3", "#00D084", "#EB144C", "#9900EF", "#ff5722", "#795548", "#ABB8C3"]
+    const defaultColors = [colors.green["500"], colors.yellow.A700, colors.red.A700, "#0693E3", "#00D084", "#EB144C", "#9900EF", "#ff5722", "#795548", "#ABB8C3"];
+    const [currentSelection, setCurrentSelection] = useState(props.currentSelection);
 
     useEffect(() => {
-        props.saveChanges(customStatus);
+        props.saveChanges(customStatus, currentSelection);
     }, [customStatus])
 
-    function onButtonClick() {
-
+    function onButtonClick(buttonInfo: any) {
+        setCurrentSelection(buttonInfo);
+        props.saveChanges(customStatus, buttonInfo);
     }
 
     function addCustomStatus() {
@@ -51,7 +55,8 @@ export const Status = (props: StatusInfo) => {
     function getCustomStatus() {
         if (customStatus) {
             const customStatusList = customStatus.map((status: any, i: number) =>
-                <CustomButton text={status.text} color={status.color} position={i} removeSelf={removeButton} key={i}/>
+                <CustomButton text={status.text} color={status.color} position={i} removeSelf={removeButton}
+                              selectButton={onButtonClick} key={i}/>
             );
             return customStatusList;
         }
@@ -62,9 +67,11 @@ export const Status = (props: StatusInfo) => {
             <h2>Status</h2>
             <div style={{display: "flex", flexDirection: "column", alignItems: "start", width: "220px"}}>
                 <Button variant="contained" className={buttonStyling.buttonGreen}
-                        onClick={onButtonClick}>Available</Button>
-                <Button variant="contained" className={buttonStyling.buttonYellow} onClick={onButtonClick}>Away</Button>
-                <Button variant="contained" className={buttonStyling.buttonRed} onClick={onButtonClick}>Do not
+                        onClick={() => onButtonClick(getAvailableButton())}>Available</Button>
+                <Button variant="contained" className={buttonStyling.buttonYellow}
+                        onClick={() => onButtonClick(getAwayButton())}>Away</Button>
+                <Button variant="contained" className={buttonStyling.buttonRed}
+                        onClick={() => onButtonClick(getBusyButton())}>Do not
                     disturb</Button>
                 {getCustomStatus()}
 

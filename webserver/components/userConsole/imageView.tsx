@@ -70,7 +70,14 @@ export const ImageView = (props: ImageViewProps) => {
                                onChange={(e) => setSelectedData(e.target.value)}/>
                     <img src={selectedData} height="300px" alt="Unable to display image"/>
                 </div>);
-        } else if (selectedRadio === DataType.VEGA) {
+        } else if (selectedRadio === DataType.CALENDAR) {
+            return (
+                <div>
+                    <TextField label="Calendar" value={selectedData}
+                               onChange={(e) => setSelectedData(e.target.value)}/>
+                    <iframe src={selectedData} height="300px"/>
+                </div>);
+        }else if (selectedRadio === DataType.VEGA) {
             return (<TextareaAutosize value={selectedData} onChange={(e) => setSelectedData(e.target.value)}/>);
         }
     }
@@ -103,6 +110,8 @@ export const ImageView = (props: ImageViewProps) => {
                                                                   label="Image"/>
                                                 <FormControlLabel value={DataType.VEGA} control={<Radio/>}
                                                                   label="Vega-Lite"/>
+                                                <FormControlLabel value={DataType.CALENDAR} control={<Radio/>}
+                                                                  label="Calendar"/>
                                                 <FormControlLabel value={DataType.EMPTY} control={<Radio/>}
                                                                   label="Empty"/>
                                             </RadioGroup>

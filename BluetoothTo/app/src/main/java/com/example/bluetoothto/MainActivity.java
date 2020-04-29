@@ -35,7 +35,8 @@ public class MainActivity extends Activity {
     private WebView webView;
     private String lastRecieved;
 
-    private String localIP = "192.168.87.166";
+    //private String localIP = "192.168.87.166";
+    private String localIP = "192.168.87.166"; //hyrup
     private String mainURL = "http://" + localIP+ ":3000"; // SKAL MÅSKE ÆNDRES TIL LOCALHOST
     //private String mainURL = "http://localhost:3000";
 

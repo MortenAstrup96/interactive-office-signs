@@ -3,16 +3,14 @@ import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button, colors} from "@material-ui/core";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
-import {useRouter} from "next/router";
+import {getAvailableButton, getBusyButton} from "../../library/general_functions";
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
 
-    const [status, setStatus] = useState<string>(props.status);
-    const [buttonColor, setButtonColor] = useState<any>({background: colors.green["500"], text: colors.common.black});
+    const [status, setStatus] = useState<any>(props.status);
     const [nameId] = useState<string>(props.nameId);
-    const [inMeeting, setInMeeting] = useState(false);
 
     let {data} = useSWR(() => '/api/getCalendar', fetcher, {
         refreshInterval: 120000
@@ -23,53 +21,21 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         if (data) {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
-            console.log(parsed);
 
             // Array of events happening at the moment
             const currentEvents = parseCalendarData(parsed.events);
             if (currentEvents.length >= 1) {
-                setInMeeting(true);
+                setStatus({text: "In Meeting", color: colors.red.A700})
             } else {
-                setInMeeting(false);
+                setStatus(props.status);
             }
         }
     }, [data]);
-
-    useEffect(() => {
-        if (inMeeting) {
-            setStatus("Busy");
-        } else {
-            // Reverts to previous status when meeting is over.
-            setStatus(props.status);
-        }
-    }, [inMeeting]);
 
 
     useEffect(() => {
         setStatus(props.status);
     }, [props.status]);
-
-
-    // Whenever status switches, color of button will change TODO: Change so it just returns a colored button instead
-    useEffect(() => {
-        if (inMeeting) {
-            setButtonColor({background: colors.red.A700, text: colors.common.white});
-
-        }
-        switch (status) {
-            case "Available":
-                setButtonColor({background: colors.green["500"], text: colors.common.white});
-                break;
-            case "Be right back":
-                setButtonColor({background: colors.yellow.A700, text: colors.common.white});
-                break;
-            case "Busy":
-                setButtonColor({background: colors.red.A700, text: colors.common.white});
-                break;
-            default:
-                setButtonColor({background: colors.common.white, text: colors.common.black});
-        }
-    }, [status]);
 
 
     // Filters the array of events received
@@ -90,7 +56,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     }
 
     // Updates database via API on status change
-    function putStatusUpdate(status: string) {
+    function putStatusUpdate(status: any) {
         fetch('/api/setStatusById/' + props.nameId, {
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -110,21 +76,23 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
     // Will switch between available/busy - If neither switch to available
     function changeStatus() {
-        if (status === "Available") {
-            setStatus("Busy")
-            putStatusUpdate("Busy");
+        if (status.text === "Available") {
+            setStatus(getBusyButton())
+            putStatusUpdate(getBusyButton());
         } else {
-            setStatus("Available");
-            putStatusUpdate("Available");
+            setStatus(getAvailableButton());
+            putStatusUpdate(getAvailableButton());
         }
     }
 
     return (
         <div>
             <Button variant="contained" onClick={changeStatus}
-                    style={{backgroundColor: buttonColor.background, color: buttonColor.text, width: 200, height: 50}}>
-                {status}
+                    style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50}}>
+                {status.text}
             </Button>
+
+
         </div>
     );
 };

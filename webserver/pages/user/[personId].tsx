@@ -43,11 +43,12 @@ export default function Index() {
 
     useEffect(() => {
         saveChanges();
-    }, [currentUser?.statusButtons])
+    }, [currentUser?.statusButtons, currentUser?.status]);
 
-    function updateStatusButtons(buttonArray: any[]) {
+    function updateStatusButtons(buttonArray: any[], buttonStatus: any) {
         setCurrentUser((prevState: any) => ({
             ...prevState,
+            status: buttonStatus,
             statusButtons: buttonArray,
         }));
     }
@@ -59,6 +60,7 @@ export default function Index() {
         }
     }
 
+    console.log(currentUser?.status);
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
@@ -73,10 +75,12 @@ export default function Index() {
                 <Tab label="Status" />
             </Tabs>
         <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
-        <Status statusButtons={currentUser?.statusButtons} saveChanges={updateStatusButtons}/>
+            <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status}
+                    saveChanges={updateStatusButtons}/>
+            <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
         </div>
     );
 }
 
 // Customize component:
-// <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
+//
