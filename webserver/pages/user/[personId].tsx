@@ -11,6 +11,7 @@ export default function Index() {
     const [currentUser, setCurrentUser] = useState<UserInformation>();
     let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
 
+    /** Tab component */
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
