@@ -16,10 +16,11 @@
     "body-parser": "^1.19.0",
     "cal-parser": "^1.0.1",
     "isomorphic-unfetch": "^3.0.0",
-    "next": "^9.3.6",
+    "next": "^9.3.5",
     "next-images": "^1.4.0",
     "node-json-db": "^1.1.0",
     "react": "^16.13.1",
+    "react-color": "^2.18.0",
     "react-dom": "^16.13.1",
     "react-vega": "^7.3.0",
     "swr": "^0.1.18",
@@ -28,7 +29,6 @@
     "vega-lite": "^4.11.0"
   },
   "devDependencies": {
-    "@types/globalize": "0.0.36",
     "@types/node": "^13.13.4",
     "@types/react": "^16.9.34",
     "prettier": "^1.19.1",

@@ -3,7 +3,7 @@ export interface UserInformation {
     nameId: string;
     name: string;
     mail: string;
-    status: string;
+    status: { text: string, color: string };
     calendarURL: string;
     viewType: string;
     firstView: ViewData;
@@ -11,6 +11,7 @@ export interface UserInformation {
     thirdView: ViewData;
     fourthView: ViewData;
     customView: ViewData;
+    statusButtons: any[];
 }
 
 export interface ViewData {
@@ -20,6 +21,6 @@ export interface ViewData {
 
 export interface OfficeAvailabilityProps {
     nameId: string;
-    status: string;
+    status: { text: string, color: string };
     calendarURL: string;
 }

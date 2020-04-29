@@ -1,7 +1,6 @@
 import {Container, List, ListItem, ListItemText,} from "@material-ui/core";
 import useSWR from "swr";
 import Link from "next/link";
-import {serverName} from "../library/constants";
 
 interface NameProp {
     name: string,
@@ -9,7 +8,7 @@ interface NameProp {
 }
 
 export default function Tablets() {
-    const {data} = useSWR(() => serverName + '/api/getUserData', fetcher);
+    const {data} = useSWR(() => '/api/getUserData', fetcher);
 
 
     // This function returns a Material UI List-item with a link, linking to /tablet/nameId

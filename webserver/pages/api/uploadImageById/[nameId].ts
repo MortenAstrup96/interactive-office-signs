@@ -1,8 +1,6 @@
 import {createWriteStream} from "fs";
 import path from "path";
 
-;
-
 export default async (req: any, res: any) => {
     // for the pipe to work, we need to disable "bodyParser" (see below)
     const {
@@ -10,6 +8,7 @@ export default async (req: any, res: any) => {
     } = req;
 
     req.pipe(createWriteStream("./img/profile/" + nameId + ".jpg"));
+    console.log("Creating image ...");
     res.statusCode = 200;
     res.end();
 };
