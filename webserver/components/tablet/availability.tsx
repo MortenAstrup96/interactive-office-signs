@@ -6,11 +6,10 @@ import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
 import {VegaLite} from "react-vega/lib";
 import {makeStyles} from "@material-ui/core/styles";
-
-
+import {getAvailableButton, getBusyButton} from "../../library/general_functions";
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
-    const [status, setStatus] = useState<string>(props.status);
+    const [status, setStatus] = useState<any>(props.status);
     const [buttonColor, setButtonColor] = useState<any>({background: colors.green["500"], text: colors.common.black});
     const [nameId] = useState<string>(props.nameId);
     const [inMeeting, setInMeeting] = useState(false);
