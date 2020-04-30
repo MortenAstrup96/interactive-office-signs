@@ -28,6 +28,7 @@ export const generalStyle = makeStyles((theme: Theme) =>
     }),
 );
 
+
 export default createMuiTheme({
         palette: {
             primary: {

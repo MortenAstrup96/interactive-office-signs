@@ -40,7 +40,7 @@ export const ImageCard = (props: ImageInformation) => {
         media: {maxWidth: "100%", maxHeight: "100%"}
     });
     const vegaClasses = vegaStyles();
-    type dataType = {start: number, end: number, description: string, time: number}
+    type dataType = { start: number, end: number, description: string, time: number }
     let event = new Array<dataType>();
 
     function fetcher(url: any) {
@@ -76,12 +76,37 @@ export const ImageCard = (props: ImageInformation) => {
                 <div>
                     {getCalendarView()}
                 </div>
-            )
+            );
+        } else if (props.dataType === DataType.TEXT) {
+            console.log(props.src.length);
+            if (props.src.length < 40) {
+                return (
+                    <Card variant="outlined" className={cardClasses.root}>
+                        <CardContent>
+                            <h1>{props.src}</h1>
+                        </CardContent>
+                    </Card>
+                );
+            } else if (props.src.length < 100) {
+                return (
+                    <Card variant="outlined" className={cardClasses.root}>
+                        <CardContent>
+                            <h2>{props.src}</h2>
+                        </CardContent>
+                    </Card>
+                );
+            }
+            return (
+                <Card variant="outlined" className={cardClasses.root}>
+                    <CardContent>
+                        <p>{props.src}</p>
+                    </CardContent>
+                </Card>);
         }
         return (
             <div className={cardClasses.root}>
 
-            </div>)
+            </div>);
     }
 
     function getVegaView() {
@@ -134,7 +159,7 @@ export const ImageCard = (props: ImageInformation) => {
     }
 
     function convertTimeToDecimal(time: any) {
-        return time.getHours()+(time.getMinutes()/60);
+        return time.getHours() + (time.getMinutes() / 60);
     }
 
     function setCalendar(start: any, end: any, current: any, desc: any) {
@@ -143,13 +168,13 @@ export const ImageCard = (props: ImageInformation) => {
         let currentDate = new Date(current);
 
         // If the event is from the current day
-        if(startDate.toDateString() === currentDate.toDateString()) {
+        if (startDate.toDateString() === currentDate.toDateString()) {
             currentTime = convertTimeToDecimal(currentDate);
-            let startTime = convertTimeToDecimal(startDate)-2; //TODO: fix with timezone
-            let endTime = convertTimeToDecimal(endDate)-2; //TODO: fix with timezone
+            let startTime = convertTimeToDecimal(startDate) - 2; //TODO: fix with timezone
+            let endTime = convertTimeToDecimal(endDate) - 2; //TODO: fix with timezone
 
             // If the event is not in the past: add to array
-            if(endTime > currentTime) {
+            if (endTime > currentTime) {
                 event.push({start: startTime, end: endTime, description: desc, time: currentTime});
             }
         }
@@ -170,8 +195,13 @@ export const ImageCard = (props: ImageInformation) => {
                                 "values": event
                             },
                             "encoding": {
-                                "y": {"field": "start", "type": "quantitative", "scale": {"domain": [22, currentTime-2], "padding": 0},"axis": {"title": ""}},
-                                "x": {"field":"", "type": "ordinal","axis": {"title": ""}},
+                                "y": {
+                                    "field": "start",
+                                    "type": "quantitative",
+                                    "scale": {"domain": [22, currentTime - 2], "padding": 0},
+                                    "axis": {"title": ""}
+                                },
+                                "x": {"field": "", "type": "ordinal", "axis": {"title": ""}},
                                 "y2": {"field": "end"},
                                 "size": {"value": 340}
 
@@ -192,12 +222,12 @@ export const ImageCard = (props: ImageInformation) => {
                                 }
                             },
                                 {
-                                    "mark":{ "type": "point"},
+                                    "mark": {"type": "point"},
                                     "encoding": {
-                                        "y": {"field":"time", "type": "quantitative" },
+                                        "y": {"field": "time", "type": "quantitative"},
                                         "color": {"value": "red"},
                                         "size": {"value": 130000},
-                                        "shape":{"value":"stroke"}
+                                        "shape": {"value": "stroke"}
                                     }
                                 }
                             ]
@@ -206,7 +236,6 @@ export const ImageCard = (props: ImageInformation) => {
                 </Card>
             </div>
         );
-
     }
 
     return (
