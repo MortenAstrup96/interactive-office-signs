@@ -16,40 +16,39 @@ interface TabPanelProps {
 export default function Index() {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<UserInformation>();
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        console.log(newValue);
+       setValue(newValue);
+    };
     let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
 
     /** Tab component */
-    function TabPanel(props: TabPanelProps) {
-        const { children, value, index, ...other } = props;
-
+    function getTabPanel(index: number, value: number, children: any) {
+        if(value === index) {
+            return (
+                <div
+                    role="tabpanel"
+                    hidden={value !== index}
+                    id={`simple-tabpanel-${index}`}
+                    aria-labelledby={`simple-tab-${index}`}
+                >
+                    {children}
+                </div>
+            );
+        }
         return (
             <div
                 role="tabpanel"
                 hidden={value !== index}
                 id={`simple-tabpanel-${index}`}
                 aria-labelledby={`simple-tab-${index}`}
-                {...other}
             >
-                {value === index && (
-                    <Box p={2}>
-                        <Typography>{children}</Typography>
-                    </Box>
-                )}
             </div>
         );
-    }
 
-    function allyProps(index: any) {
-        return {
-            id: `simple-tab${index}`,
-            'aria-controls': `simple-tabpanel-${index}`,
-        };
     }
-
-        const [value, setValue] = React.useState(0);
-        const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-            setValue(newValue);
-        };
 
     useEffect(() => {
         if (data) {
@@ -86,6 +85,18 @@ export default function Index() {
         }));
     }
 
+
+    function getCustomize() {
+        if(currentUser) {
+            return(<Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>);
+        }
+    }
+    function getStatus() {
+        if(currentUser) {
+            return( <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status} saveChanges={updateStatusButtons}/>);
+        }
+    }
+
     // Gets profile data
     async function fetcher(url: any) {
         if (router.query.personId) {
@@ -99,18 +110,14 @@ export default function Index() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    centered
-                    aria-label="simple tabs example"
-                >
-                    <Tab label="Profile" {...allyProps(0)} />
-                    <Tab label="Status" {...allyProps(1)} />
+                    centered>
+                    <Tab label="Profile" />
+                    <Tab label="Status" />
                 </Tabs>
-                <TabPanel value={value} index={0}>
-                    <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
-                </TabPanel>
-                <TabPanel index={1} value={value}>
-                    <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status} saveChanges={updateStatusButtons}/>
-                </TabPanel>
+
+            {getTabPanel(0, value, getCustomize())}
+            {getTabPanel(1, value, getStatus())}
+
         </div>
     );
 }
