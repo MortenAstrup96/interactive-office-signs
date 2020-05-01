@@ -65,10 +65,10 @@ export default function OfficeInformationId() {
                     {getProfileImage()}
                 </div>
                 <div className={generalStyling.office}>
-                    <h1>{currentOffice.name}</h1>
+                    <p>{currentOffice.name}</p>
                 </div>
                 <div className={generalStyling.office}>
-                    <h2>{currentOffice.mail}</h2>
+                    <p>{currentOffice.mail}</p>
                 </div>
                 <div className={generalStyling.office}>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}
