@@ -48,6 +48,7 @@ export default function OfficeInformationId() {
                     width: "250px"
                 }} src={avatarReal} alt={avatarFake}/>)
             } catch (e) {
+                console.log(" :) ")
                 return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
             }
 

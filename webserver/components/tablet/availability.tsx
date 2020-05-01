@@ -7,8 +7,6 @@ import {getAvailableButton, getBusyButton} from "../../library/general_functions
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
-
-
     const [status, setStatus] = useState<any>(props.status);
     const [nameId] = useState<string>(props.nameId);
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Card, CardContent, CardMedia} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import {DataType} from "../../library/enums";
@@ -34,27 +34,40 @@ export const ImageCard = (props: ImageInformation) => {
     const imgClasses = imageStyles();
 
     //Calendar-------------------
-    let currentTime = 0.0;
     const vegaStyles = makeStyles({
         root: {margin: 5, maxWidth: 600, maxHeight: 600},
         media: {maxWidth: "100%", maxHeight: "100%"}
     });
     const vegaClasses = vegaStyles();
     type dataType = { start: number, end: number, description: string, time: number }
-    let event = new Array<dataType>();
+    const [calendarEvents, setCalendarEvents] = useState<dataType[]>([]);
+    const [currentTime, setCurrentTime] = useState(0.0);
 
-    function fetcher(url: any) {
-        const calendar = props.src;
-        return fetch(url, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({calendar})
-        }).then(r => r.text());
-    }
-
-    let {data} = useSWR(() => serverName + '/api/getCalendar', fetcher, {
+    let {data} = useSWR(() => '/api/getCalendar', fetcher, {
         refreshInterval: 10000
     });
+
+    // Leave me alone!!
+    function fetcher(url: any) {
+        if (props.dataType === DataType.CALENDAR) {
+            const calendar = props.src;
+            return fetch(url, {
+                method: 'PUT',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({calendar})
+            }).then(r => r.text());
+        }
+    }
+
+
+    useEffect(() => {
+        if (data) {
+            const ical = require('cal-parser');
+            const parsed = ical.parseString(data);
+            // Array of events happening at the moment
+            parseCalendarData(parsed.events);
+        }
+    }, [data]);
 
     function getCustomView() {
         if (props.dataType === DataType.VEGA) {
@@ -78,7 +91,6 @@ export const ImageCard = (props: ImageInformation) => {
                 </div>
             );
         } else if (props.dataType === DataType.TEXT) {
-            console.log(props.src.length);
             if (props.src.length < 40) {
                 return (
                     <Card variant="outlined" className={cardClasses.root}>
@@ -127,7 +139,6 @@ export const ImageCard = (props: ImageInformation) => {
 
     function parseCalendarData(calendar: any) {
         return calendar.filter((event: any) => {
-
             try {
                 let current = event.dtstamp.getTime();
                 let start = event.dtstart.value.getTime();
@@ -144,20 +155,6 @@ export const ImageCard = (props: ImageInformation) => {
         });
     }
 
-    function fetchData() {
-        if (data) {
-            const ical = require('cal-parser');
-            const parsed = ical.parseString(data);
-
-            // Array of events happening at the moment
-            const currentEvents = parseCalendarData(parsed.events);
-            console.log("fetchWin");
-
-        } else {
-            console.log("fetchFailed");
-        }
-    }
-
     function convertTimeToDecimal(time: any) {
         return time.getHours() + (time.getMinutes() / 60);
     }
@@ -169,19 +166,31 @@ export const ImageCard = (props: ImageInformation) => {
 
         // If the event is from the current day
         if (startDate.toDateString() === currentDate.toDateString()) {
-            currentTime = convertTimeToDecimal(currentDate);
+            setCurrentTime(convertTimeToDecimal(currentDate));
             let startTime = convertTimeToDecimal(startDate) - 2; //TODO: fix with timezone
             let endTime = convertTimeToDecimal(endDate) - 2; //TODO: fix with timezone
 
             // If the event is not in the past: add to array
-            if (endTime > currentTime) {
-                event.push({start: startTime, end: endTime, description: desc, time: currentTime});
+            if (endTime > convertTimeToDecimal(currentDate)) {
+                let eventsCopy = calendarEvents;
+
+                eventsCopy.push({
+                    start: startTime,
+                    end: endTime,
+                    description: desc,
+                    time: convertTimeToDecimal(currentDate)
+                });
+
+                setCalendarEvents(eventsCopy);
             }
         }
     }
 
+    useEffect(() => {
+        console.log(currentTime);
+    }, [currentTime]);
+
     function getCalendarView() {
-        fetchData();
         return (
             <div>
                 <Card variant="outlined" className={vegaClasses.root}>
@@ -192,7 +201,7 @@ export const ImageCard = (props: ImageInformation) => {
                             "width": 350,
                             "height": 450,
                             "data": {
-                                "values": event
+                                "values": JSON.stringify(calendarEvents)
                             },
                             "encoding": {
                                 "y": {
