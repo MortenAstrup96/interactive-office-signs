@@ -88,11 +88,9 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     return (
         <div>
             <Button variant="contained" onClick={changeStatus}
-                    style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50}}>
+                    style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50, fontSize: "20px"}}>
                 {status.text}
             </Button>
-
-
         </div>
     );
 };

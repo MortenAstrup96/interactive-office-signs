@@ -1,25 +1,21 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {createStyles, Theme} from "@material-ui/core";
-import {createMuiTheme} from "@material-ui/core/styles";
-import {blueGrey, red} from "@material-ui/core/colors";
+import {createStyles, Theme, colors} from "@material-ui/core";
+
 
 export const generalStyle = makeStyles((theme: Theme) =>
     createStyles({
         profile: {
             fontFamily: "Roboto",
             textAlign: "center",
-            margin: "30px",
+            margin: "10px",
             width: "600px",
         },
         office: {
             fontFamily: "Roboto",
-            fontSize: "60px",
-            fontStyle: "bold",
+            fontSize: "50px",
+            margin: "5px",
+            marginTop: "10px",
             textAlign: "center",
-            margin: "10px",
-            marginTop: "30px",
-            display: "flex",
-            flexDirection: "row",
         },
         officeDetail: {
             fontFamily: "Roboto",
@@ -30,15 +26,5 @@ export const generalStyle = makeStyles((theme: Theme) =>
         },
     }),
 );
-
-export default createMuiTheme({
-        palette: {
-            primary: {
-                main: blueGrey["500"],
-                light: blueGrey["100"],
-            }
-        }
-    }
-)
 
 

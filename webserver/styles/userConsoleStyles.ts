@@ -66,20 +66,23 @@ export const buttonStyle = makeStyles({
         height: 50,
         margin: "10px",
         backgroundColor: colors.green["500"],
-        color: colors.common.white
+        color: colors.common.white,
+        fontSize: "20px"
     },
     buttonYellow: {
         width: 200,
         height: 50,
         margin: "10px",
         backgroundColor: colors.yellow.A700,
-        color: colors.common.white
+        color: colors.common.white,
+        fontSize: "20px"
     },
     buttonRed: {
         width: 200,
         height: 50,
         margin: "10px",
         backgroundColor: colors.red.A700,
-        color: colors.common.white
+        color: colors.common.white,
+        fontSize: "20px"
     }
 });
