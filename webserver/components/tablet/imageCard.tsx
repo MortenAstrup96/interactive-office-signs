@@ -53,7 +53,7 @@ export const ImageCard = (props: ImageInformation) => {
     }
 
     let {data} = useSWR(() => serverName + '/api/getCalendar', fetcher, {
-        refreshInterval: 10000
+        refreshInterval: 120000
     });
 
     function getCustomView() {
