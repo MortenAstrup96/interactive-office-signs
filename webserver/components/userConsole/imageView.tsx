@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {
     Button,
     Card,
@@ -6,7 +6,7 @@ import {
     CardContent,
     FormControl,
     FormControlLabel,
-    Divider,
+    FormLabel,
     Modal,
     Radio,
     RadioGroup, TextareaAutosize,
@@ -41,10 +41,6 @@ export const ImageView = (props: ImageViewProps) => {
     const [selectedRadio, setSelectedRadio] = useState<string>(DataType.EMPTY);
     const [selectedData, setSelectedData] = useState("");
 
-    useEffect(() => {
-        setSelectedData("");
-    }, [selectedRadio])
-
     function saveChanges() {
         const newData = {
             dataType: selectedRadio,
@@ -60,8 +56,7 @@ export const ImageView = (props: ImageViewProps) => {
     function getVegaView() {
         try {
             const parsedVega = JSON.parse(selectedData);
-            return (<div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/>
-            </div>);
+            return (<VegaLite spec={parsedVega}/>);
         } catch (e) {
             return (<h4>Visualisation unable to compile</h4>)
         }
@@ -70,39 +65,20 @@ export const ImageView = (props: ImageViewProps) => {
     function getCorrectInputField() {
         if (selectedRadio === DataType.IMAGE) {
             return (
-                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <TextField label="Image Link" placeholder="https://www.somewebsite/images/image.jpg"
-                               variant="outlined" value={selectedData}
-                               style={{width: "100%", margin: "10px", marginBottom: "30px"}}
+                <div>
+                    <TextField label="Image" value={selectedData}
                                onChange={(e) => setSelectedData(e.target.value)}/>
-                    <img src={selectedData} height="400px" alt="Unable to display image"/>
+                    <img src={selectedData} height="300px" alt="Unable to display image"/>
                 </div>);
         } else if (selectedRadio === DataType.CALENDAR) {
             return (
-                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    <TextField label="Calendar" placeholder="https://microsoft/mycalendar.ics"
-                               variant="outlined" value={selectedData}
-                               style={{width: "100%", margin: "10px", marginBottom: "30px"}}
+                <div>
+                    <TextField label="Calendar" value={selectedData}
                                onChange={(e) => setSelectedData(e.target.value)}/>
-                    <iframe src={selectedData} height="400px"/>
+                    <iframe src={selectedData} height="300px"/>
                 </div>);
-        } else if (selectedRadio === DataType.VEGA) {
-            return (
-                <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                    <TextField label="Vega-Lite" value={selectedData} multiline rows={24} variant="outlined"
-                               style={{width: "600px", margin: "10px", marginTop: "20px"}}
-                               onChange={(e) => setSelectedData(e.target.value)}/>
-                    {getVegaView()}
-                </div>
-            );
-        } else if (selectedRadio === DataType.TEXT) {
-            return (
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <TextField label="Text" value={selectedData} multiline rows={6} variant="outlined"
-                               style={{width: "90%", margin: "20px", marginBottom: "30px"}}
-                               onChange={(e) => setSelectedData(e.target.value)}/>
-                </div>
-            );
+        }else if (selectedRadio === DataType.VEGA) {
+            return (<TextareaAutosize value={selectedData} onChange={(e) => setSelectedData(e.target.value)}/>);
         }
     }
 
@@ -124,38 +100,23 @@ export const ImageView = (props: ImageViewProps) => {
                                     Add Content
                                 </Typography>
                                 <div>
-                                    <div style={{
-                                        margin: "20px",
-                                        marginLeft: "100px",
-                                        marginRight: "100px",
-                                        minWidth: "600px",
-                                        maxWidth: "1600px"
-
-                                    }}>
-                                        <FormControl component="fieldset" style={{width: "100%"}}>
-                                            <RadioGroup value={selectedRadio}
-                                                        row={true}
-                                                        style={{justifyContent: "space-around"}}
+                                    <div style={{margin: "30px", width: "600px"}}>
+                                        <FormControl component="fieldset">
+                                            <FormLabel component="legend">Type to display on tablet</FormLabel>
+                                            <RadioGroup aria-label="Type to display on tablet" name="tabletDisplay"
+                                                        value={selectedRadio}
                                                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSelectedRadio((event.target as HTMLInputElement).value)}>
                                                 <FormControlLabel value={DataType.IMAGE} control={<Radio/>}
-                                                                  label="Image"
-                                                                  labelPlacement="bottom"/>
+                                                                  label="Image"/>
                                                 <FormControlLabel value={DataType.VEGA} control={<Radio/>}
-                                                                  label="Vega-Lite"
-                                                                  labelPlacement="bottom"/>
+                                                                  label="Vega-Lite"/>
                                                 <FormControlLabel value={DataType.CALENDAR} control={<Radio/>}
-                                                                  label="Calendar"
-                                                                  labelPlacement="bottom"/>
-                                                <FormControlLabel value={DataType.TEXT} control={<Radio/>}
-                                                                  label="Text"
-                                                                  labelPlacement="bottom"/>
+                                                                  label="Calendar"/>
                                                 <FormControlLabel value={DataType.EMPTY} control={<Radio/>}
-                                                                  label="Empty"
-                                                                  labelPlacement="bottom"/>
+                                                                  label="Empty"/>
                                             </RadioGroup>
                                         </FormControl>
                                     </div>
-                                    <Divider/>
                                     {getCorrectInputField()}
                                 </div>
                             </CardContent>
@@ -174,11 +135,10 @@ export const ImageView = (props: ImageViewProps) => {
         );
     }
 
-    if (props.consoleMode) {
+    if(props.consoleMode) {
         return (
             <div>
-                <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles}
-                           consoleView={true}/>
+                <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles} consoleView={true}/>
             </div>
         );
     }
