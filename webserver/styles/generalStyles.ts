@@ -22,9 +22,7 @@ export const generalStyle = makeStyles((theme: Theme) =>
             fontSize: "34px",
             display: "grid",
             gridTemplateColumns: "1fr 2fr 3fr",
-            flexDirection: "column",
+            flexDirection: "column"
         },
     }),
 );
-
-
