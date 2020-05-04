@@ -186,20 +186,16 @@ export const ImageCard = (props: ImageInformation) => {
         }
     }
 
-    useEffect(() => {
-        console.log(currentTime);
-    }, [currentTime]);
-
     function getCalendarView() {
         return (
-            <div>
-                <Card variant="outlined" className={vegaClasses.root}>
-                    <CardContent className={vegaClasses.media}>
+            <div style={{padding: "0"}}>
+                <Card variant="outlined" className={cardClasses.root}>
+                    <CardContent style={{padding: "0"}}>
                         <VegaLite spec={{
                             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
                             "description": "A simple bar chart with ranged data (aka Gantt Chart).",
-                            "width": 350,
-                            "height": 400,
+                            "width": 273,
+                            "height": 320,
                             "data": {
                                 "values": JSON.stringify(calendarEvents)
                             },
@@ -212,7 +208,7 @@ export const ImageCard = (props: ImageInformation) => {
                                 },
                                 "x": {"field": "", "type": "ordinal", "axis": {"title": ""}},
                                 "y2": {"field": "end"},
-                                "size": {"value": 340}
+                                "size": {"value": 273}
 
                             },
                             "layer": [{
