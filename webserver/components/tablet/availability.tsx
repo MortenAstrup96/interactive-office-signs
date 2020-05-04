@@ -20,9 +20,14 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
 
+
             // Array of events happening at the moment
             const currentEvents = parseCalendarData(parsed.events);
+            console.log(currentEvents);
+
             if (currentEvents.length >= 1) {
+                console.log(currentEvents[0].dtstart.value.getTime());
+                console.log(currentEvents[0].dtstamp.getTime());
                 setStatus({text: "In Meeting", color: colors.red.A700})
             } else {
                 setStatus(props.status);
@@ -41,9 +46,16 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         return calendar.filter((event: any) => {
 
             try {
-                let current = event.dtstamp.getTime();
+                let current;
                 let start = event.dtstart.value.getTime();
                 let end = event.dtend.value.getTime();
+
+                // Start and end might come in as
+                if (event.dtstart.params.tzid === "Romance Standard Time") {
+                    current = event.dtstamp.getTime() + 7200000;
+                } else {
+                    current = event.dtstamp.getTime();
+                }
 
                 return (current >= start && current <= end)
             } catch (e) {

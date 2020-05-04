@@ -199,7 +199,7 @@ export const ImageCard = (props: ImageInformation) => {
                             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
                             "description": "A simple bar chart with ranged data (aka Gantt Chart).",
                             "width": 350,
-                            "height": 450,
+                            "height": 400,
                             "data": {
                                 "values": JSON.stringify(calendarEvents)
                             },
