@@ -2,6 +2,7 @@ export enum DataType {
     VEGA = "vega",
     IMAGE = "image",
     CALENDAR = "calendar",
+    TEXT = "text",
     EMPTY = "empty"
 }
 
