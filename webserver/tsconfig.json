@@ -26,6 +26,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
-    "pages/index.js"
+    "pages/index.js",
+    "fonts.d.ts"
   ]
 }

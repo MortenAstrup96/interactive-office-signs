@@ -1,11 +1,13 @@
-import {Button, Grid, TextField,} from "@material-ui/core";
+import {Button, Grid, TextField, ThemeProvider,} from "@material-ui/core";
 import Link from "next/link";
 import React, {useState} from "react";
+import {theme} from "../styles/generalStyles";
 
 function Index() {
     const [username, setUsername] = useState<string>("");
 
     return (
+        <ThemeProvider theme={theme}>
         <Grid container
               direction="column"
               justify="space-between"
@@ -47,7 +49,7 @@ function Index() {
                 </Grid>
             </Link>
         </Grid>
-
+        </ThemeProvider>
     );
 }
 
