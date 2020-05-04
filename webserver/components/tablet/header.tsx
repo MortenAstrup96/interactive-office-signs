@@ -8,7 +8,9 @@ const textColor = '#002546';
 // Interface defines what items must be given this Header
 interface officeInformationProps {
     office: string,
-    nameId: string
+    nameId: string,
+    name: string,
+    mail: string
 }
 
 export default function Header(props: officeInformationProps) {
@@ -23,37 +25,40 @@ export default function Header(props: officeInformationProps) {
     };
 
     const textStyle = {
-        marginTop: '10px',
-        marginBottom: '10px',
+        marginTop: '20px',
+        marginBottom: '20px',
         fontFamily: 'Roboto',
         color: textColor,
         height: '20px'
     };
+
+    console.log(props);
     return (
         <div>
             <div style={headerStyles}>
                 <div style={{position: "relative"}}>
-                    <img src={auLogo} alt="No image" style={{position: "absolute", width: "300px", bottom: "10px"}}/>
+                    <img src={auLogo} alt="No image"
+                         style={{position: "absolute", width: "300px", bottom: "10px", marginBottom: "10px"}}/>
                 </div>
 
                 <span style={{textAlign: "right"}}>
-                <h2 style={textStyle}>{props.office}</h2>
+                <h1 style={textStyle}>{props.office}</h1>
                 <p style={textStyle}>Department of Computer Science</p>
             </span>
             </div>
+            <Divider/>
 
             <Link href={"/office/" + props.nameId}>
-                <Button variant="contained">
+                <Button variant="text" color="primary">
                     Far
                 </Button>
             </Link>
 
             <Link href={"/office/details/" + props.nameId}>
-                <Button variant="contained">
+                <Button variant="text" color="primary">
                     Close
                 </Button>
             </Link>
-            <Divider/>
         </div>
     );
 }

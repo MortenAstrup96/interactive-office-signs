@@ -1,5 +1,5 @@
 export interface UserInformation {
-    officeId: string;
+    office: string;
     nameId: string;
     name: string;
     mail: string;

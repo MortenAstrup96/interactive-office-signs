@@ -26,7 +26,6 @@ export default function OfficeInformationId() {
 
     useEffect(() => {
         setCurrentOffice(data);
-        console.log(data);
     }, [data, revalidate]);
 
 
@@ -57,12 +56,14 @@ export default function OfficeInformationId() {
         }
     }
 
-    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
+    if (!data || !currentOffice) return (<div></div>);
 
+    console.log(currentOffice);
     return (
         <Container>
             <div>
-                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
+                <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
+                        mail={currentOffice?.mail}/>
                 <div className={generalStyling.office}>
                     {getProfileImage()}
                 </div>

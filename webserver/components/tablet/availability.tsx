@@ -23,11 +23,8 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
 
             // Array of events happening at the moment
             const currentEvents = parseCalendarData(parsed.events);
-            console.log(currentEvents);
 
             if (currentEvents.length >= 1) {
-                console.log(currentEvents[0].dtstart.value.getTime());
-                console.log(currentEvents[0].dtstamp.getTime());
                 setStatus({text: "In Meeting", color: colors.red.A700})
             } else {
                 setStatus(props.status);

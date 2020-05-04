@@ -87,13 +87,14 @@ export default function OfficeInformationId() {
     }
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
+    if (!data || !currentOffice) return (<div></div>);
 
 
     return (
         <Container>
             <div>
-                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
+                <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
+                        mail={currentOffice?.mail}/>
                 <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
                     <div className={generalStyling.officeDetail}>
                         {getProfileImage()}
