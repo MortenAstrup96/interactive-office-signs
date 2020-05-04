@@ -1,6 +1,13 @@
 import {makeStyles} from "@material-ui/core/styles";
-import {createStyles, Theme, colors} from "@material-ui/core";
+import {createStyles, Theme} from "@material-ui/core";
+import {createMuiTheme} from "@material-ui/core/styles";
 
+interface PaletteIntention {
+    light?: string;
+    main: string;
+    dark?: string;
+    contrastText?: string;
+}
 
 export const generalStyle = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,4 +34,28 @@ export const generalStyle = makeStyles((theme: Theme) =>
     }),
 );
 
+export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#003d73',
+            dark: '#002546',
+        },
+        secondary: {
+            main: '#37a0cb',
+            dark: '#003e5c',
+        },
+        success: {
+            main: '#8bad3f',
+            dark: '#425821',
+        },
+        warning: {
+            main: '#fabb00',
+            dark: '#634b03',
+        },
+        error: {
+            main: '#e2001a',
+            dark: '#5b0c0c',
+        }
+    }
+});
 

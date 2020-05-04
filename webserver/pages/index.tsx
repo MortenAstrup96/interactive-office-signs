@@ -1,6 +1,7 @@
-import {Button, Grid, TextField,} from "@material-ui/core";
+import {Button, Grid, TextField, ThemeProvider,} from "@material-ui/core";
 import Link from "next/link";
 import React, {useState} from "react";
+import {theme} from "../styles/generalStyles";
 
 function Index() {
     const [username, setUsername] = useState<string>("");
@@ -17,7 +18,7 @@ function Index() {
             <div style={{marginBottom: "2%"}}>
                 <form noValidate autoComplete="off">
                     <Grid container direction="column" justify="space-between" alignItems="center" spacing={2}>
-                        <Grid item>
+                        <Grid item>s
                             <TextField id="outlined-basic" label="Username" variant="outlined" value={username}
                                        onChange={event => setUsername(event.target.value)}
                                        style={{width: 300, height: 40, margin: "10px"}}/>
@@ -31,9 +32,11 @@ function Index() {
             </div>
 
             <Grid item>
+                <ThemeProvider theme={theme}>
                 <Link href={"/user/" + username}>
                     <Button variant="contained" color="primary" style={{width: 180, height: 45}}>Sign In</Button>
                 </Link>
+                </ThemeProvider>
             </Grid>
             <Link href={"/create-account/"}>
                 <Grid item>
