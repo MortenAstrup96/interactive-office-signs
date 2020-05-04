@@ -7,6 +7,7 @@ function Index() {
     const [username, setUsername] = useState<string>("");
 
     return (
+        <ThemeProvider theme={theme}>
         <Grid container
               direction="column"
               justify="space-between"
@@ -18,7 +19,7 @@ function Index() {
             <div style={{marginBottom: "2%"}}>
                 <form noValidate autoComplete="off">
                     <Grid container direction="column" justify="space-between" alignItems="center" spacing={2}>
-                        <Grid item>s
+                        <Grid item>
                             <TextField id="outlined-basic" label="Username" variant="outlined" value={username}
                                        onChange={event => setUsername(event.target.value)}
                                        style={{width: 350, height: 40, margin: "10px"}}/>
@@ -32,7 +33,6 @@ function Index() {
             </div>
 
             <Grid item>
-                <ThemeProvider theme={theme}>
                 <Link href={"/user/" + username}>
                     <Button variant="contained" color="primary"
                             style={{width: 140, height: 45, marginRight: "10px"}}>Console</Button>
@@ -42,7 +42,6 @@ function Index() {
                     <Button variant="contained" color="primary"
                             style={{width: 140, height: 45, marginLeft: "10px"}}>Tablet</Button>
                 </Link>
-                </ThemeProvider>
             </Grid>
             <Link href={"/create-account/"}>
                 <Grid item>
@@ -50,7 +49,7 @@ function Index() {
                 </Grid>
             </Link>
         </Grid>
-
+        </ThemeProvider>
     );
 }
 
