@@ -116,9 +116,9 @@ export const ImageCard = (props: ImageInformation) => {
                 </Card>);
         }
         return (
-            <div className={cardClasses.root}>
+            <Card variant="outlined" className={cardClasses.root}>
 
-            </div>);
+            </Card>);
     }
 
     function getVegaView() {

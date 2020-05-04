@@ -23,4 +23,5 @@ export interface OfficeAvailabilityProps {
     nameId: string;
     status: { text: string, color: string };
     calendarURL: string;
+    small?: boolean;
 }

@@ -92,20 +92,39 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         }
     }
 
-    return (
-        <div>
-            <Button variant="contained" onClick={changeStatus}
-                    style={{
-                        backgroundColor: status.color,
-                        color: "#ffffff",
-                        marginTop: "80px",
-                        width: 350,
-                        height: 100,
-                        fontSize: "30px"
+    if (props.small) {
+        return (
+            <div>
+                <Button variant="contained" onClick={changeStatus}
+                        style={{
+                            backgroundColor: status.color,
+                            color: "#ffffff",
+                            marginTop: "10px",
+                            width: 200,
+                            height: 55,
+                            fontSize: "20px",
+                            marginLeft: "19px"
+                        }}>
+                    {status.text}
+                </Button>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <Button variant="contained" onClick={changeStatus}
+                        style={{
+                            backgroundColor: status.color,
+                            color: "#ffffff",
+                            marginTop: "80px",
+                            width: 350,
+                            height: 100,
+                            fontSize: "30px"
+                        }}>
+                    {status.text}
+                </Button>
+            </div>
+        );
+    }
 
-                    }}>
-                {status.text}
-            </Button>
-        </div>
-    );
 };
