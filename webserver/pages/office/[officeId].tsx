@@ -36,15 +36,15 @@ export default function OfficeInformationId() {
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "400px",
-                    width: "400px"
+                    height: "450px",
+                    width: "450px"
                 }} src={avatarReal} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+                return (<img src={avatarFake} alt={avatarFake} width="450px"/>);
             }
 
         }
-        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+        return (<img src={avatarFake} alt={avatarFake} width="450px"/>);
     }
 
     async function fetcher(url: any) {
@@ -58,25 +58,25 @@ export default function OfficeInformationId() {
 
     if (!data || !currentOffice) return (<div></div>);
 
-    console.log(currentOffice);
     return (
         <Container>
             <div>
                 <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
                         mail={currentOffice?.mail}/>
-                <div className={generalStyling.office}>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     {getProfileImage()}
-                </div>
-                <div className={generalStyling.office}>
-                    <p>{currentOffice.name}</p>
-                </div>
-                <div className={generalStyling.office}>
-                    <p>{currentOffice.mail}</p>
-                </div>
-                <div className={generalStyling.office}>
+                    <h1 style={{
+                        fontSize: "60px",
+                        margin: "5px",
+                        marginTop: "30px",
+                        color: "#002546"
+                    }}>{currentOffice.name}</h1>
+                    <p style={{fontSize: "30px", margin: "5px", marginBottom: "30px", color: "#002546"}}>Associate
+                        Professor</p>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}
                                   calendarURL={currentOffice?.calendarURL}/>
                 </div>
+
             </div>
         </Container>
     );

@@ -17,6 +17,18 @@ export const generalStyle = makeStyles((theme: Theme) =>
             marginTop: "10px",
             textAlign: "center",
         },
+        officeName: {
+            fontFamily: "Roboto",
+            fontSize: "50px",
+            margin: "5px",
+            textAlign: "center",
+        },
+        officeTitle: {
+            fontFamily: "Roboto",
+            fontSize: "20px",
+            margin: "5px",
+            textAlign: "center",
+        },
         officeDetail: {
             fontFamily: "Roboto",
             fontSize: "34px",

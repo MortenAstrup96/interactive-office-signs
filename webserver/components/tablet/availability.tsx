@@ -95,7 +95,15 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     return (
         <div>
             <Button variant="contained" onClick={changeStatus}
-                    style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50, fontSize: "20px"}}>
+                    style={{
+                        backgroundColor: status.color,
+                        color: "#ffffff",
+                        marginTop: "80px",
+                        width: 350,
+                        height: 100,
+                        fontSize: "30px"
+
+                    }}>
                 {status.text}
             </Button>
         </div>
