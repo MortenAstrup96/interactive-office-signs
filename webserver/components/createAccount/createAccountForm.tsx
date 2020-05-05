@@ -11,9 +11,8 @@ export const CreateAccountForm = () => {
     const router = useRouter();
 
 
-    const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
+    const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; title: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         const username = prop.nameId;
-        const avatarFake = require("../../img/avataricon.png");
 
         fetch('/api/user/0', {
             method: 'POST',
@@ -25,6 +24,7 @@ export const CreateAccountForm = () => {
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
+    const [title, setTitle] = useState("");
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
     const [calendarURL, setCalenderURL] = useState("");
@@ -33,6 +33,7 @@ export const CreateAccountForm = () => {
             officeId: office,
             nameId: nameId,
             name: name,
+            title: title,
             mail: mail,
             status: "Available",
             calendarURL: calendarURL,
@@ -46,14 +47,15 @@ export const CreateAccountForm = () => {
         setName("");
         setNameId("");
         setOffice("");
+        setTitle("");
         setMail("");
-        setPin("")
-        setCalenderURL("")
+        setPin("");
+        setCalenderURL("");
     };
     const [activeStep, setActiveStep] = useState(0);
     const steps = ['Account Information', 'Customization & Settings', 'Confirmation'];
     const avatarFake = require("../../img/avataricon.png");
-
+ 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -72,7 +74,7 @@ export const CreateAccountForm = () => {
             case 0:
                 return <div>{getAccountInformation()}</div>;
             case 1:
-                return <div>{getCustomizationInformation()}</div>
+                return <div>{getCustomizationInformation()}</div>;
             case 2:
                 return <div>{getResultInformation()}</div>;
             default:
@@ -107,6 +109,7 @@ export const CreateAccountForm = () => {
                 <CardContent>
                     {getSpan("Name", name)}
                     {getSpan("Office", office)}
+                    {getSpan("Title", title)}
                     {getSpan("email", mail)}
                     <Divider style={{margin: "10px"}}/>
                     {getSpan("Username", nameId)}
@@ -140,6 +143,9 @@ export const CreateAccountForm = () => {
                            style={{margin: "10px", width: "400px"}}/>
                 <TextField type="text" value={office} required onChange={(e) => setOffice(e.target.value)}
                            variant="outlined" label="Office" style={{margin: "10px"}}/>
+
+                <TextField type="text" value={title} required onChange={(e) => setTitle(e.target.value)}
+                           variant="outlined" label="Title" style={{margin: "10px"}}/>
 
                 <TextField type="text" value={mail} required onChange={(e) => setMail(e.target.value)}
                            variant="outlined"

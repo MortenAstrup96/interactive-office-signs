@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Card, CardContent, Container} from "@material-ui/core";
+import { Container} from "@material-ui/core";
 import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
@@ -19,7 +19,6 @@ export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     const [vega, setVega] = useState<any>();
-    const generalStyling = generalStyle();
 
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
@@ -114,8 +113,7 @@ export default function OfficeInformationId() {
                             marginLeft: "20px",
                             fontSize: "22px",
                             marginTop: 0
-                        }}>Associate
-                            Professor</p>
+                        }}>{currentOffice?.title}</p>
                         <p style={{
                             margin: "5px",
                             marginLeft: "20px",

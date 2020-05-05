@@ -15,8 +15,6 @@ export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
-    const generalStyling = generalStyle();
-    const buttonStyling = buttonStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     let {data, revalidate} = useSWR(() => '/api/user/' + router.query.officeId, fetcher, {
@@ -71,8 +69,12 @@ export default function OfficeInformationId() {
                         marginTop: "30px",
                         color: "#002546"
                     }}>{currentOffice.name}</h1>
-                    <p style={{fontSize: "30px", margin: "5px", marginBottom: "30px", color: "#002546"}}>Associate
-                        Professor</p>
+                    <p style={{
+                        fontSize: "30px",
+                        margin: "5px",
+                        marginBottom: "30px",
+                        color: "#002546"
+                    }}>{currentOffice?.title}</p>
                     <Availability nameId={currentOffice.nameId} status={currentOffice.status}
                                   calendarURL={currentOffice?.calendarURL}/>
                 </div>
