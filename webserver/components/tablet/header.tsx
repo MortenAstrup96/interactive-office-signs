@@ -1,4 +1,4 @@
-import {Divider, Button} from "@material-ui/core";
+import {Divider, Button, IconButton} from "@material-ui/core";
 import Link from "next/link";
 
 const auLogo = require("../../img/aulogo.png");
@@ -32,14 +32,21 @@ export default function Header(props: officeInformationProps) {
         height: '20px'
     };
 
-    console.log(props);
     return (
         <div>
             <div style={headerStyles}>
+
+
                 <div style={{position: "relative"}}>
-                    <img src={auLogo} alt="No image"
-                         style={{position: "absolute", width: "300px", bottom: "10px", marginBottom: "10px"}}/>
+                    <Link href={"/"}>
+                        <a>
+                            <img src={auLogo} alt="No image"
+                                 style={{position: "absolute", width: "300px", bottom: "10px", marginBottom: "10px"}}/>
+                        </a>
+
+                    </Link>
                 </div>
+
 
                 <span style={{textAlign: "right"}}>
                 <h1 style={textStyle}>{props.office}</h1>
