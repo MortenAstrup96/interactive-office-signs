@@ -1,10 +1,11 @@
-import {Container, Button, TextField, colors, Popover} from "@material-ui/core";
+import {Container, Button, TextField, colors, Popover, ThemeProvider} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import {buttonStyle} from "../../styles/userConsoleStyles";
 // @ts-ignore
 import {TwitterPicker} from 'react-color'
 import {CustomButton} from "./CustomButton";
 import {getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
+import {theme} from "../../styles/generalStyles";
 
 interface StatusInfo {
     statusButtons: any[];
@@ -64,7 +65,8 @@ export const Status = (props: StatusInfo) => {
 
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <h2>Status</h2>
+            <ThemeProvider theme={theme}>
+            <h2>STATUS</h2>
             <div style={{display: "flex", flexDirection: "column", alignItems: "start", width: "220px"}}>
                 <Button variant="contained" className={buttonStyling.buttonGreen}
                         onClick={() => onButtonClick(getAvailableButton())}>Available</Button>
@@ -106,8 +108,7 @@ export const Status = (props: StatusInfo) => {
                                    onChange={(color: any) => setSelectedColor(color.hex)}/>
                 </Popover>
             </div>
-
-
+            </ThemeProvider>
         </Container>
     );
 }

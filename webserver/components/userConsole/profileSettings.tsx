@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {Button, TextField} from "@material-ui/core";
+import {Button, TextField, ThemeProvider} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
-import {generalStyle} from "../../styles/generalStyles";
+import {generalStyle, theme} from "../../styles/generalStyles";
 
 interface ProfileSettingsProps {
     user: UserInformation;
@@ -45,15 +45,16 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
     }
 
     return (
+        <ThemeProvider theme={theme}>
         <div className={generalStyling.profile}>
             <h1>PROFILE SETTINGS</h1>
             <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
                 <div>
                     {getProfileImage()}
-                    <div style={{marginTop: "10px"}}></div>
                     <Button
                         variant="contained"
                         component="label"
+                        style={{marginTop: "10px"}}
                     >
                         Change Picture
                         <input
@@ -80,5 +81,6 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
                     </div>
                 </div>
             </div>
-        </div>);
+        </div>
+        </ThemeProvider>);
 };
