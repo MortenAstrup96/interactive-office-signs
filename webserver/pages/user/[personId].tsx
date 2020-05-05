@@ -19,7 +19,6 @@ export default function Index() {
     const [value, setValue] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        console.log(newValue);
        setValue(newValue);
     };
     let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
