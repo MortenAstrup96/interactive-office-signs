@@ -5,12 +5,14 @@ import useSWR from "swr";
 import Header from "../../components/tablet/header";
 import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
+import {generalStyle} from "../../styles/generalStyles";
 
 const avatarFake = require("../../img/avataricon.png");
 
 export default function OfficeInformationId() {
 
     const router = useRouter();
+    const generalStyling = generalStyle();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     console.log(router.query.personId);
 
@@ -60,12 +62,7 @@ export default function OfficeInformationId() {
                     mail={currentOffice?.mail}/>
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 {getProfileImage()}
-                <h1 style={{
-                    fontSize: "60px",
-                    margin: "5px",
-                    marginTop: "30px",
-                    color: "#002546"
-                }}>{currentOffice.name}</h1>
+                <h1 className={generalStyling.office}>{currentOffice.name}</h1>
                 <p style={{
                     fontSize: "30px",
                     margin: "5px",

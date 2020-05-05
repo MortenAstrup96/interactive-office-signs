@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {ViewControls} from "./viewControls";
-import {Container, Divider, Button, Modal, Card, CardContent, Box} from "@material-ui/core";
+import {Container, Divider, Button, Modal, Card, CardContent, Box, ThemeProvider} from "@material-ui/core";
 import {ViewId, ViewType} from "../../library/enums";
 import {SingleView} from "./viewTypes/singleView";
 import {DoubleView} from "./viewTypes/doubleView";
@@ -10,6 +10,7 @@ import {CustomView} from "./viewTypes/customView";
 import {ProfileSettings} from "./profileSettings";
 import {UserInformation, ViewData} from "../../library/general_interfaces";
 import OfficeInformationId from "../../pages/office/details/[personId]";
+import {theme} from "../../styles/generalStyles";
 
 interface customizeInfo {
     currentUser: UserInformation;
@@ -95,6 +96,7 @@ export const Customize = (props: customizeInfo) => {
 
     return (
         <Container style={{display: " flex", flexDirection: "column", alignItems: "center"}}>
+            <ThemeProvider theme={theme}>
             <Modal
                 open={showModal}
                 onClose={() => setShowModal(false)}
@@ -113,14 +115,19 @@ export const Customize = (props: customizeInfo) => {
 
             </Modal>
             <ProfileSettings user={props.currentUser}/>
-            <Button onClick={props.save} variant="contained" color="primary">Save Changes</Button>
-            <Button onClick={() => {
-                setShowModal(true);
-                props.save();
-            }} variant="contained" color="primary">Save & Preview</Button>
             <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
+
+                <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
             <ViewControls currentViewType={props.currentUser.viewType} updateViewType={updateViewType}/>
             {getCards()}
+                <div style={{marginTop: "20px"}}>
+                    <Button onClick={props.save} variant="contained" color="primary" style={{margin: "5px"}}>Save Changes</Button>
+                    <Button onClick={() => {
+                        setShowModal(true);
+                        props.save();
+                    }} variant="contained" color="primary">Save & Preview</Button>
+                </div>
+            </ThemeProvider>
         </Container>
     );
 }

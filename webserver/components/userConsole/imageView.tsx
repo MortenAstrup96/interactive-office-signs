@@ -177,14 +177,17 @@ export const ImageView = (props: ImageViewProps) => {
                         <Card>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="h2">
-                                    Add Content
+                                    Customize your tablet
+                                </Typography>
+                                <Typography variant="body2" component="p">
+                                    Add content to the view
                                 </Typography>
                                 <div>
                                     <div style={{
                                         margin: "20px",
                                         marginLeft: "100px",
                                         marginRight: "100px",
-                                        minWidth: "600px",
+                                        minWidth: "400px",
                                         maxWidth: "1600px"
 
                                     }}>
@@ -216,10 +219,10 @@ export const ImageView = (props: ImageViewProps) => {
                                 </div>
                             </CardContent>
                             <CardActions>
-                                <Button size="small" color="primary" variant="contained" onClick={() => saveChanges()}>
+                                <Button size="medium" color="primary" onClick={() => saveChanges()}>
                                     Choose
                                 </Button>
-                                <Button size="small" color="primary" onClick={() => setShowModal(false)}>
+                                <Button size="medium" color="primary" onClick={() => setShowModal(false)}>
                                     Cancel
                                 </Button>
                             </CardActions>

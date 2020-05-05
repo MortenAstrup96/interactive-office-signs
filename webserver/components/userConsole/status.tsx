@@ -23,7 +23,7 @@ export const Status = (props: StatusInfo) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const open = Boolean(anchorEl);
     const [selectedColor, setSelectedColor] = useState(colors.green["500"]);
-    const defaultColors = [colors.green["500"], colors.yellow.A700, colors.red.A700, "#0693E3", "#00D084", "#EB144C", "#9900EF", "#ff5722", "#795548", "#ABB8C3"];
+    const defaultColors = ["#8bad3f", "#fabb00", "#e2001a", "#37a0cb", "#00aba4", "#e2007a", "#655a9f", "#ee7f00", "#795548", "#ABB8C3"];
     const [currentSelection, setCurrentSelection] = useState(props.currentSelection);
 
     useEffect(() => {

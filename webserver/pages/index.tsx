@@ -8,7 +8,6 @@ function Index() {
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline />
         <Grid container
               direction="column"
               justify="space-between"
