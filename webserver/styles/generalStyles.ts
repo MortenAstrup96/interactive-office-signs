@@ -5,11 +5,13 @@ import {createMuiTheme} from "@material-ui/core/styles";
 export const generalStyle = makeStyles((theme: Theme) =>
     createStyles({
         profile: {
+            fontFamily: "Roboto",
             textAlign: "center",
             margin: "10px",
             width: "600px",
         },
         office: {
+            fontFamily: "Roboto",
             fontSize: "50px",
             margin: "5px",
             marginTop: "10px",
@@ -46,20 +48,9 @@ export const theme = createMuiTheme({
             main: '#37a0cb',
             dark: '#003e5c',
         },
-        success: {
-            main: '#8bad3f',
-            dark: '#425821',
-        },
-        warning: {
-            main: '#fabb00',
-            dark: '#634b03',
-        },
-        error: {
-            main: '#e2001a',
-            dark: '#5b0c0c',
-        }
     },
     typography: {
-        fontFamily: "sans-serif",
-    }
+        fontFamily: 'Roboto',
+    },
 });
+
