@@ -246,7 +246,7 @@ export const ImageCard = (props: ImageInformation) => {
             // If the event is not in the past: add to array
             if (endTime > convertTimeToDecimal(currentDate)) {
                 let eventsCopy = calendarEvents;
-
+                eventsCopy.length = 0; //empty array to avoid duplication of events
                 eventsCopy.push({
                     start: startTime,
                     end: endTime,
