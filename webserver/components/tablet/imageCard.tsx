@@ -271,7 +271,13 @@ export const ImageCard = (props: ImageInformation) => {
         return (
             <div style={{padding: "0"}}>
                 <Card variant="outlined" className={cardClasses.root}>
-                    <CardContent style={{padding: "0"}}>
+                    <CardContent style={{
+                        position: "relative",
+                        display: "inline-block",
+                        width: "100%",
+                        height: "100%"
+                    }}>
+                        {getDeleteButton()}
                         <VegaLite spec={{
                             "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
                             "description": "A simple bar chart with ranged data (aka Gantt Chart).",

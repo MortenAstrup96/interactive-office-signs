@@ -98,7 +98,6 @@ export const ImageView = (props: ImageViewProps) => {
                     <img src={selectedData} height="400px" alt="Unable to display image"/>
                 </div>);
         } else if (selectedRadio === DataType.CALENDAR) {
-            console.log(props.viewData.data);
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <TextField label="Calendar" placeholder="https://microsoft/mycalendar.ics"
@@ -106,6 +105,7 @@ export const ImageView = (props: ImageViewProps) => {
                                style={{width: "100%", margin: "10px", marginBottom: "30px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
                     <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                        <iframe src={selectedData.substring(4, selectedData.length - 4)} height="400px"/>
                         <div style={{
                             width: "300px",
                             display: "flex",
