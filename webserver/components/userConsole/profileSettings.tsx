@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, TextField, ThemeProvider} from "@material-ui/core";
+import {Button, SvgIcon, SvgIconProps, TextField, ThemeProvider} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
@@ -44,6 +44,22 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
         return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
     }
 
+    function PersonIcon(props: SvgIconProps) {
+        return (
+            <SvgIcon {...props}>
+                <path d="M9 8c1.66 0 2.99-1.34 2.99-3S10.66 2 9 2C7.34 2 6 3.34 6 5s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V16h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+            </SvgIcon>
+        );
+    }
+
+    function EmailIcon(props: SvgIconProps) {
+        return (
+            <SvgIcon {...props}>
+                <path d="M22 4H2v16h20V4zm-2 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </SvgIcon>
+        );
+    }
+
     return (
         <ThemeProvider theme={theme}>
         <div className={generalStyling.profile}>
@@ -66,21 +82,26 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
                 </div>
 
                 <div style={{marginRight: "20px", marginTop: "30px"}}>
+                    <ThemeProvider theme={theme}>
                     <div>
-                        <IconPerson/>
+                        <PersonIcon style={{color: '#002546', fontSize: 48}}/>
                         <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
                                    size="small"
-                                   style={{width: "280px"}}/>
+                                   style={{width: "280px", marginBottom: "15px"}}/>
                     </div>
 
                     <div>
-                        <IconMail/>
+                        <EmailIcon fontSize="large" style={{color: '#002546', marginTop: "10px"}}/>
                         <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
                                    size="small"
-                                   style={{width: "280px"}}/>
+                                   style={{width: "280px", marginLeft: "11px", marginTop: "7px"}}/>
                     </div>
+                </ThemeProvider>
                 </div>
             </div>
         </div>
-        </ThemeProvider>);
+        </ThemeProvider>
+    );
 };
+
+

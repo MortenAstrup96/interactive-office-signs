@@ -66,7 +66,7 @@ export const Status = (props: StatusInfo) => {
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <ThemeProvider theme={theme}>
-            <h2>STATUS</h2>
+            <h1 style={{fontFamily: "Roboto"}}>STATUS</h1>
             <div style={{display: "flex", flexDirection: "column", alignItems: "start", width: "220px"}}>
                 <Button variant="contained" className={buttonStyling.buttonGreen}
                         onClick={() => onButtonClick(getAvailableButton())}>Available</Button>
@@ -78,18 +78,20 @@ export const Status = (props: StatusInfo) => {
                 {getCustomStatus()}
 
 
-                <div style={{display: "flex", alignItems: "center"}}>
+                <div style={{display: "flex", alignItems: "center", marginTop: "20px"}}>
                     <TextField variant="outlined" label="Custom status"
                                style={{margin: "10px", width: "200px", height: "50px"}}
                                value={addStatusTextField}
                                onChange={(event: any) => setAddStatusTextField(event.target.value)}/>
+                </div>
+
+                <div style={{marginTop: "3px"}}>
+                <Button color="primary" variant="contained" onClick={(e: any) => setAnchorEl(e.currentTarget)}
+                        style={{width: "60px", height: "35px", marginLeft: "10px", marginRight: "71px"}}>Color</Button>
+
                     <Button color="primary" variant="contained" onClick={addCustomStatus}
                             style={{width: "60px", height: "35px"}}>Add</Button>
-
-
                 </div>
-                <Button variant="contained" onClick={(e: any) => setAnchorEl(e.currentTarget)}
-                        style={{backgroundColor: selectedColor, color: "#ffffff", marginLeft: "10px"}}>Color</Button>
 
                 <Popover
                     open={open}
