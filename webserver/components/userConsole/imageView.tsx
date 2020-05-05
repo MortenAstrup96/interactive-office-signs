@@ -43,7 +43,7 @@ export const ImageView = (props: ImageViewProps) => {
 
     useEffect(() => {
         setSelectedData("");
-    }, [selectedRadio])
+    }, [selectedRadio]);
 
     function saveChanges() {
         const newData = {
@@ -64,10 +64,20 @@ export const ImageView = (props: ImageViewProps) => {
     function getVegaView() {
         try {
             const parsedVega = JSON.parse(selectedData);
-            return (<div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/>
-            </div>);
+            return (
+                <div>
+                    <h4>Vega-lite is data visualization tool</h4>
+                    <a href="https://vega.github.io/vega-lite/examples/" target="_blank">more Vega-lite examples</a>
+                    <div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/></div>
+                </div>);
         } catch (e) {
-            return (<h4>Visualisation unable to compile</h4>)
+            return (
+                <div>
+                    <h4>Vega-Lite is data visualization tool</h4>
+                    <a href="https://vega.github.io/vega-lite/examples/" target="_blank">More Vega-Lite examples</a>
+                    <h3 style={{color:"red"}}>Visualisation unable to compile</h3>
+
+            </div>)
         }
     }
 
@@ -77,8 +87,12 @@ export const ImageView = (props: ImageViewProps) => {
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <TextField label="Image Link" placeholder="https://www.somewebsite/images/image.jpg"
                                variant="outlined" value={selectedData}
-                               style={{width: "100%", margin: "10px", marginBottom: "30px"}}
+                               style={{width: "100%", margin: "10px", marginBottom: "10px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
+                    <a href="https://www.lifewire.com/copy-image-web-address-url-1174175" target="_blank" style={{marginBottom: "10px"}}>Paste the image address from a picture found online</a>
+
+
+
                     <img src={selectedData} height="400px" alt="Unable to display image"/>
                 </div>);
         } else if (selectedRadio === DataType.CALENDAR) {
@@ -88,7 +102,15 @@ export const ImageView = (props: ImageViewProps) => {
                                variant="outlined" value={selectedData}
                                style={{width: "100%", margin: "10px", marginBottom: "30px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
-                    <iframe src={selectedData} height="400px"/>
+                               <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                                   <iframe src={selectedData} height="400px"/>
+                                   <div style={{width: "300px", display: "flex", flexDirection: "column", margin: "30px", alignItems: "center"}}>
+                                       <h4>Add a view of your calendar for the day</h4>
+                                       <p>This will display your appointments for the day from your calendar on the officesign. The appointments can be displayed with title or just as 'busy'</p>
+                                       <p>Your calendar is added with a link to the calendars ICS-file that can be published via Outlook Web Application (OWA)</p>
+                                       <a href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5" target="_blank">How to publish Outlook calendar</a>
+                                   </div>
+                               </div>
                 </div>);
         } else if (selectedRadio === DataType.VEGA) {
                 if(selectedData == "") {
