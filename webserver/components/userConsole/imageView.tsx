@@ -91,6 +91,25 @@ export const ImageView = (props: ImageViewProps) => {
                     <iframe src={selectedData} height="400px"/>
                 </div>);
         } else if (selectedRadio === DataType.VEGA) {
+                if(selectedData == "") {
+                    setSelectedData("{\n" +
+                        "  \"$schema\": \"https://vega.github.io/schema/vega-lite/v4.json\",\n" +
+                        "  \"description\": \"A simple bar chart with embedded data.\",\n" +
+                        "  \"data\": {\n" +
+                        "    \"values\": [\n" +
+                        "      {\"a\": \"A\", \"b\": 28}, {\"a\": \"B\", \"b\": 55}, {\"a\": \"C\", \"b\": 43},\n" +
+                        "      {\"a\": \"D\", \"b\": 91}, {\"a\": \"E\", \"b\": 81}, {\"a\": \"F\", \"b\": 53},\n" +
+                        "      {\"a\": \"G\", \"b\": 19}, {\"a\": \"H\", \"b\": 87}, {\"a\": \"I\", \"b\": 52}\n" +
+                        "    ]\n" +
+                        "  },\n" +
+                        "  \"mark\": \"bar\",\n" +
+                        "  \"encoding\": {\n" +
+                        "    \"x\": {\"field\": \"a\", \"type\": \"ordinal\", \"axis\": {\"labelAngle\": 0}},\n" +
+                        "    \"y\": {\"field\": \"b\", \"type\": \"quantitative\"}\n" +
+                        "  }\n" +
+                        "}");
+                }
+
             return (
                 <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
                     <TextField label="Vega-Lite" value={selectedData} multiline rows={24} variant="outlined"
