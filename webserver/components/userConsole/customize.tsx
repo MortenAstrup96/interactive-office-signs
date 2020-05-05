@@ -114,7 +114,10 @@ export const Customize = (props: customizeInfo) => {
             </Modal>
             <ProfileSettings user={props.currentUser}/>
             <Button onClick={props.save} variant="contained" color="primary">Save Changes</Button>
-            <Button onClick={() => setShowModal(true)} variant="contained" color="primary">Preview</Button>
+            <Button onClick={() => {
+                setShowModal(true);
+                props.save();
+            }} variant="contained" color="primary">Save & Preview</Button>
             <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
             <ViewControls currentViewType={props.currentUser.viewType} updateViewType={updateViewType}/>
             {getCards()}

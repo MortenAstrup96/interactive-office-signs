@@ -76,6 +76,7 @@ export const ImageCard = (props: ImageInformation) => {
                             style={{position: "relative", display: "inline-block", width: "100%", height: "100%"}}>
 
                             {getDeleteButton()}
+
                             <div style={{
                                 height: "100%",
                                 width: "100%",
@@ -197,17 +198,19 @@ export const ImageCard = (props: ImageInformation) => {
     }
 
     function getDeleteButton() {
-        return (
-            <IconButton onClick={(e: any) => removeImageButton(e)} style={{
-                position: "absolute",
-                top: "11%",
-                left: "94%",
-                transform: "translate(-50%, -50%)",
-                color: "#2142fw",
-                padding: 0
-            }}>
-                <IconDelete/>
-            </IconButton>)
+        if (props.consoleView) {
+            return (
+                <IconButton onClick={(e: any) => removeImageButton(e)} style={{
+                    position: "absolute",
+                    top: "0%",
+                    left: "100%",
+                    transform: "translate(-49px, 30px)",
+                    color: "#2142fw",
+                    padding: 0
+                }}>
+                    <IconDelete/>
+                </IconButton>)
+        }
     }
 
     function parseCalendarData(calendar: any) {

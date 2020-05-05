@@ -59,6 +59,7 @@ export const ImageView = (props: ImageViewProps) => {
 
     function removeCurrentData() {
         setCurrentData({dataType: DataType.EMPTY, data: ""});
+        setSelectedData(DataType.EMPTY);
     }
 
     function getVegaView() {
