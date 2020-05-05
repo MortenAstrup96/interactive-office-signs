@@ -22,7 +22,8 @@ export const CustomButton = (props: CustomButtonInfo) => {
                         color: "#ffffff",
                         width: "200px",
                         height: "50px",
-                        margin: "10px"
+                        margin: "10px",
+                        fontSize: "18px"
                     }}>{props.text}</Button>
             <IconButton aria-label="delete" onClick={() => props.removeSelf(props.position)}
                         style={{margin: 0, padding: 0}}>

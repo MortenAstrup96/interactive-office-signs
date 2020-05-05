@@ -4,7 +4,8 @@ import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
 import {Customize} from "../../components/userConsole/customize";
 import {Status} from "../../components/userConsole/status";
-import {Box, Tab, Tabs, Typography} from "@material-ui/core";
+import {Box, Tab, Tabs, ThemeProvider, Typography} from "@material-ui/core";
+import {theme} from "../../styles/generalStyles";
 
 
 interface TabPanelProps {
@@ -106,10 +107,12 @@ export default function Index() {
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
+            <ThemeProvider theme={theme}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    centered>
+                    centered
+                    color="primary">
                     <Tab label="Profile" />
                     <Tab label="Status" />
                 </Tabs>
@@ -117,6 +120,7 @@ export default function Index() {
             {getTabPanel(0, value, getCustomize())}
             {getTabPanel(1, value, getStatus())}
 
+            </ThemeProvider>
         </div>
     );
 }

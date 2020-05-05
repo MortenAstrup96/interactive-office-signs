@@ -65,7 +65,7 @@ export const buttonStyle = makeStyles({
         width: 200,
         height: 50,
         margin: "10px",
-        backgroundColor: colors.green["500"],
+        backgroundColor: '#8bad3f',
         color: colors.common.white,
         fontSize: "20px"
     },
@@ -73,7 +73,7 @@ export const buttonStyle = makeStyles({
         width: 200,
         height: 50,
         margin: "10px",
-        backgroundColor: colors.yellow.A700,
+        backgroundColor: '#fabb00',
         color: colors.common.white,
         fontSize: "20px"
     },
@@ -81,7 +81,7 @@ export const buttonStyle = makeStyles({
         width: 200,
         height: 50,
         margin: "10px",
-        backgroundColor: colors.red.A700,
+        backgroundColor: '#e2001a',
         color: colors.common.white,
         fontSize: "18px"
     }
