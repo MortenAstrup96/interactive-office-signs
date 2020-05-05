@@ -9,7 +9,7 @@ import {
     Divider,
     Modal,
     Radio,
-    RadioGroup, TextareaAutosize,
+    RadioGroup,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -55,6 +55,10 @@ export const ImageView = (props: ImageViewProps) => {
             props.updateView(props.viewId, newData);
         }
         setCurrentData(newData);    // Required to force an update of component
+    }
+
+    function removeCurrentData() {
+        setCurrentData({dataType: DataType.EMPTY, data: ""});
     }
 
     function getVegaView() {
@@ -178,13 +182,14 @@ export const ImageView = (props: ImageViewProps) => {
         return (
             <div>
                 <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles}
-                           consoleView={true}/>
+                           consoleView={true} removeCurrent={removeCurrentData}/>
             </div>
         );
     }
     return (
         <div>
-            <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles}/>
+            <ImageCard src={currentData.data} dataType={currentData.dataType} cardStyles={props.cardStyles}
+                       removeCurrent={console.log}/>
         </div>
     );
 };

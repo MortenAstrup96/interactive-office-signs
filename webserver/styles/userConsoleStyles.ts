@@ -83,6 +83,6 @@ export const buttonStyle = makeStyles({
         margin: "10px",
         backgroundColor: colors.red.A700,
         color: colors.common.white,
-        fontSize: "20px"
+        fontSize: "18px"
     }
 });

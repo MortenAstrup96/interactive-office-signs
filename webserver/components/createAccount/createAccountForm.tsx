@@ -1,6 +1,17 @@
 import React, {useState} from "react";
-import {Button, Card, CardContent, Divider, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent, CssBaseline,
+    Divider,
+    Step,
+    StepLabel,
+    Stepper,
+    TextField,
+    ThemeProvider
+} from "@material-ui/core";
 import {useRouter} from "next/router";
+import {theme} from "../../styles/generalStyles";
 
 const gridStyle = {
     display: "grid",
@@ -11,9 +22,8 @@ export const CreateAccountForm = () => {
     const router = useRouter();
 
 
-    const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
+    const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; title: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         const username = prop.nameId;
-        const avatarFake = require("../../img/avataricon.png");
 
         fetch('/api/user/0', {
             method: 'POST',
@@ -25,6 +35,7 @@ export const CreateAccountForm = () => {
     const [name, setName] = useState("");
     const [nameId, setNameId] = useState("");
     const [office, setOffice] = useState("");
+    const [title, setTitle] = useState("");
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
     const [calendarURL, setCalenderURL] = useState("");
@@ -33,6 +44,7 @@ export const CreateAccountForm = () => {
             officeId: office,
             nameId: nameId,
             name: name,
+            title: title,
             mail: mail,
             status: "Available",
             calendarURL: calendarURL,
@@ -46,14 +58,15 @@ export const CreateAccountForm = () => {
         setName("");
         setNameId("");
         setOffice("");
+        setTitle("");
         setMail("");
-        setPin("")
-        setCalenderURL("")
+        setPin("");
+        setCalenderURL("");
     };
     const [activeStep, setActiveStep] = useState(0);
     const steps = ['Account Information', 'Customization & Settings', 'Confirmation'];
     const avatarFake = require("../../img/avataricon.png");
-
+ 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
@@ -72,7 +85,7 @@ export const CreateAccountForm = () => {
             case 0:
                 return <div>{getAccountInformation()}</div>;
             case 1:
-                return <div>{getCustomizationInformation()}</div>
+                return <div>{getCustomizationInformation()}</div>;
             case 2:
                 return <div>{getResultInformation()}</div>;
             default:
@@ -107,6 +120,7 @@ export const CreateAccountForm = () => {
                 <CardContent>
                     {getSpan("Name", name)}
                     {getSpan("Office", office)}
+                    {getSpan("Title", title)}
                     {getSpan("email", mail)}
                     <Divider style={{margin: "10px"}}/>
                     {getSpan("Username", nameId)}
@@ -125,13 +139,14 @@ export const CreateAccountForm = () => {
 
     function getAccountInformation() {
         return (<div style={gridStyle}>
-                <h4 style={{margin: 0}}>Account Information</h4>
+                <ThemeProvider theme={theme}>
+                <h4 style={{margin: 0, marginTop: "20px"}}>Account Information</h4>
                 <TextField type="text" value={nameId} required onChange={(e) => setNameId(e.target.value)}
                            variant="outlined" label="Username" style={{margin: "10px"}}/>
 
                 <TextField type="text" value={pin} required onChange={(e) => setPin(e.target.value)}
                            variant="outlined" label="PIN Code"
-                           style={{margin: "10px", marginBottom: "60px", width: "200px"}}/>
+                           style={{margin: "10px", marginBottom: "40px", width: "200px"}}/>
 
                 <h4 style={{margin: 0, marginTop: "10px"}}>Office Information</h4>
                 <TextField type="text" value={name} required onChange={(e) => setName(e.target.value)}
@@ -141,53 +156,64 @@ export const CreateAccountForm = () => {
                 <TextField type="text" value={office} required onChange={(e) => setOffice(e.target.value)}
                            variant="outlined" label="Office" style={{margin: "10px"}}/>
 
+                <TextField type="text" value={title} required onChange={(e) => setTitle(e.target.value)}
+                           variant="outlined" label="Title" style={{margin: "10px"}}/>
+
                 <TextField type="text" value={mail} required onChange={(e) => setMail(e.target.value)}
                            variant="outlined"
                            label="Mail" style={{margin: "10px", marginBottom: "40px"}}/>
+                </ThemeProvider>
             </div>
         );
     }
 
     function getCustomizationInformation() {
         return (
+            <ThemeProvider theme={theme}>
             <div style={{display: "flex", flexDirection: "column"}}>
-                <div style={{display: "flex", flexDirection: "column", alignItems: "baseline", margin: "20px"}}>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center", margin: "20px"}}>
                     <img style={{
                         objectFit: "cover",
                         borderRadius: "50%",
                         height: "150px",
                         width: "150px"
                     }} src={avatarFake} alt={avatarFake}/>
-                    <Button variant="contained" component="label">Change Picture</Button>
+                    <Button variant="contained" component="label" style={{marginTop: "10px"}}>Change Picture</Button>
                 </div>
 
-                <h4 style={{marginTop: "50px", marginBottom: 0}}>Automatic Availability</h4>
-                <p style={{marginBottom: 0}}>Connect your calendar to automatically change status</p>
+                <h4 style={{marginTop: "30px", marginBottom: 0}}>Automatic Availability</h4>
+                <p style={{marginBottom: 10}}>Connect your calendar to automatically change status</p>
                 <TextField type="text" value={calendarURL}
                            onChange={(e) => setCalenderURL(e.target.value)}
                            variant="outlined"
                            label="Calendar .ics URL"
-                           style={{margin: "10px", marginBottom: "50px", width: "600px", alignSelf: "center"}}/>
+                           style={{margin: 0, marginBottom: "50px", width: "600px"}}/>
             </div>
+            </ThemeProvider>
         );
     }
 
     function getNextButton() {
         if (activeStep === steps.length - 1) {
-            return (<Button variant="contained" color="primary" size="medium" onClick={handleSubmit}>Create
-                Account</Button>);
+            return (
+                <ThemeProvider theme={theme}>
+                <Button variant="contained" color="primary" style={{margin: "10px"}} onClick={handleSubmit}>Create
+                Account</Button>
+                </ThemeProvider>);
         } else {
 
-            return (<Button variant="contained" color="primary" onClick={handleNext}
+            return (<ThemeProvider theme={theme}><Button variant="contained" color="primary" onClick={handleNext}
                             style={{margin: "10px"}}
                             disabled={(nameId === "" || pin === "" || name === "" || office === "" || mail === "")}>
                 {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-            </Button>);
+            </Button></ThemeProvider>);
         }
     }
 
     return (
         <div>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
             <Stepper activeStep={activeStep} alternativeLabel>
                 {steps.map((label) => (
                     <Step key={label}>
@@ -220,6 +246,7 @@ export const CreateAccountForm = () => {
                     </div>
                 )}
             </div>
+            </ThemeProvider>
         </div>
     );
 };

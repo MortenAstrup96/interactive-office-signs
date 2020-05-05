@@ -1,11 +1,11 @@
 import React from "react";
 
-const IconAdd = ({
-                     style = {},
-                     width = "24",
-                     className = "",
-                     viewBox = "0 0 24 24"
-                 }) => (
+const IconDelete = ({
+                        style = {},
+                        width = "24",
+                        className = "",
+                        viewBox = "0 0 24 24"
+                    }) => (
     <svg
         width={width}
         style={style}
@@ -21,4 +21,4 @@ const IconAdd = ({
 
 );
 
-export default IconAdd;
+export default IconDelete;

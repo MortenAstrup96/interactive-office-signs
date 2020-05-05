@@ -2,6 +2,7 @@ export interface UserInformation {
     office: string;
     nameId: string;
     name: string;
+    title: string;
     mail: string;
     status: { text: string, color: string };
     calendarURL: string;

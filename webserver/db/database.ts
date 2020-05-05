@@ -38,6 +38,7 @@ export function addUser(personToAdd: UserInformation) {
         db.push("/person/" + personToAdd.nameId + "/nameId", personToAdd.nameId);
         db.push("/person/" + personToAdd.nameId + "/name", personToAdd.name);
         db.push("/person/" + personToAdd.nameId + "/office", personToAdd.office);
+        db.push("/person/" + personToAdd.nameId + "/title", personToAdd.title);
         db.push("/person/" + personToAdd.nameId + "/mail", personToAdd.mail);
         db.push("/person/" + personToAdd.nameId + "/status", "Available");
         db.push("/person/" + personToAdd.nameId + "/calendarURL", personToAdd.calendarURL);
