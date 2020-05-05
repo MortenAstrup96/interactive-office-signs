@@ -88,7 +88,7 @@ export const Customize = (props: customizeInfo) => {
     }
 
     return (
-        <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Container style={{display: " flex", flexDirection: "column", alignItems: "center"}}>
             <ProfileSettings user={props.currentUser}/>
             <Button onClick={props.save} variant="contained" color="primary">Save Changes</Button>
             <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>

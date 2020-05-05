@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import {Card, CardContent, CardMedia} from "@material-ui/core";
+import {Card, CardContent, CardMedia, IconButton} from "@material-ui/core";
 import {makeStyles} from '@material-ui/core/styles';
 import {DataType} from "../../library/enums";
 import {VegaLite} from "react-vega/lib";
 import {serverName} from "../../library/constants";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
+import IconPerson from "../../img/icons/iconPerson";
+import IconDelete from "../../img/icons/iconDelete";
 
 
 interface ImageInformation {
@@ -13,17 +15,11 @@ interface ImageInformation {
     dataType: string;
     cardStyles: any;
     consoleView?: boolean;
+
+    removeCurrent(): void;
 }
 
 const imageStyles = makeStyles({
-    root: {margin: 10},
-    media: {minWidth: "100%", minHeight: "100%"}
-});
-const vegaStyles = makeStyles({
-    root: {margin: 5, maxWidth: 600, maxHeight: 600},
-    media: {maxWidth: "100%", maxHeight: "100%"}
-});
-const calendarStyles = makeStyles({
     root: {margin: 10},
     media: {minWidth: "100%", minHeight: "100%"}
 });
@@ -36,7 +32,7 @@ export const ImageCard = (props: ImageInformation) => {
     //Calendar-------------------
     const vegaStyles = makeStyles({
         root: {margin: 5, maxWidth: 600, maxHeight: 600},
-        media: {maxWidth: "100%", maxHeight: "100%"}
+        media: {width: "100%", height: "100%"}
     });
     const vegaClasses = vegaStyles();
     type dataType = { start: number, end: number, description: string, time: number }
@@ -76,11 +72,21 @@ export const ImageCard = (props: ImageInformation) => {
             return (
                 <div>
                     <Card variant="outlined" className={cardClasses.root}>
-                        <CardMedia
-                            component="img"
-                            className={imgClasses.media}
-                            image={props.src}
-                        />
+                        <CardContent
+                            style={{position: "relative", display: "inline-block", width: "100%", height: "100%"}}>
+
+                            {getDeleteButton()}
+                            <div style={{
+                                height: "100%",
+                                width: "100%",
+                                padding: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <img src={props.src} className={imgClasses.media}/>
+                            </div>
+                        </CardContent>
                     </Card>
                 </div>
             )
@@ -94,24 +100,61 @@ export const ImageCard = (props: ImageInformation) => {
             if (props.src.length < 40) {
                 return (
                     <Card variant="outlined" className={cardClasses.root}>
-                        <CardContent>
-                            <h1>{props.src}</h1>
+                        <CardContent
+                            style={{position: "relative", display: "inline-block", width: "100%", height: "100%"}}>
+
+                            {getDeleteButton()}
+                            <div style={{
+                                height: "100%",
+                                width: "100%",
+                                padding: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <h1>{props.src}</h1>
+                            </div>
                         </CardContent>
                     </Card>
                 );
             } else if (props.src.length < 100) {
                 return (
                     <Card variant="outlined" className={cardClasses.root}>
-                        <CardContent>
-                            <h2>{props.src}</h2>
+                        <CardContent
+                            style={{position: "relative", display: "inline-block", width: "100%", height: "100%"}}>
+
+                            {getDeleteButton()}
+                            <div style={{
+                                height: "100%",
+                                width: "100%",
+                                padding: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <h2>{props.src}</h2>
+                            </div>
+
                         </CardContent>
                     </Card>
                 );
             }
             return (
                 <Card variant="outlined" className={cardClasses.root}>
-                    <CardContent>
-                        <p>{props.src}</p>
+                    <CardContent
+                        style={{position: "relative", display: "inline-block", width: "100%", height: "100%"}}>
+
+                        {getDeleteButton()}
+                        <div style={{
+                            height: "100%",
+                            width: "100%",
+                            padding: 0,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}>
+                            <p>{props.src}</p>
+                        </div>
                     </CardContent>
                 </Card>);
         }
@@ -126,15 +169,45 @@ export const ImageCard = (props: ImageInformation) => {
             const parsedVega = JSON.parse(props.src);
             return (
                 <div>
-                    <Card variant="outlined" className={vegaClasses.root}>
-                        <CardContent className={vegaClasses.media}>
-                            <VegaLite spec={parsedVega}/>
+                    <Card variant="outlined" className={cardClasses.root}>
+                        <CardContent className={vegaClasses.media}
+                                     style={{
+                                         position: "relative",
+                                         display: "inline-block",
+                                         width: "100%",
+                                         height: "100%"
+                                     }}>
+                            {getDeleteButton()}
+                            <div style={{
+                                height: "100%",
+                                width: "100%",
+                                padding: 0,
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <VegaLite spec={parsedVega}/>
+                            </div>
                         </CardContent>
                     </Card>
                 </div>
             );
         } catch (e) {
         }
+    }
+
+    function getDeleteButton() {
+        return (
+            <IconButton onClick={(e: any) => removeImageButton(e)} style={{
+                position: "absolute",
+                top: "11%",
+                left: "94%",
+                transform: "translate(-50%, -50%)",
+                color: "#2142fw",
+                padding: 0
+            }}>
+                <IconDelete/>
+            </IconButton>)
     }
 
     function parseCalendarData(calendar: any) {
@@ -184,6 +257,11 @@ export const ImageCard = (props: ImageInformation) => {
                 setCalendarEvents(eventsCopy);
             }
         }
+    }
+
+    function removeImageButton(e: any) {
+        e.stopPropagation();
+        props.removeCurrent();
     }
 
     function getCalendarView() {
