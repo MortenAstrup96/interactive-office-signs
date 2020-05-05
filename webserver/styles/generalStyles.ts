@@ -1,41 +1,65 @@
 import {makeStyles} from "@material-ui/core/styles";
 import {createStyles, Theme} from "@material-ui/core";
 import {createMuiTheme} from "@material-ui/core/styles";
-import {blueGrey, red} from "@material-ui/core/colors";
 
 export const generalStyle = makeStyles((theme: Theme) =>
     createStyles({
         profile: {
-            fontFamily: "Roboto",
             textAlign: "center",
-            margin: "30px",
+            margin: "10px",
             width: "600px",
         },
         office: {
-            fontFamily: "Roboto",
+            fontSize: "50px",
+            margin: "5px",
+            marginTop: "10px",
             textAlign: "center",
-            margin: "30px",
-            marginTop: "30px",
+        },
+        officeName: {
+            fontFamily: "Roboto",
+            fontSize: "50px",
+            margin: "5px",
+            textAlign: "center",
+        },
+        officeTitle: {
+            fontFamily: "Roboto",
+            fontSize: "20px",
+            margin: "5px",
+            textAlign: "center",
         },
         officeDetail: {
-            fontFamily: "Roboto",
             fontSize: "34px",
-            margin: "30px",
-            marginTop: "30px",
             display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-        }
+            gridTemplateColumns: "1fr 2fr 3fr",
+            flexDirection: "column"
+        },
     }),
 );
 
-export default createMuiTheme({
-        palette: {
-            primary: {
-                main: blueGrey["500"],
-                light: blueGrey["100"],
-            }
+export const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#003d73',
+            dark: '#002546',
+        },
+        secondary: {
+            main: '#37a0cb',
+            dark: '#003e5c',
+        },
+        success: {
+            main: '#8bad3f',
+            dark: '#425821',
+        },
+        warning: {
+            main: '#fabb00',
+            dark: '#634b03',
+        },
+        error: {
+            main: '#e2001a',
+            dark: '#5b0c0c',
         }
+    },
+    typography: {
+        fontFamily: "sans-serif",
     }
-)
-
-
+});

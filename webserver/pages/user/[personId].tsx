@@ -2,14 +2,53 @@ import {useRouter} from 'next/router';
 import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {UserInformation} from "../../library/general_interfaces";
-import {Status} from "../../components/userConsole/status";
 import {Customize} from "../../components/userConsole/customize";
+import {Status} from "../../components/userConsole/status";
+import {Box, Tab, Tabs, Typography} from "@material-ui/core";
 
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
 
 export default function Index() {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<UserInformation>();
+    const [value, setValue] = useState(0);
+
+    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+        console.log(newValue);
+       setValue(newValue);
+    };
     let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
+
+    /** Tab component */
+    function getTabPanel(index: number, value: number, children: any) {
+        if(value === index) {
+            return (
+                <div
+                    role="tabpanel"
+                    hidden={value !== index}
+                    id={`simple-tabpanel-${index}`}
+                    aria-labelledby={`simple-tab-${index}`}
+                >
+                    {children}
+                </div>
+            );
+        }
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+            >
+            </div>
+        );
+
+    }
 
     useEffect(() => {
         if (data) {
@@ -46,6 +85,18 @@ export default function Index() {
         }));
     }
 
+
+    function getCustomize() {
+        if(currentUser) {
+            return(<Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>);
+        }
+    }
+    function getStatus() {
+        if(currentUser) {
+            return( <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status} saveChanges={updateStatusButtons}/>);
+        }
+    }
+
     // Gets profile data
     async function fetcher(url: any) {
         if (router.query.personId) {
@@ -56,12 +107,17 @@ export default function Index() {
     if (!currentUser) return (<div> Loading... </div>);
     return (
         <div>
-            <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status}
-                    saveChanges={updateStatusButtons}/>
-            <Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    centered>
+                    <Tab label="Profile" />
+                    <Tab label="Status" />
+                </Tabs>
+
+            {getTabPanel(0, value, getCustomize())}
+            {getTabPanel(1, value, getStatus())}
+
         </div>
     );
 }
-
-// Customize component:
-//

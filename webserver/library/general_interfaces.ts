@@ -1,5 +1,5 @@
 export interface UserInformation {
-    officeId: string;
+    office: string;
     nameId: string;
     name: string;
     mail: string;
@@ -23,4 +23,5 @@ export interface OfficeAvailabilityProps {
     nameId: string;
     status: { text: string, color: string };
     calendarURL: string;
+    small?: boolean;
 }

@@ -7,8 +7,6 @@ import {getAvailableButton, getBusyButton} from "../../library/general_functions
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
-
-
     const [status, setStatus] = useState<any>(props.status);
     const [nameId] = useState<string>(props.nameId);
 
@@ -22,8 +20,10 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
             const ical = require('cal-parser');
             const parsed = ical.parseString(data);
 
+
             // Array of events happening at the moment
             const currentEvents = parseCalendarData(parsed.events);
+
             if (currentEvents.length >= 1) {
                 setStatus({text: "In Meeting", color: colors.red.A700})
             } else {
@@ -43,9 +43,16 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         return calendar.filter((event: any) => {
 
             try {
-                let current = event.dtstamp.getTime();
+                let current;
                 let start = event.dtstart.value.getTime();
                 let end = event.dtend.value.getTime();
+
+                // Start and end might come in as
+                if (event.dtstart.params.tzid === "Romance Standard Time") {
+                    current = event.dtstamp.getTime() + 7200000;
+                } else {
+                    current = event.dtstamp.getTime();
+                }
 
                 return (current >= start && current <= end)
             } catch (e) {
@@ -85,14 +92,39 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
         }
     }
 
-    return (
-        <div>
-            <Button variant="contained" onClick={changeStatus}
-                    style={{backgroundColor: status.color, color: "#ffffff", width: 200, height: 50}}>
-                {status.text}
-            </Button>
+    if (props.small) {
+        return (
+            <div>
+                <Button variant="contained" onClick={changeStatus}
+                        style={{
+                            backgroundColor: status.color,
+                            color: "#ffffff",
+                            marginTop: "10px",
+                            width: 200,
+                            height: 55,
+                            fontSize: "20px",
+                            marginLeft: "19px"
+                        }}>
+                    {status.text}
+                </Button>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <Button variant="contained" onClick={changeStatus}
+                        style={{
+                            backgroundColor: status.color,
+                            color: "#ffffff",
+                            marginTop: "80px",
+                            width: 350,
+                            height: 100,
+                            fontSize: "30px"
+                        }}>
+                    {status.text}
+                </Button>
+            </div>
+        );
+    }
 
-
-        </div>
-    );
 };

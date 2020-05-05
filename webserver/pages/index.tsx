@@ -1,11 +1,13 @@
-import {Button, Grid, TextField,} from "@material-ui/core";
+import {Button, Grid, TextField, ThemeProvider,} from "@material-ui/core";
 import Link from "next/link";
 import React, {useState} from "react";
+import {theme} from "../styles/generalStyles";
 
 function Index() {
     const [username, setUsername] = useState<string>("");
 
     return (
+        <ThemeProvider theme={theme}>
         <Grid container
               direction="column"
               justify="space-between"
@@ -20,11 +22,11 @@ function Index() {
                         <Grid item>
                             <TextField id="outlined-basic" label="Username" variant="outlined" value={username}
                                        onChange={event => setUsername(event.target.value)}
-                                       style={{width: 300, height: 40, margin: "10px"}}/>
+                                       style={{width: 350, height: 40, margin: "10px"}}/>
                         </Grid>
                         <Grid item>
                             <TextField id="outlined-basic" label="Pincode" variant="outlined"
-                                       style={{width: 300, height: 40, margin: "10px"}}/>
+                                       style={{width: 350, height: 40, margin: "10px"}}/>
                         </Grid>
                     </Grid>
                 </form>
@@ -32,23 +34,22 @@ function Index() {
 
             <Grid item>
                 <Link href={"/user/" + username}>
-                    <Button variant="contained" color="primary" style={{width: 180, height: 45}}>Sign In</Button>
+                    <Button variant="contained" color="primary"
+                            style={{width: 140, height: 45, marginRight: "10px"}}>Console</Button>
+                </Link>
+
+                <Link href={"/office/" + username}>
+                    <Button variant="contained" color="primary"
+                            style={{width: 140, height: 45, marginLeft: "10px"}}>Tablet</Button>
                 </Link>
             </Grid>
             <Link href={"/create-account/"}>
                 <Grid item>
-                    <Button variant="outlined" color="primary" style={{width: 180, height: 45}}>Create Account</Button>
+                    <Button variant="outlined" color="primary" style={{width: 300, height: 45}}>Create Account</Button>
                 </Grid>
             </Link>
-
-            <Grid item>
-                <Link href={"/tablets/"}>
-                    <Button variant="contained" color="primary" style={{width: 250, height: 45, marginTop: "20px"}}>Tablet
-                        Overview</Button>
-                </Link>
-            </Grid>
         </Grid>
-
+        </ThemeProvider>
     );
 }
 

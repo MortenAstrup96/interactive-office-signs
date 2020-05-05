@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
+import {Button, Card, CardContent, Divider, Step, StepLabel, Stepper, TextField} from "@material-ui/core";
 import {useRouter} from "next/router";
 
 const gridStyle = {
@@ -13,6 +13,7 @@ export const CreateAccountForm = () => {
 
     const addUser = (prop: { mail: string; calendarURL: string; fourthView: { data: string; dataType: string }; customView: { data: string; dataType: string }; thirdView: { data: string; dataType: string }; officeId: string; name: string; viewType: string; nameId: string; firstView: { data: string; dataType: string }; secondView: { data: string; dataType: string }; status: string }) => {
         const username = prop.nameId;
+        const avatarFake = require("../../img/avataricon.png");
 
         fetch('/api/user/0', {
             method: 'POST',
@@ -73,10 +74,53 @@ export const CreateAccountForm = () => {
             case 1:
                 return <div>{getCustomizationInformation()}</div>
             case 2:
-                return <p>3</p>;
+                return <div>{getResultInformation()}</div>;
             default:
                 return <p>Error Loading</p>;
         }
+    }
+
+    function getProfile() {
+        try {
+            const avatarReal = require("../../img/profile/" + nameId + ".jpg");
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "150px",
+                width: "150px"
+            }} src={avatarReal} alt={avatarFake}/>)
+        } catch (e) {
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "200px",
+                width: "200px",
+                alignSelf: "center"
+            }} src={avatarFake} alt={avatarFake}/>);
+        }
+    }
+
+    function getResultInformation() {
+        return (<div style={{display: "flex"}}>
+            {getProfile()}
+            <Card variant="outlined" style={{width: "350px", margin: "20px"}}>
+                <CardContent>
+                    {getSpan("Name", name)}
+                    {getSpan("Office", office)}
+                    {getSpan("email", mail)}
+                    <Divider style={{margin: "10px"}}/>
+                    {getSpan("Username", nameId)}
+                    {getSpan("Calendar URL", calendarURL)}
+                </CardContent>
+            </Card>
+
+        </div>)
+    }
+
+    function getSpan(title: string, value: string) {
+        return <span style={{display: "flex", justifyContent: "start", alignItems: "center"}}>
+            <h4 style={{margin: "8px", marginRight: "20px"}}>{title}: </h4><p
+            style={{margin: "8px"}}>{value}</p></span>
     }
 
     function getAccountInformation() {

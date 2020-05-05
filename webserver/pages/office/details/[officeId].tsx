@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Container} from "@material-ui/core";
+import {Card, CardContent, Container} from "@material-ui/core";
 import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
@@ -11,6 +11,7 @@ import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../../components/userConsole/viewTypes/quadrupleView";
 import {CustomView} from "../../../components/userConsole/viewTypes/customView";
 import {generalStyle} from "../../../styles/generalStyles";
+import {Availability} from "../../../components/tablet/availability";
 
 const avatarFake = require("../../../img/avataricon.png");
 
@@ -44,15 +45,14 @@ export default function OfficeInformationId() {
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "250px",
-                    width: "250px"
+                    height: "220px",
+                    width: "220px"
                 }} src={avatarReal} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+                return (<img src={avatarFake} alt={avatarFake} width="220px"/>);
             }
-
         }
-        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+        return (<img src={avatarFake} alt={avatarFake} width="220px"/>);
     }
 
     async function fetcher(url: string) {
@@ -86,23 +86,51 @@ export default function OfficeInformationId() {
     }
 
     if (error) return (<div> Failed to load </div>);
-    if (!data || !currentOffice) return (<div><Header office={""} nameId={""}/></div>);
+    if (!data || !currentOffice) return (<div></div>);
 
 
     return (
         <Container>
             <div>
-                <Header office={currentOffice?.officeId} nameId={currentOffice?.nameId}/>
-                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
-                    <div className={generalStyling.officeDetail}>
-                        {getProfileImage()}
-                        <p>{currentOffice.name}</p>
-                        <p>{currentOffice.mail}</p>
+                <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
+                        mail={currentOffice?.mail}/>
+                <div style={{display: "flex", justifyContent: "center"}}>
+                    {getProfileImage()}
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        marginLeft: "30px",
+                        justifyContent: "center"
+                    }}>
+                        <h1 style={{
+                            margin: "5px",
+                            marginLeft: "20px",
+                            fontSize: "38px",
+                            marginBottom: 0,
+                            letterSpacing: "2px"
+                        }}>{currentOffice.name}</h1>
+                        <p style={{
+                            margin: "5px",
+                            marginLeft: "20px",
+                            fontSize: "22px",
+                            marginTop: 0
+                        }}>Associate
+                            Professor</p>
+                        <p style={{
+                            margin: "5px",
+                            marginLeft: "20px",
+                            fontSize: "18px"
+                        }}>{currentOffice.mail}</p>
+                        <Availability nameId={currentOffice.nameId} status={currentOffice.status}
+                                      calendarURL={currentOffice?.calendarURL} small={true}/>
                     </div>
-                    <div style={{textAlign: "center"}}>
-                        {getImages()}
-                    </div>
+
                 </div>
+                <div style={{display: "flex", justifyContent: "center", marginTop: "25px"}}>
+                    {getImages()}
+                </div>
+
+
             </div>
         </Container>
     );
