@@ -5,13 +5,10 @@ import useSWR from "swr";
 import Header from "../../components/tablet/header";
 import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
-import {generalStyle} from "../../styles/generalStyles";
-import {buttonStyle} from "../../styles/userConsoleStyles";
-
 
 const avatarFake = require("../../img/avataricon.png");
 
-export default function OfficeInformationId() {
+export default function OfficeInformationId()  {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
@@ -20,7 +17,6 @@ export default function OfficeInformationId() {
     let {data, revalidate} = useSWR(() => '/api/user/' + router.query.officeId, fetcher, {
         refreshInterval: 10000
     });
-
 
     useEffect(() => {
         setCurrentOffice(data);

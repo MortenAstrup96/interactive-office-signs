@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import {ViewControls} from "./viewControls";
-import {Container, Divider, Button} from "@material-ui/core";
+import {Container, Divider, Button, Modal} from "@material-ui/core";
 import {ViewId, ViewType} from "../../library/enums";
 import {SingleView} from "./viewTypes/singleView";
 import {DoubleView} from "./viewTypes/doubleView";
@@ -9,6 +9,7 @@ import {QuadrupleView} from "./viewTypes/quadrupleView";
 import {CustomView} from "./viewTypes/customView";
 import {ProfileSettings} from "./profileSettings";
 import {UserInformation, ViewData} from "../../library/general_interfaces";
+import OfficeInformationId from "../../pages/office/[officeId]";
 
 interface customizeInfo {
     currentUser: UserInformation;
@@ -19,6 +20,7 @@ interface customizeInfo {
 }
 
 export const Customize = (props: customizeInfo) => {
+    const [showModal, setShowModal] = useState(false);
 
 
     function updateImage(viewId: ViewId, viewData: ViewData) {
@@ -48,6 +50,10 @@ export const Customize = (props: customizeInfo) => {
                 }));
                 break;
         }
+    }
+
+    function openPreviewModal() {
+
     }
 
     /** ----- USER INTERFACE ----- */
@@ -89,8 +95,16 @@ export const Customize = (props: customizeInfo) => {
 
     return (
         <Container style={{display: " flex", flexDirection: "column", alignItems: "center"}}>
+            <Modal
+                open={showModal}
+                onClose={() => setShowModal(false)}
+                style={{height: 1000, width: 800}}
+            >
+                <OfficeInformationId/>
+            </Modal>
             <ProfileSettings user={props.currentUser}/>
             <Button onClick={props.save} variant="contained" color="primary">Save Changes</Button>
+            <Button onClick={() => setShowModal(true)} variant="contained" color="primary">Preview</Button>
             <Divider variant="fullWidth" style={{width: "700px", marginTop: "30px", marginBottom: "20px"}}/>
             <ViewControls currentViewType={props.currentUser.viewType} updateViewType={updateViewType}/>
             {getCards()}
