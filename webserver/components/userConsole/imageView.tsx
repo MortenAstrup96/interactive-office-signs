@@ -69,16 +69,17 @@ export const ImageView = (props: ImageViewProps) => {
                 <div>
                     <h4>Vega-lite is data visualization tool</h4>
                     <a href="https://vega.github.io/vega-lite/examples/" target="_blank">more Vega-lite examples</a>
-                    <div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/></div>
+                    <div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/>
+                    </div>
                 </div>);
         } catch (e) {
             return (
                 <div>
                     <h4>Vega-Lite is data visualization tool</h4>
                     <a href="https://vega.github.io/vega-lite/examples/" target="_blank">More Vega-Lite examples</a>
-                    <h3 style={{color:"red"}}>Visualisation unable to compile</h3>
+                    <h3 style={{color: "red"}}>Visualisation unable to compile</h3>
 
-            </div>)
+                </div>)
         }
     }
 
@@ -90,48 +91,57 @@ export const ImageView = (props: ImageViewProps) => {
                                variant="outlined" value={selectedData}
                                style={{width: "100%", margin: "10px", marginBottom: "10px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
-                    <a href="https://www.lifewire.com/copy-image-web-address-url-1174175" target="_blank" style={{marginBottom: "10px"}}>Paste the image address from a picture found online</a>
-
+                    <a href="https://www.lifewire.com/copy-image-web-address-url-1174175" target="_blank"
+                       style={{marginBottom: "10px"}}>Paste the image address from a picture found online</a>
 
 
                     <img src={selectedData} height="400px" alt="Unable to display image"/>
                 </div>);
         } else if (selectedRadio === DataType.CALENDAR) {
+            console.log(props.viewData.data);
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <TextField label="Calendar" placeholder="https://microsoft/mycalendar.ics"
                                variant="outlined" value={selectedData}
                                style={{width: "100%", margin: "10px", marginBottom: "30px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
-                               <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                                   <iframe src={selectedData} height="400px"/>
-                                   <div style={{width: "300px", display: "flex", flexDirection: "column", margin: "30px", alignItems: "center"}}>
-                                       <h4>Add a view of your calendar for the day</h4>
-                                       <p>This will display your appointments for the day from your calendar on the officesign. The appointments can be displayed with title or just as 'busy'</p>
-                                       <p>Your calendar is added with a link to the calendars ICS-file that can be published via Outlook Web Application (OWA)</p>
-                                       <a href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5" target="_blank">How to publish Outlook calendar</a>
-                                   </div>
-                               </div>
+                    <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                        <div style={{
+                            width: "300px",
+                            display: "flex",
+                            flexDirection: "column",
+                            margin: "30px",
+                            alignItems: "center"
+                        }}>
+                            <h4>Add a view of your calendar for the day</h4>
+                            <p>This will display your appointments for the day from your calendar on the officesign. The
+                                appointments can be displayed with title or just as 'busy'</p>
+                            <p>Your calendar is added with a link to the calendars ICS-file that can be published via
+                                Outlook Web Application (OWA)</p>
+                            <a href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5"
+                               target="_blank">How to publish Outlook calendar</a>
+                        </div>
+                    </div>
                 </div>);
         } else if (selectedRadio === DataType.VEGA) {
-                if(selectedData == "") {
-                    setSelectedData("{\n" +
-                        "  \"$schema\": \"https://vega.github.io/schema/vega-lite/v4.json\",\n" +
-                        "  \"description\": \"A simple bar chart with embedded data.\",\n" +
-                        "  \"data\": {\n" +
-                        "    \"values\": [\n" +
-                        "      {\"a\": \"A\", \"b\": 28}, {\"a\": \"B\", \"b\": 55}, {\"a\": \"C\", \"b\": 43},\n" +
-                        "      {\"a\": \"D\", \"b\": 91}, {\"a\": \"E\", \"b\": 81}, {\"a\": \"F\", \"b\": 53},\n" +
-                        "      {\"a\": \"G\", \"b\": 19}, {\"a\": \"H\", \"b\": 87}, {\"a\": \"I\", \"b\": 52}\n" +
-                        "    ]\n" +
-                        "  },\n" +
-                        "  \"mark\": \"bar\",\n" +
-                        "  \"encoding\": {\n" +
-                        "    \"x\": {\"field\": \"a\", \"type\": \"ordinal\", \"axis\": {\"labelAngle\": 0}},\n" +
-                        "    \"y\": {\"field\": \"b\", \"type\": \"quantitative\"}\n" +
-                        "  }\n" +
-                        "}");
-                }
+            if (selectedData == "") {
+                setSelectedData("{\n" +
+                    "  \"$schema\": \"https://vega.github.io/schema/vega-lite/v4.json\",\n" +
+                    "  \"description\": \"A simple bar chart with embedded data.\",\n" +
+                    "  \"data\": {\n" +
+                    "    \"values\": [\n" +
+                    "      {\"a\": \"A\", \"b\": 28}, {\"a\": \"B\", \"b\": 55}, {\"a\": \"C\", \"b\": 43},\n" +
+                    "      {\"a\": \"D\", \"b\": 91}, {\"a\": \"E\", \"b\": 81}, {\"a\": \"F\", \"b\": 53},\n" +
+                    "      {\"a\": \"G\", \"b\": 19}, {\"a\": \"H\", \"b\": 87}, {\"a\": \"I\", \"b\": 52}\n" +
+                    "    ]\n" +
+                    "  },\n" +
+                    "  \"mark\": \"bar\",\n" +
+                    "  \"encoding\": {\n" +
+                    "    \"x\": {\"field\": \"a\", \"type\": \"ordinal\", \"axis\": {\"labelAngle\": 0}},\n" +
+                    "    \"y\": {\"field\": \"b\", \"type\": \"quantitative\"}\n" +
+                    "  }\n" +
+                    "}");
+            }
 
             return (
                 <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
