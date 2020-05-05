@@ -8,18 +8,20 @@ import {Availability} from "../../components/tablet/availability";
 
 const avatarFake = require("../../img/avataricon.png");
 
-export default function OfficeInformationId()  {
+export default function OfficeInformationId() {
 
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
+    console.log(router.query.personId);
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
-    let {data, revalidate} = useSWR(() => '/api/user/' + router.query.officeId, fetcher, {
+    let {data, revalidate} = useSWR(() => '/api/user/' + router.query.personId, fetcher, {
         refreshInterval: 10000
     });
 
     useEffect(() => {
         setCurrentOffice(data);
+        console.log(data);
     }, [data, revalidate]);
 
 
@@ -30,19 +32,19 @@ export default function OfficeInformationId()  {
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "450px",
-                    width: "450px"
+                    height: "400px",
+                    width: "400px"
                 }} src={avatarReal} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="450px"/>);
+                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
             }
 
         }
-        return (<img src={avatarFake} alt={avatarFake} width="450px"/>);
+        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
     }
 
     async function fetcher(url: any) {
-        if (router.query.officeId) {
+        if (router.query.personId) {
             return fetch(url, {
                 method: 'GET',
                 headers: {'Content-Type': 'application/json'}
@@ -53,28 +55,25 @@ export default function OfficeInformationId()  {
     if (!data || !currentOffice) return (<div></div>);
 
     return (
-        <Container>
-            <div>
-                <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
-                        mail={currentOffice?.mail}/>
-                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                    {getProfileImage()}
-                    <h1 style={{
-                        fontSize: "60px",
-                        margin: "5px",
-                        marginTop: "30px",
-                        color: "#002546"
-                    }}>{currentOffice.name}</h1>
-                    <p style={{
-                        fontSize: "30px",
-                        margin: "5px",
-                        marginBottom: "30px",
-                        color: "#002546"
-                    }}>{currentOffice?.title}</p>
-                    <Availability nameId={currentOffice.nameId} status={currentOffice.status}
-                                  calendarURL={currentOffice?.calendarURL}/>
-                </div>
-
+        <Container style={{height: "110%"}}>
+            <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
+                    mail={currentOffice?.mail}/>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                {getProfileImage()}
+                <h1 style={{
+                    fontSize: "60px",
+                    margin: "5px",
+                    marginTop: "30px",
+                    color: "#002546"
+                }}>{currentOffice.name}</h1>
+                <p style={{
+                    fontSize: "30px",
+                    margin: "5px",
+                    marginBottom: "30px",
+                    color: "#002546"
+                }}>{currentOffice?.title}</p>
+                <Availability nameId={currentOffice.nameId} status={currentOffice.status}
+                              calendarURL={currentOffice?.calendarURL}/>
             </div>
         </Container>
     );

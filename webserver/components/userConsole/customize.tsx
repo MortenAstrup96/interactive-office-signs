@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {ViewControls} from "./viewControls";
-import {Container, Divider, Button, Modal} from "@material-ui/core";
+import {Container, Divider, Button, Modal, Card, CardContent, Box} from "@material-ui/core";
 import {ViewId, ViewType} from "../../library/enums";
 import {SingleView} from "./viewTypes/singleView";
 import {DoubleView} from "./viewTypes/doubleView";
@@ -9,7 +9,7 @@ import {QuadrupleView} from "./viewTypes/quadrupleView";
 import {CustomView} from "./viewTypes/customView";
 import {ProfileSettings} from "./profileSettings";
 import {UserInformation, ViewData} from "../../library/general_interfaces";
-import OfficeInformationId from "../../pages/office/[officeId]";
+import OfficeInformationId from "../../pages/office/details/[personId]";
 
 interface customizeInfo {
     currentUser: UserInformation;
@@ -98,9 +98,19 @@ export const Customize = (props: customizeInfo) => {
             <Modal
                 open={showModal}
                 onClose={() => setShowModal(false)}
-                style={{height: 1000, width: 800}}
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "50px"
+                }}
             >
-                <OfficeInformationId/>
+                <Card style={{height: "100%", overflowY: "hidden"}}>
+                    <CardContent style={{overflow: "scroll", height: "100%", width: "1050px"}}>
+                        <OfficeInformationId/>
+                    </CardContent>
+                </Card>
+
             </Modal>
             <ProfileSettings user={props.currentUser}/>
             <Button onClick={props.save} variant="contained" color="primary">Save Changes</Button>
