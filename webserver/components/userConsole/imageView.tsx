@@ -11,7 +11,7 @@ import {
     Radio,
     RadioGroup,
     TextField,
-    Typography
+    Typography, ThemeProvider
 } from "@material-ui/core";
 import {DataType, ViewId} from "../../library/enums";
 import {ImageCard} from "../tablet/imageCard";
@@ -19,6 +19,7 @@ import {ViewData} from "../../library/general_interfaces";
 import IconAdd from "../../img/icons/iconAdd";
 import {modalPopupStyles} from "../../styles/userConsoleStyles";
 import {VegaLite} from "react-vega/lib";
+import {theme} from "../../styles/generalStyles";
 
 interface ImageViewProps {
     viewData: ViewData;
@@ -66,19 +67,18 @@ export const ImageView = (props: ImageViewProps) => {
         try {
             const parsedVega = JSON.parse(selectedData);
             return (
-                <div>
-                    <h4>Vega-lite is data visualization tool</h4>
-                    <a href="https://vega.github.io/vega-lite/examples/" target="_blank">more Vega-lite examples</a>
-                    <div style={{maxWidth: "1000px", margin: "10px", marginTop: "20px"}}><VegaLite spec={parsedVega}/>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <h4 style={{fontFamily: "Roboto"}}>Vega-lite is a data visualization tool</h4>
+                    <a style={{fontFamily: "Roboto", marginTop: "20px"}} href="https://vega.github.io/vega-lite/examples/" target="_blank">Click here to see more Vega-lite examples</a>
+                    <div style={{maxWidth: "1000px", marginTop: "10px", marginBottom: "20px"}}><VegaLite spec={parsedVega}/>
                     </div>
                 </div>);
         } catch (e) {
             return (
-                <div>
-                    <h4>Vega-Lite is data visualization tool</h4>
-                    <a href="https://vega.github.io/vega-lite/examples/" target="_blank">More Vega-Lite examples</a>
-                    <h3 style={{color: "red"}}>Visualisation unable to compile</h3>
-
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                    <h4 style={{fontFamily: "Roboto"}}>Vega-Lite is a data visualization tool</h4>
+                    <a style={{fontFamily: "Roboto"}} href="https://vega.github.io/vega-lite/examples/" target="_blank">More Vega-Lite examples</a>
+                    <h3 style={{color: "#e2001a"}}>The visualisation is unable to compile</h3>
                 </div>)
         }
     }
@@ -86,17 +86,15 @@ export const ImageView = (props: ImageViewProps) => {
     function getCorrectInputField() {
         if (selectedRadio === DataType.IMAGE) {
             return (
-                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "center", fontFamily: "Roboto"}}>
                     <TextField label="Image Link" placeholder="https://www.somewebsite/images/image.jpg"
                                variant="outlined" value={selectedData}
                                style={{width: "100%", margin: "10px", marginBottom: "10px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
                     <a href="https://www.lifewire.com/copy-image-web-address-url-1174175" target="_blank"
-                       style={{marginBottom: "10px"}}>Paste the image address from a picture found online</a>
-
-
+                       style={{marginBottom: "10px", fontFamily: "Roboto"}}>Paste the image address from a picture that you have found online</a>
                     <img src={selectedData} height="400px" alt="Unable to display image"/>
-                </div>);
+                </div>)
         } else if (selectedRadio === DataType.CALENDAR) {
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -113,12 +111,12 @@ export const ImageView = (props: ImageViewProps) => {
                             margin: "30px",
                             alignItems: "center"
                         }}>
-                            <h4>Add a view of your calendar for the day</h4>
-                            <p>This will display your appointments for the day from your calendar on the officesign. The
-                                appointments can be displayed with title or just as 'busy'</p>
-                            <p>Your calendar is added with a link to the calendars ICS-file that can be published via
+                            <h4 style={{fontFamily: "Roboto"}}>Add a view of your calendar</h4>
+                            <p style={{fontFamily: "Roboto"}}>This will display your appointments for the day from your calendar on the office sign. The
+                                appointments can be displayed with a title or just as 'Busy' or 'In a meeting'.</p>
+                            <p style={{fontFamily: "Roboto"}}>Your calendar can be added with a link to the ICS-file that can be published via
                                 Outlook Web Application (OWA)</p>
-                            <a href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5"
+                            <a style={{fontFamily: "Roboto"}} href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5"
                                target="_blank">How to publish Outlook calendar</a>
                         </div>
                     </div>
@@ -145,8 +143,8 @@ export const ImageView = (props: ImageViewProps) => {
 
             return (
                 <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
-                    <TextField label="Vega-Lite" value={selectedData} multiline rows={24} variant="outlined"
-                               style={{width: "600px", margin: "10px", marginTop: "20px"}}
+                    <TextField label="Vega-Lite" value={selectedData} multiline rows={15} variant="outlined"
+                               style={{width: "600px", margin: "10px", marginTop: "20px", fontFamily: "Roboto"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
                     {getVegaView()}
                 </div>
@@ -155,7 +153,7 @@ export const ImageView = (props: ImageViewProps) => {
             return (
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                     <TextField label="Text" value={selectedData} multiline rows={6} variant="outlined"
-                               style={{width: "90%", margin: "20px", marginBottom: "30px"}}
+                               style={{width: "90%", margin: "20px", marginBottom: "30px", fontFamily: "Roboto"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
                 </div>
             );
@@ -179,7 +177,7 @@ export const ImageView = (props: ImageViewProps) => {
                                 <Typography gutterBottom variant="h5" component="h2">
                                     Customize your tablet
                                 </Typography>
-                                <Typography variant="body2" component="p">
+                                <Typography variant="body2" component="p" style={{fontFamily: "Roboto"}}>
                                     Add content to the view
                                 </Typography>
                                 <div>

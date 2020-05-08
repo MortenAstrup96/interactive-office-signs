@@ -60,6 +60,14 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
         );
     }
 
+    function TitleIcon(props: SvgIconProps) {
+        return (
+            <SvgIcon {...props}>
+                <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"></path>
+            </SvgIcon>
+        );
+    }
+
     return (
         <ThemeProvider theme={theme}>
         <div className={generalStyling.profile}>
@@ -96,6 +104,13 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
                                    size="small"
                                    style={{width: "280px", marginLeft: "11px", marginTop: "7px"}}/>
                     </div>
+
+                        <div>
+                            <TitleIcon fontSize="large" style={{color: '#002546', marginTop: "22px"}}/>
+                            <TextField id="outlined-basic" label="Title" value={currentUser?.title} variant="outlined" size="small"
+                                       style={{width: "280px", marginLeft: "11px", marginTop: "20px"}}/>
+                        </div>
+
                 </ThemeProvider>
                 </div>
             </div>

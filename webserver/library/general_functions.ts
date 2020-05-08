@@ -18,13 +18,13 @@ export function getPropString(prop: any, field: string) {
 }
 
 export function getAvailableButton() {
-    return {text: "Available", color: colors.green["500"]}
+    return {text: "Available", color: "#8bad3f"}
 }
 
 export function getAwayButton() {
-    return {text: "Away", color: colors.yellow.A700}
+    return {text: "Away", color: "#fabb00"}
 }
 
 export function getBusyButton() {
-    return {text: "Busy", color: colors.red.A700}
+    return {text: "Busy", color: "#e2001a"}
 }

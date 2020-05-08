@@ -16,24 +16,30 @@ export const generalStyle = makeStyles((theme: Theme) =>
             margin: "5px",
             marginTop: "10px",
             textAlign: "center",
+            fontWeight: "normal"
         },
         officeName: {
             fontFamily: "Roboto",
-            fontSize: "50px",
             margin: "5px",
-            textAlign: "center",
+            marginLeft: "20px",
+            fontSize: "38px",
+            marginBottom: 0,
+            letterSpacing: "2px",
+            fontWeight: "normal"
         },
         officeTitle: {
             fontFamily: "Roboto",
-            fontSize: "20px",
             margin: "5px",
-            textAlign: "center",
+            marginLeft: "20px",
+            fontSize: "22px",
+            marginTop: 0
         },
-        officeDetail: {
-            fontSize: "34px",
-            display: "grid",
-            gridTemplateColumns: "1fr 2fr 3fr",
-            flexDirection: "column"
+        officeMail: {
+            margin: "5px",
+            marginLeft: "20px",
+            fontSize: "18px",
+            fontFamily: "Roboto",
+            marginBottom: "15px"
         },
     }),
 );

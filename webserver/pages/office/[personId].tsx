@@ -67,7 +67,7 @@ export default function OfficeInformationId() {
                     fontSize: "30px",
                     margin: "5px",
                     marginBottom: "30px",
-                    color: "#002546"
+                    fontFamily: "Roboto"
                 }}>{currentOffice?.title}</p>
                 <Availability nameId={currentOffice.nameId} status={currentOffice.status}
                               calendarURL={currentOffice?.calendarURL}/>
@@ -75,4 +75,3 @@ export default function OfficeInformationId() {
         </Container>
     );
 }
-

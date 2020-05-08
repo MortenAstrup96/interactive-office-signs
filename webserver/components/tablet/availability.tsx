@@ -3,7 +3,7 @@ import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button, colors} from "@material-ui/core";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
-import {getAvailableButton, getBusyButton} from "../../library/general_functions";
+import {getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
@@ -84,7 +84,10 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     // Will switch between available/busy - If neither switch to available
     function changeStatus() {
         if (status.text === "Available") {
-            setStatus(getBusyButton())
+            setStatus(getAwayButton())
+            putStatusUpdate(getAwayButton());
+        } else if (status.text === "Away") {
+            setStatus(getBusyButton)
             putStatusUpdate(getBusyButton());
         } else {
             setStatus(getAvailableButton());
@@ -100,7 +103,7 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
                             backgroundColor: status.color,
                             color: "#ffffff",
                             marginTop: "10px",
-                            width: 200,
+                            width: 150,
                             height: 55,
                             fontSize: "20px",
                             marginLeft: "19px"
@@ -116,10 +119,10 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
                         style={{
                             backgroundColor: status.color,
                             color: "#ffffff",
-                            marginTop: "80px",
+                            marginTop: "30px",
                             width: 350,
-                            height: 100,
-                            fontSize: "30px"
+                            height: 90,
+                            fontSize: "40px"
                         }}>
                     {status.text}
                 </Button>

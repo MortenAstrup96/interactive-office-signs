@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Container} from "@material-ui/core";
+import {Container, ThemeProvider} from "@material-ui/core";
 import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
@@ -11,6 +11,7 @@ import {TripleView} from "../../../components/userConsole/viewTypes/tripleView";
 import {QuadrupleView} from "../../../components/userConsole/viewTypes/quadrupleView";
 import {CustomView} from "../../../components/userConsole/viewTypes/customView";
 import {Availability} from "../../../components/tablet/availability";
+import {generalStyle, theme} from "../../../styles/generalStyles";
 
 const avatarFake = require("../../../img/avataricon.png");
 
@@ -18,7 +19,7 @@ export default function OfficeInformationId() {
     const router = useRouter();
     const [currentOffice, setCurrentOffice] = useState<UserInformation>();
     const [vega, setVega] = useState<any>();
-
+    const generalStyling = generalStyle();
 
     // Will get the person by ID in the URL and revalidate every 10 seconds
     const {data, error} = useSWR(() => '/api/user/' + router.query.personId, fetcher, {
@@ -89,6 +90,7 @@ export default function OfficeInformationId() {
 
     return (
         <Container>
+            <ThemeProvider theme={theme}>
             <div>
                 <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
                         mail={currentOffice?.mail}/>
@@ -100,24 +102,9 @@ export default function OfficeInformationId() {
                         marginLeft: "30px",
                         justifyContent: "center"
                     }}>
-                        <h1 style={{
-                            margin: "5px",
-                            marginLeft: "20px",
-                            fontSize: "38px",
-                            marginBottom: 0,
-                            letterSpacing: "2px"
-                        }}>{currentOffice.name}</h1>
-                        <p style={{
-                            margin: "5px",
-                            marginLeft: "20px",
-                            fontSize: "22px",
-                            marginTop: 0
-                        }}>{currentOffice?.title}</p>
-                        <p style={{
-                            margin: "5px",
-                            marginLeft: "20px",
-                            fontSize: "18px"
-                        }}>{currentOffice.mail}</p>
+                        <h1 className={generalStyling.officeName}>{currentOffice.name}</h1>
+                        <p className={generalStyling.officeTitle}>{currentOffice?.title}</p>
+                        <p className={generalStyling.officeMail}>{currentOffice.mail}</p>
                         <Availability nameId={currentOffice.nameId} status={currentOffice.status}
                                       calendarURL={currentOffice?.calendarURL} small={true}/>
                     </div>
@@ -126,9 +113,8 @@ export default function OfficeInformationId() {
                 <div style={{display: "flex", justifyContent: "center", marginTop: "25px"}}>
                     {getImages()}
                 </div>
-
-
             </div>
+            </ThemeProvider>
         </Container>
     );
 };
