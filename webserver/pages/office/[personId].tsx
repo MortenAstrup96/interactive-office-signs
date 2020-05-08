@@ -30,19 +30,22 @@ export default function OfficeInformationId() {
     function getProfileImage() {
         if (currentOffice?.nameId) {
             try {
-                const avatarReal = require("../../img/profile/" + currentOffice.nameId + ".jpg");
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "400px",
-                    width: "400px"
-                }} src={avatarReal} alt={avatarFake}/>)
+                    height: "450px",
+                    width: "450px"
+                }} src={require("../../img/profile/" + currentOffice.nameId + ".jpg")} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "450px",
+                    width: "450px"
+                }} src={avatarFake}/>)
             }
 
         }
-        return (<img src={avatarFake} alt={avatarFake} width="400px"/>);
     }
 
     async function fetcher(url: any) {

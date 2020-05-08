@@ -40,18 +40,22 @@ export default function OfficeInformationId() {
     function getProfileImage() {
         if (currentOffice?.nameId) {
             try {
-                const avatarReal = require("../../../img/profile/" + currentOffice.nameId + ".jpg");
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
                     height: "220px",
                     width: "220px"
-                }} src={avatarReal} alt={avatarFake}/>)
+                }} src={require("../../../img/profile/" + currentOffice.nameId + ".jpg")}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="220px"/>);
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "220px",
+                    width: "220px"
+                }} src={avatarFake}/>)
             }
+
         }
-        return (<img src={avatarFake} alt={avatarFake} width="220px"/>);
     }
 
     async function fetcher(url: string) {
@@ -91,30 +95,31 @@ export default function OfficeInformationId() {
     return (
         <Container>
             <ThemeProvider theme={theme}>
-            <div>
-                <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
-                        mail={currentOffice?.mail}/>
-                <div style={{display: "flex", justifyContent: "center"}}>
-                    {getProfileImage()}
-                    <div style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        marginLeft: "30px",
-                        justifyContent: "center"
-                    }}>
-                        <h1 className={generalStyling.officeName}>{currentOffice.name}</h1>
-                        <p className={generalStyling.officeTitle}>{currentOffice?.title}</p>
-                        <p className={generalStyling.officeMail}>{currentOffice.mail}</p>
-                        <Availability nameId={currentOffice.nameId} status={currentOffice.status}
-                                      calendarURL={currentOffice?.calendarURL} small={true}/>
-                    </div>
+                <div>
+                    <Header office={currentOffice?.office} nameId={currentOffice?.nameId} name={currentOffice?.name}
+                            mail={currentOffice?.mail}/>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        {getProfileImage()}
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginLeft: "30px",
+                            justifyContent: "center"
+                        }}>
+                            <h1 className={generalStyling.officeName}>{currentOffice.name}</h1>
+                            <p className={generalStyling.officeTitle}>{currentOffice?.title}</p>
+                            <p className={generalStyling.officeMail}>{currentOffice.mail}</p>
+                            <Availability nameId={currentOffice.nameId} status={currentOffice.status}
+                                          calendarURL={currentOffice?.calendarURL} small={true}/>
+                        </div>
 
+                    </div>
+                    <div style={{display: "flex", justifyContent: "center", marginTop: "25px"}}>
+                        {getImages()}
+                    </div>
                 </div>
-                <div style={{display: "flex", justifyContent: "center", marginTop: "25px"}}>
-                    {getImages()}
-                </div>
-            </div>
             </ThemeProvider>
         </Container>
     );
-};
+}
+;

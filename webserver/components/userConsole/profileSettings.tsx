@@ -5,6 +5,7 @@ import IconPerson from "../../img/icons/iconPerson";
 import {UserInformation} from "../../library/general_interfaces";
 import {generalStyle, theme} from "../../styles/generalStyles";
 
+
 interface ProfileSettingsProps {
     user: UserInformation;
 }
@@ -30,24 +31,29 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
     function getProfileImage() {
         if (currentUser) {
             try {
-                const avatarReal = require("../../img/profile/" + currentUser.nameId + ".jpg");
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
-                    height: "150px",
-                    width: "150px"
-                }} src={avatarReal} alt={avatarFake}/>)
+                    height: "200px",
+                    width: "200px"
+                }} src={require("../../img/profile/" + currentUser.nameId + ".jpg")} alt={avatarFake}/>)
             } catch (e) {
-                return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
+                return (<img style={{
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                    height: "200px",
+                    width: "200px"
+                }} src={avatarFake}/>)
             }
+
         }
-        return (<img src={avatarFake} alt={avatarFake} width="150px"/>);
     }
 
     function PersonIcon(props: SvgIconProps) {
         return (
             <SvgIcon {...props}>
-                <path d="M9 8c1.66 0 2.99-1.34 2.99-3S10.66 2 9 2C7.34 2 6 3.34 6 5s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V16h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                <path
+                    d="M9 8c1.66 0 2.99-1.34 2.99-3S10.66 2 9 2C7.34 2 6 3.34 6 5s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V16h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
             </SvgIcon>
         );
     }
@@ -70,51 +76,52 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
 
     return (
         <ThemeProvider theme={theme}>
-        <div className={generalStyling.profile}>
-            <h1>PROFILE SETTINGS</h1>
-            <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
-                <div>
-                    {getProfileImage()}
-                    <Button
-                        variant="contained"
-                        component="label"
-                        style={{marginTop: "10px"}}
-                    >
-                        Change Picture
-                        <input
-                            type="file"
-                            onChange={postProfileImage}
-                            style={{display: "none"}}
-                        />
-                    </Button>
-                </div>
-
-                <div style={{marginRight: "20px", marginTop: "30px"}}>
-                    <ThemeProvider theme={theme}>
+            <div className={generalStyling.profile}>
+                <h1>PROFILE SETTINGS</h1>
+                <div style={{display: "grid", gridTemplateColumns: "1fr 2fr"}}>
                     <div>
-                        <PersonIcon style={{color: '#002546', fontSize: 48}}/>
-                        <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
-                                   size="small"
-                                   style={{width: "280px", marginBottom: "15px"}}/>
+                        {getProfileImage()}
+                        <Button
+                            variant="contained"
+                            component="label"
+                            style={{marginTop: "10px"}}
+                        >
+                            Change Picture
+                            <input
+                                type="file"
+                                onChange={postProfileImage}
+                                style={{display: "none"}}
+                            />
+                        </Button>
                     </div>
 
-                    <div>
-                        <EmailIcon fontSize="large" style={{color: '#002546', marginTop: "10px"}}/>
-                        <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
-                                   size="small"
-                                   style={{width: "280px", marginLeft: "11px", marginTop: "7px"}}/>
+                    <div style={{marginRight: "20px", marginTop: "30px"}}>
+                        <ThemeProvider theme={theme}>
+                            <div>
+                                <PersonIcon style={{color: '#002546', fontSize: 48}}/>
+                                <TextField id="outlined-basic" label="Name" value={currentUser?.name} variant="outlined"
+                                           size="small"
+                                           style={{width: "280px", marginBottom: "15px"}}/>
+                            </div>
+
+                            <div>
+                                <EmailIcon fontSize="large" style={{color: '#002546', marginTop: "10px"}}/>
+                                <TextField id="outlined-basic" label="Mail" value={currentUser?.mail} variant="outlined"
+                                           size="small"
+                                           style={{width: "280px", marginLeft: "11px", marginTop: "7px"}}/>
+                            </div>
+
+                            <div>
+                                <TitleIcon fontSize="large" style={{color: '#002546', marginTop: "22px"}}/>
+                                <TextField id="outlined-basic" label="Title" value={currentUser?.title}
+                                           variant="outlined" size="small"
+                                           style={{width: "280px", marginLeft: "11px", marginTop: "20px"}}/>
+                            </div>
+
+                        </ThemeProvider>
                     </div>
-
-                        <div>
-                            <TitleIcon fontSize="large" style={{color: '#002546', marginTop: "22px"}}/>
-                            <TextField id="outlined-basic" label="Title" value={currentUser?.title} variant="outlined" size="small"
-                                       style={{width: "280px", marginLeft: "11px", marginTop: "20px"}}/>
-                        </div>
-
-                </ThemeProvider>
                 </div>
             </div>
-        </div>
         </ThemeProvider>
     );
 };
