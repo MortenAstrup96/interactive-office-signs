@@ -7,8 +7,6 @@ import {Container} from "@material-ui/core";
 import {Availability} from "../../components/tablet/availability";
 import {generalStyle} from "../../styles/generalStyles";
 
-const avatarFake = require("../../img/avataricon.png");
-
 export default function OfficeInformationId() {
 
     const router = useRouter();
@@ -29,22 +27,14 @@ export default function OfficeInformationId() {
 
     function getProfileImage() {
         if (currentOffice?.nameId) {
-            try {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "450px",
-                    width: "450px"
-                }} src={require("../../img/profile/" + currentOffice.nameId + ".jpg")} alt={avatarFake}/>)
-            } catch (e) {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "450px",
-                    width: "450px"
-                }} src={avatarFake}/>)
-            }
-
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "450px",
+                width: "450px",
+                backgroundImage: "url('../../static/avataricon.png')",
+                backgroundSize: "100%"
+            }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
         }
     }
 

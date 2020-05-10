@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useReducer, useState} from "react";
 import {
     Button,
     Card,
@@ -40,6 +40,7 @@ export const CreateAccountForm = () => {
     const [mail, setMail] = useState("");
     const [pin, setPin] = useState("");
     const [calendarURL, setCalenderURL] = useState("");
+    const [log, forceUpdate] = useReducer(x => x + 1, 0);
     const handleSubmit = () => {
         addUser({
             office: office,
@@ -66,7 +67,6 @@ export const CreateAccountForm = () => {
     };
     const [activeStep, setActiveStep] = useState(0);
     const steps = ['Account Information', 'Customization & Settings', 'Confirmation'];
-    const avatarFake = require("../../img/avataricon.png");
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -95,22 +95,17 @@ export const CreateAccountForm = () => {
     }
 
     function getProfile() {
+
         try {
-            const avatarReal = require("../../img/profile/" + nameId + ".jpg");
+            const avatarReal = require("../../static/" + nameId + ".jpg");
+
             return (<img style={{
                 objectFit: "cover",
                 borderRadius: "50%",
                 height: "150px",
                 width: "150px"
-            }} src={avatarReal} alt={avatarFake}/>)
+            }} src={avatarReal}/>)
         } catch (e) {
-            return (<img style={{
-                objectFit: "cover",
-                borderRadius: "50%",
-                height: "200px",
-                width: "200px",
-                alignSelf: "center"
-            }} src={avatarFake} alt={avatarFake}/>);
         }
     }
 
@@ -168,20 +163,52 @@ export const CreateAccountForm = () => {
         );
     }
 
+    const postProfileImage = async (e: any) => {
+        const file = e.currentTarget.files[0];
+        await fetch("/api/uploadImageById/" + nameId, {
+            method: "POST",
+            headers: {
+                "Content-Type": file.type
+            },
+            body: file
+        }).then(() => forceUpdate());
+    };
+
+    function getProfileThing() {
+        try {
+            return (
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    margin: "20px",
+                }}>
+                    <img style={{
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        height: "150px",
+                        width: "150px",
+                        backgroundImage: "url('../../static/avataricon.png')",
+                        backgroundSize: "100%"
+                    }} src={`${"../../static/" + nameId + ".jpg"}?${new Date().getTime()}`}/>
+                    <Button variant="contained" component="label" style={{marginTop: "10px"}}>Change Picture
+                        <input
+                            type="file"
+                            onChange={postProfileImage}
+                            style={{display: "none"}}/>
+                    </Button>
+                </div>
+            );
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     function getCustomizationInformation() {
         return (
             <ThemeProvider theme={theme}>
                 <div style={{display: "flex", flexDirection: "column"}}>
-                    <div style={{display: "flex", flexDirection: "column", alignItems: "center", margin: "20px"}}>
-                        <img style={{
-                            objectFit: "cover",
-                            borderRadius: "50%",
-                            height: "150px",
-                            width: "150px"
-                        }} src={avatarFake} alt={avatarFake}/>
-                        <Button variant="contained" component="label" style={{marginTop: "10px"}}>Change
-                            Picture</Button>
-                    </div>
+                    {getProfileThing()}
 
                     <h4 style={{marginTop: "30px", marginBottom: 0}}>Automatic Availability</h4>
                     <p style={{marginBottom: 10}}>Connect your calendar to automatically change status</p>

@@ -7,7 +7,7 @@ export default async (req: any, res: any) => {
         query: {nameId},
     } = req;
 
-    req.pipe(createWriteStream("./img/profile/" + nameId + ".jpg"));
+    req.pipe(createWriteStream("./static/" + nameId + ".jpg"));
     console.log("Creating image ...");
     res.statusCode = 200;
     res.end();

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useReducer, useState} from "react";
 import {Button, SvgIcon, SvgIconProps, TextField, ThemeProvider} from "@material-ui/core";
 import IconMail from "../../img/icons/iconMail";
 import IconPerson from "../../img/icons/iconPerson";
@@ -12,7 +12,7 @@ interface ProfileSettingsProps {
 
 export const ProfileSettings = (props: ProfileSettingsProps) => {
     const [currentUser] = useState<UserInformation>(props.user);
-    const avatarFake = require("../../img/avataricon.png");
+    const [log, forceUpdate] = useReducer(x => x + 1, 0);
     const generalStyling = generalStyle();
 
     const postProfileImage = async (e: any) => {
@@ -24,28 +24,20 @@ export const ProfileSettings = (props: ProfileSettingsProps) => {
                     "Content-Type": file.type
                 },
                 body: file
-            });
+            }).then(() => forceUpdate());
         }
     };
 
     function getProfileImage() {
         if (currentUser) {
-            try {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "200px",
-                    width: "200px"
-                }} src={require("../../img/profile/" + currentUser.nameId + ".jpg")} alt={avatarFake}/>)
-            } catch (e) {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "200px",
-                    width: "200px"
-                }} src={avatarFake}/>)
-            }
-
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "200px",
+                width: "200px",
+                backgroundImage: "url('../../static/avataricon.png')",
+                backgroundSize: "100%"
+            }} src={"../../static/" + currentUser.nameId + ".jpg"}/>)
         }
     }
 

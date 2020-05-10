@@ -13,7 +13,6 @@ import {CustomView} from "../../../components/userConsole/viewTypes/customView";
 import {Availability} from "../../../components/tablet/availability";
 import {generalStyle, theme} from "../../../styles/generalStyles";
 
-const avatarFake = require("../../../img/avataricon.png");
 
 export default function OfficeInformationId() {
     const router = useRouter();
@@ -39,21 +38,14 @@ export default function OfficeInformationId() {
 
     function getProfileImage() {
         if (currentOffice?.nameId) {
-            try {
                 return (<img style={{
                     objectFit: "cover",
                     borderRadius: "50%",
                     height: "220px",
-                    width: "220px"
-                }} src={require("../../../img/profile/" + currentOffice.nameId + ".jpg")}/>)
-            } catch (e) {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "220px",
-                    width: "220px"
-                }} src={avatarFake}/>)
-            }
+                    width: "220px",
+                    backgroundImage: "url('../../static/avataricon.png')",
+                    backgroundSize: "100%"
+                }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
 
         }
     }
