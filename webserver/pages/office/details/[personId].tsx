@@ -46,7 +46,6 @@ export default function OfficeInformationId() {
                     backgroundImage: "url('../../static/avataricon.png')",
                     backgroundSize: "100%"
                 }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
-
         }
     }
 

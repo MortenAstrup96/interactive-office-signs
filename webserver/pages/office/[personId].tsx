@@ -34,7 +34,7 @@ export default function OfficeInformationId() {
                 width: "450px",
                 backgroundImage: "url('../../static/avataricon.png')",
                 backgroundSize: "100%"
-            }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
+            }} src={require("../../static/" + currentOffice.nameId + ".jpg")}/>)
         }
     }
 
