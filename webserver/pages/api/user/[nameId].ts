@@ -3,7 +3,6 @@ import {addUser, getUserById, setUserById} from "../../../db/database";
 export default (req: any, res: any) => {
     switch (req.method) {
         case "POST":
-            console.log(req.body);
             addUser(req.body);
             res.json(200);
             break;

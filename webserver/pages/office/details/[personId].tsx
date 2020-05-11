@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {UserInformation} from "../../../library/general_interfaces";
 import useSWR from "swr";
 import Header from "../../../components/tablet/header";
-import {Container, ThemeProvider} from "@material-ui/core";
+import {Button, Container, ThemeProvider} from "@material-ui/core";
 import {ViewType} from "../../../library/enums";
 import {SingleView} from "../../../components/userConsole/viewTypes/singleView";
 import {DoubleView} from "../../../components/userConsole/viewTypes/doubleView";
@@ -38,18 +38,19 @@ export default function OfficeInformationId() {
 
     function getProfileImage() {
         if (currentOffice?.nameId) {
-                return (<img style={{
-                    objectFit: "cover",
-                    borderRadius: "50%",
-                    height: "220px",
-                    width: "220px",
-                    backgroundImage: "url('../../static/avataricon.png')",
-                    backgroundSize: "100%"
-                }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
+            return (<img style={{
+                objectFit: "cover",
+                borderRadius: "50%",
+                height: "220px",
+                width: "220px",
+                backgroundImage: "url('../../static/avataricon.png')",
+                backgroundSize: "100%"
+            }} src={"../../static/" + currentOffice.nameId + ".jpg"}/>)
         }
     }
 
     async function fetcher(url: string) {
+        console.log("fetcher: " + url);
         if (router.query.personId) {
             return fetch(url, {
                 method: 'GET',

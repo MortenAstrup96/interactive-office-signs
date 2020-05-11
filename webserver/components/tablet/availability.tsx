@@ -3,7 +3,7 @@ import {OfficeAvailabilityProps} from "../../library/general_interfaces";
 import {Button, colors} from "@material-ui/core";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
-import {getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
+import {generateLogEvent, getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
@@ -84,12 +84,15 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     // Will switch between available/busy - If neither switch to available
     function changeStatus() {
         if (status.text === "Available") {
+            generateLogEvent(props.nameId, {eventType: "Status Change", status: "Away"});
             setStatus(getAwayButton())
             putStatusUpdate(getAwayButton());
         } else if (status.text === "Away") {
-            setStatus(getBusyButton)
+            generateLogEvent(props.nameId, {eventType: "Status Change", status: "Busy"});
+            setStatus(getBusyButton);
             putStatusUpdate(getBusyButton());
         } else {
+            generateLogEvent(props.nameId, {eventType: "Status Change", status: "Available"});
             setStatus(getAvailableButton());
             putStatusUpdate(getAvailableButton());
         }

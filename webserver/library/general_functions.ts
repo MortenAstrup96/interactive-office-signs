@@ -5,6 +5,18 @@ export function fetcher(url: any) {
     return fetch(url).then(r => r.json());
 }
 
+export async function generateLogEvent(user: string, event: any) {
+    const url = "/api/logEvent";
+    const timestamp = Date.now().toString();
+    const objectToSend = {timestamp: timestamp, event: event, user: user};
+
+    return fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(objectToSend),
+    }).then(r => r.json());
+}
+
 export function setPropValue(prop: any, field: string, change: string) {
 
 }
