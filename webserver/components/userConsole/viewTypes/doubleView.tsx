@@ -10,6 +10,7 @@ interface DoubleViewProps {
     firstView: ViewData;
     secondView: ViewData;
     consoleMode: boolean;
+    nameId: string;
 
     updateView?(viewId: ViewId, viewData: ViewData): void;
 }
@@ -22,11 +23,11 @@ export const DoubleView = (props: DoubleViewProps) => {
                   alignItems="center">
                 <Grid item>
                     <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={halfCardStyle}
-                               consoleMode={props.consoleMode} updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} nameId={props.nameId} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={halfCardStyle}
-                               consoleMode={props.consoleMode} updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} nameId={props.nameId} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>

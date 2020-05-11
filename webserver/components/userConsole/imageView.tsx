@@ -19,13 +19,14 @@ import {ViewData} from "../../library/general_interfaces";
 import IconAdd from "../../img/icons/iconAdd";
 import {modalPopupStyles} from "../../styles/userConsoleStyles";
 import {VegaLite} from "react-vega/lib";
-import {theme} from "../../styles/generalStyles";
+import {generateLogEvent} from "../../library/general_functions";
 
 interface ImageViewProps {
     viewData: ViewData;
     viewId: ViewId;
     cardStyles: any;
     consoleMode: boolean;
+    nameId: string;
 
     updateView?(viewId: ViewId, viewData: ViewData): void;
 }
@@ -52,6 +53,7 @@ export const ImageView = (props: ImageViewProps) => {
             data: selectedData
         };
 
+        generateLogEvent(props.nameId, {eventType: "Content Change", newData})
         if (props.updateView) {
             props.updateView(props.viewId, newData);
         }
@@ -69,15 +71,19 @@ export const ImageView = (props: ImageViewProps) => {
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <h4 style={{fontFamily: "Roboto"}}>Vega-lite is a data visualization tool</h4>
-                    <a style={{fontFamily: "Roboto", marginTop: "20px"}} href="https://vega.github.io/vega-lite/examples/" target="_blank">Click here to see more Vega-lite examples</a>
-                    <div style={{maxWidth: "1000px", marginTop: "10px", marginBottom: "20px"}}><VegaLite spec={parsedVega}/>
+                    <a style={{fontFamily: "Roboto", marginTop: "20px"}}
+                       href="https://vega.github.io/vega-lite/examples/" target="_blank">Click here to see more
+                        Vega-lite examples</a>
+                    <div style={{maxWidth: "1000px", marginTop: "10px", marginBottom: "20px"}}><VegaLite
+                        spec={parsedVega}/>
                     </div>
                 </div>);
         } catch (e) {
             return (
                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <h4 style={{fontFamily: "Roboto"}}>Vega-Lite is a data visualization tool</h4>
-                    <a style={{fontFamily: "Roboto"}} href="https://vega.github.io/vega-lite/examples/" target="_blank">More Vega-Lite examples</a>
+                    <a style={{fontFamily: "Roboto"}} href="https://vega.github.io/vega-lite/examples/" target="_blank">More
+                        Vega-Lite examples</a>
                     <h3 style={{color: "#e2001a"}}>The visualisation is unable to compile</h3>
                 </div>)
         }
@@ -92,7 +98,8 @@ export const ImageView = (props: ImageViewProps) => {
                                style={{width: "100%", margin: "10px", marginBottom: "10px"}}
                                onChange={(e) => setSelectedData(e.target.value)}/>
                     <a href="https://www.lifewire.com/copy-image-web-address-url-1174175" target="_blank"
-                       style={{marginBottom: "10px", fontFamily: "Roboto"}}>Paste the image address from a picture that you have found online</a>
+                       style={{marginBottom: "10px", fontFamily: "Roboto"}}>Paste the image address from a picture that
+                        you have found online</a>
                     <img src={selectedData} height="400px" alt="Unable to display image"/>
                 </div>)
         } else if (selectedRadio === DataType.CALENDAR) {
@@ -112,11 +119,14 @@ export const ImageView = (props: ImageViewProps) => {
                             alignItems: "center"
                         }}>
                             <h4 style={{fontFamily: "Roboto"}}>Add a view of your calendar</h4>
-                            <p style={{fontFamily: "Roboto"}}>This will display your appointments for the day from your calendar on the office sign. The
+                            <p style={{fontFamily: "Roboto"}}>This will display your appointments for the day from your
+                                calendar on the office sign. The
                                 appointments can be displayed with a title or just as 'Busy' or 'In a meeting'.</p>
-                            <p style={{fontFamily: "Roboto"}}>Your calendar can be added with a link to the ICS-file that can be published via
+                            <p style={{fontFamily: "Roboto"}}>Your calendar can be added with a link to the ICS-file
+                                that can be published via
                                 Outlook Web Application (OWA)</p>
-                            <a style={{fontFamily: "Roboto"}} href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5"
+                            <a style={{fontFamily: "Roboto"}}
+                               href="https://support.office.com/en-us/article/share-your-calendar-in-outlook-on-the-web-7ecef8ae-139c-40d9-bae2-a23977ee58d5"
                                target="_blank">How to publish Outlook calendar</a>
                         </div>
                     </div>

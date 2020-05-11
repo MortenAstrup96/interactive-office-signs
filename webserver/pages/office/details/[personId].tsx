@@ -62,17 +62,20 @@ export default function OfficeInformationId() {
     function getImages() {
         switch (currentOffice?.viewType) {
             case ViewType.SINGLE:
-                return <SingleView firstView={currentOffice.firstView} consoleMode={false}/>;
+                return <SingleView firstView={currentOffice.firstView} consoleMode={false}
+                                   nameId={currentOffice.nameId}/>;
             case ViewType.DOUBLE:
                 return <DoubleView firstView={currentOffice.firstView} secondView={currentOffice.secondView}
+                                   nameId={currentOffice.nameId}
                                    consoleMode={false}/>;
             case ViewType.TRIPLE:
                 return <TripleView firstView={currentOffice.firstView} secondView={currentOffice.secondView}
-                                   thirdView={currentOffice.thirdView} consoleMode={false}/>
+                                   thirdView={currentOffice.thirdView} consoleMode={false}
+                                   nameId={currentOffice.nameId}/>
             case ViewType.QUADRUPLE:
                 return <QuadrupleView firstView={currentOffice.firstView} secondView={currentOffice.secondView}
                                       thirdView={currentOffice.thirdView} fourthView={currentOffice.fourthView}
-                                      consoleMode={false}/>;
+                                      consoleMode={false} nameId={currentOffice.nameId}/>;
             case ViewType.CUSTOM:
                 return <CustomView customView={currentOffice.customView}/>;
             default:

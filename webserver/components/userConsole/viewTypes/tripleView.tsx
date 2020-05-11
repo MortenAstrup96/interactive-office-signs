@@ -10,6 +10,7 @@ interface TripleViewProps {
     secondView: ViewData;
     thirdView: ViewData;
     consoleMode: boolean;
+    nameId: string;
 
     updateView?(viewId: ViewId, viewData: ViewData): void;
 }
@@ -21,15 +22,15 @@ export const TripleView = (props: TripleViewProps) => {
                   alignItems="center">
                 <Grid item>
                     <ImageView viewData={props.firstView} viewId={ViewId.FIRST} cardStyles={quarterCardStyle}
-                               consoleMode={props.consoleMode} updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} nameId={props.nameId} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.secondView} viewId={ViewId.SECOND} cardStyles={quarterCardStyle}
-                               consoleMode={props.consoleMode} updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} nameId={props.nameId} updateView={props.updateView}/>
                 </Grid>
                 <Grid item>
                     <ImageView viewData={props.thirdView} viewId={ViewId.THIRD} cardStyles={halfCardStyle}
-                               consoleMode={props.consoleMode} updateView={props.updateView}/>
+                               consoleMode={props.consoleMode} nameId={props.nameId} updateView={props.updateView}/>
                 </Grid>
             </Grid>
         </div>

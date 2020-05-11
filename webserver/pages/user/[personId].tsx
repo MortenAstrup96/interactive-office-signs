@@ -6,6 +6,7 @@ import {Customize} from "../../components/userConsole/customize";
 import {Status} from "../../components/userConsole/status";
 import {Box, Tab, Tabs, ThemeProvider, Typography} from "@material-ui/core";
 import {theme} from "../../styles/generalStyles";
+import {generateLogEvent} from "../../library/general_functions";
 
 
 interface TabPanelProps {
@@ -60,6 +61,7 @@ export default function Index() {
     // Updates database via API on status change
     function saveChanges() {
         const nameId = currentUser?.nameId;
+
 
         // Posting data
         if (nameId) {
