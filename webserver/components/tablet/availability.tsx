@@ -1,14 +1,22 @@
 import React, {useEffect, useState} from "react";
 import {OfficeAvailabilityProps} from "../../library/general_interfaces";
-import {Button, colors} from "@material-ui/core";
+import {Button, Card, CardContent, colors, Modal, ThemeProvider} from "@material-ui/core";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
 import {generateLogEvent, getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
+import OfficeInformationId from "../../pages/office/details/[personId]";
+import {CustomButton} from "../userConsole/CustomButton";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "../../img/icons/iconDelete";
+import {buttonStyle} from "../../styles/userConsoleStyles";
+import {Status} from "../userConsole/status";
 
 
 export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     const [status, setStatus] = useState<any>(props.status);
+    const [showModal, setShowModal] = useState(false);
     const [nameId] = useState<string>(props.nameId);
+    const buttonStyling = buttonStyle();
 
     let {data} = useSWR(() => '/api/getCalendar', fetcher, {
         refreshInterval: 120000
@@ -82,26 +90,66 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     }
 
     // Will switch between available/busy - If neither switch to available
-    function changeStatus() {
-        if (status.text === "Available") {
-            generateLogEvent(props.nameId, {eventType: "Status Change", status: "Away"});
-            setStatus(getAwayButton())
-            putStatusUpdate(getAwayButton());
-        } else if (status.text === "Away") {
+    function changeStatus(buttonInfo: any) {
+        if (buttonInfo.text === "Available") {
+            generateLogEvent(props.nameId, {eventType: "Status Change", status: "Available"});
+            setStatus(getAvailableButton())
+            putStatusUpdate(getAvailableButton());
+        } else if (buttonInfo.text === "Busy") {
             generateLogEvent(props.nameId, {eventType: "Status Change", status: "Busy"});
             setStatus(getBusyButton);
             putStatusUpdate(getBusyButton());
-        } else {
+        } else if (buttonInfo.text === "Away") {
             generateLogEvent(props.nameId, {eventType: "Status Change", status: "Available"});
-            setStatus(getAvailableButton());
-            putStatusUpdate(getAvailableButton());
+            setStatus(getAwayButton());
+            putStatusUpdate(getAwayButton());
+        } else {
+            generateLogEvent(props.nameId, {eventType: "Status Change", status: buttonInfo.text});
+            setStatus({text: buttonInfo.text, color: buttonInfo.color});
+            putStatusUpdate({text: buttonInfo.text, color: buttonInfo.color});
+        }
+        setShowModal(false);
+    }
+
+    function getCustomStatus() {
+        if (props.customStatus) {
+            const customStatusList = props.customStatus.map((status: any, i: number) =>
+                <StatusButton text={status.text} color={status.color} position={i} selectButton={changeStatus} key={i}/>
+            );
+            return customStatusList;
         }
     }
 
     if (props.small) {
         return (
             <div>
-                <Button variant="contained" onClick={changeStatus}
+                <Modal
+                    open={showModal}
+                    onClose={() => setShowModal(false)}
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "50px"
+                    }}
+                >
+                    <Card>
+                        <CardContent style={{maxWidth: "450px"}}>
+                            <Button variant="contained" className={buttonStyling.buttonGreen}
+                                    onClick={() => changeStatus(getAvailableButton())}
+                            >Available</Button>
+                            <Button variant="contained" className={buttonStyling.buttonYellow}
+                                    onClick={() => changeStatus(getAwayButton())}
+                            >Away</Button>
+                            <Button variant="contained" className={buttonStyling.buttonRed}
+                                    onClick={() => changeStatus(getBusyButton())}
+                            >Do not disturb</Button>
+                            {getCustomStatus()}
+                        </CardContent>
+                    </Card>
+
+                </Modal>
+                <Button variant="contained" onClick={() => setShowModal(true)}
                         style={{
                             backgroundColor: status.color,
                             color: "#ffffff",
@@ -118,7 +166,33 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
     } else {
         return (
             <div>
-                <Button variant="contained" onClick={changeStatus}
+                <Modal
+                    open={showModal}
+                    onClose={() => setShowModal(false)}
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        padding: "50px"
+                    }}
+                >
+                    <Card>
+                        <CardContent style={{maxWidth: "450px"}}>
+                            <Button variant="contained" className={buttonStyling.buttonGreen}
+                                    onClick={() => changeStatus(getAvailableButton())}
+                            >Available</Button>
+                            <Button variant="contained" className={buttonStyling.buttonYellow}
+                                    onClick={() => changeStatus(getAwayButton())}
+                            >Away</Button>
+                            <Button variant="contained" className={buttonStyling.buttonRed}
+                                    onClick={() => changeStatus(getBusyButton())}
+                            >Do not disturb</Button>
+                            {getCustomStatus()}
+                        </CardContent>
+                    </Card>
+
+                </Modal>
+                <Button variant="contained" onClick={() => setShowModal(true)}
                         style={{
                             backgroundColor: status.color,
                             color: "#ffffff",
@@ -132,5 +206,26 @@ export const Availability: React.FC<OfficeAvailabilityProps> = props => {
             </div>
         );
     }
+};
 
+interface StatusButtonInfo {
+    text: string;
+    color: string;
+    position: number;
+
+    selectButton(buttonInfo: any): void;
+}
+
+const StatusButton = (props: StatusButtonInfo) => {
+    return (
+        <Button variant="contained" onClick={() => props.selectButton({text: props.text, color: props.color})}
+                style={{
+                    backgroundColor: props.color,
+                    color: "#ffffff",
+                    width: "200px",
+                    height: "50px",
+                    margin: "10px",
+                    fontSize: "18px"
+                }}>{props.text}</Button>
+    )
 };

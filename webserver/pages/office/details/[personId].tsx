@@ -105,7 +105,8 @@ export default function OfficeInformationId() {
                             <p className={generalStyling.officeTitle}>{currentOffice?.title}</p>
                             <p className={generalStyling.officeMail}>{currentOffice.mail}</p>
                             <Availability nameId={currentOffice.nameId} status={currentOffice.status}
-                                          calendarURL={currentOffice?.calendarURL} small={true}/>
+                                          calendarURL={currentOffice?.calendarURL} small={true}
+                                          customStatus={currentOffice?.statusButtons}/>
                         </div>
 
                     </div>

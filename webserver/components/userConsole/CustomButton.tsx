@@ -31,4 +31,4 @@ export const CustomButton = (props: CustomButtonInfo) => {
             </IconButton>
         </div>
     )
-}
+};

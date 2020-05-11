@@ -64,7 +64,7 @@ export default function OfficeInformationId() {
                     fontFamily: "Roboto"
                 }}>{currentOffice?.title}</p>
                 <Availability nameId={currentOffice.nameId} status={currentOffice.status}
-                              calendarURL={currentOffice?.calendarURL}/>
+                              calendarURL={currentOffice?.calendarURL} customStatus={currentOffice?.statusButtons}/>
             </div>
         </Container>
     );

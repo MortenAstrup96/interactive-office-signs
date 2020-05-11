@@ -25,4 +25,5 @@ export interface OfficeAvailabilityProps {
     status: { text: string, color: string };
     calendarURL: string;
     small?: boolean;
+    customStatus: any[];
 }
