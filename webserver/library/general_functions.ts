@@ -16,10 +16,6 @@ export async function generateLogEvent(user: string, event: any) {
     }).then(r => r.json());
 }
 
-export function setPropValue(prop: any, field: string, change: string) {
-
-}
-
 export function getPropString(prop: any, field: string) {
     if (prop && prop.field) {
         return prop.field;

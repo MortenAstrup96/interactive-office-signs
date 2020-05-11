@@ -5,7 +5,6 @@ export default (req: any, res: any) => {
     let log: any;
     fs.readFile("./logs/" + req.body.user + ".json", function (err: any, data: any) {
         if (err) {
-            console.log("Failed - Writing to empty file");
             log = [];
             log.push(req.body);
             writeToFile(log);
@@ -26,7 +25,6 @@ export default (req: any, res: any) => {
     function writeToFile(log: any[]) {
         fs.writeFile("./logs/" + req.body.user + ".json", JSON.stringify(log), function (err: any) {
             if (err) return console.log(err);
-            console.log("Wrote to file");
         });
 
         res.json(200);

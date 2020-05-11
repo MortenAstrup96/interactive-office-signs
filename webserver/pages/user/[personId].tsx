@@ -21,13 +21,13 @@ export default function Index() {
     const [value, setValue] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-       setValue(newValue);
+        setValue(newValue);
     };
     let {data} = useSWR(() => '/api/user/' + router.query.personId, fetcher);
 
     /** Tab component */
     function getTabPanel(index: number, value: number, children: any) {
-        if(value === index) {
+        if (value === index) {
             return (
                 <div
                     role="tabpanel"
@@ -80,6 +80,13 @@ export default function Index() {
     }, [currentUser?.statusButtons, currentUser?.status]);
 
     function updateStatusButtons(buttonArray: any[], buttonStatus: any) {
+        if (currentUser) {
+            generateLogEvent(currentUser.nameId, {
+                eventType: "Status Change - Console",
+                event: {buttonStatus, buttonArray}
+            })
+        }
+
         setCurrentUser((prevState: any) => ({
             ...prevState,
             status: buttonStatus,
@@ -89,13 +96,15 @@ export default function Index() {
 
 
     function getCustomize() {
-        if(currentUser) {
-            return(<Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>);
+        if (currentUser) {
+            return (<Customize currentUser={currentUser} setCurrentUser={setCurrentUser} save={saveChanges}/>);
         }
     }
+
     function getStatus() {
-        if(currentUser) {
-            return( <Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status} saveChanges={updateStatusButtons}/>);
+        if (currentUser) {
+            return (<Status statusButtons={currentUser?.statusButtons} currentSelection={currentUser?.status}
+                            saveChanges={updateStatusButtons}/>);
         }
     }
 
@@ -115,12 +124,12 @@ export default function Index() {
                     onChange={handleChange}
                     centered
                     color="primary">
-                    <Tab label="Profile" />
-                    <Tab label="Status" />
+                    <Tab label="Profile"/>
+                    <Tab label="Status"/>
                 </Tabs>
 
-            {getTabPanel(0, value, getCustomize())}
-            {getTabPanel(1, value, getStatus())}
+                {getTabPanel(0, value, getCustomize())}
+                {getTabPanel(1, value, getStatus())}
 
             </ThemeProvider>
         </div>

@@ -53,9 +53,6 @@ export const Customize = (props: customizeInfo) => {
         }
     }
 
-    function openPreviewModal() {
-
-    }
 
     /** ----- USER INTERFACE ----- */
     function updateViewType(viewType: string) {

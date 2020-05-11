@@ -4,7 +4,7 @@ import {buttonStyle} from "../../styles/userConsoleStyles";
 // @ts-ignore
 import {TwitterPicker} from 'react-color'
 import {CustomButton} from "./CustomButton";
-import {getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
+import {generateLogEvent, getAvailableButton, getAwayButton, getBusyButton} from "../../library/general_functions";
 import {theme} from "../../styles/generalStyles";
 
 interface StatusInfo {
@@ -66,50 +66,56 @@ export const Status = (props: StatusInfo) => {
     return (
         <Container style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <ThemeProvider theme={theme}>
-            <h1 style={{fontFamily: "Roboto"}}>STATUS</h1>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "start", width: "220px"}}>
-                <Button variant="contained" className={buttonStyling.buttonGreen}
-                        onClick={() => onButtonClick(getAvailableButton())}>Available</Button>
-                <Button variant="contained" className={buttonStyling.buttonYellow}
-                        onClick={() => onButtonClick(getAwayButton())}>Away</Button>
-                <Button variant="contained" className={buttonStyling.buttonRed}
-                        onClick={() => onButtonClick(getBusyButton())}>Do not
-                    disturb</Button>
-                {getCustomStatus()}
+                <h1 style={{fontFamily: "Roboto"}}>STATUS</h1>
+                <div style={{display: "flex", flexDirection: "column", alignItems: "start", width: "220px"}}>
+                    <h4>Current Status: {props.currentSelection.text}</h4>
+                    <Button variant="contained" className={buttonStyling.buttonGreen}
+                            onClick={() => onButtonClick(getAvailableButton())}>Available</Button>
+                    <Button variant="contained" className={buttonStyling.buttonYellow}
+                            onClick={() => onButtonClick(getAwayButton())}>Away</Button>
+                    <Button variant="contained" className={buttonStyling.buttonRed}
+                            onClick={() => onButtonClick(getBusyButton())}>Do not
+                        disturb</Button>
+                    {getCustomStatus()}
 
 
-                <div style={{display: "flex", alignItems: "center", marginTop: "20px"}}>
-                    <TextField variant="outlined" label="Custom status"
-                               style={{margin: "10px", width: "200px", height: "50px"}}
-                               value={addStatusTextField}
-                               onChange={(event: any) => setAddStatusTextField(event.target.value)}/>
+                    <div style={{display: "flex", alignItems: "center", marginTop: "20px"}}>
+                        <TextField variant="outlined" label="Custom status"
+                                   style={{margin: "10px", width: "200px", height: "50px"}}
+                                   value={addStatusTextField}
+                                   onChange={(event: any) => setAddStatusTextField(event.target.value)}/>
+                    </div>
+
+                    <div style={{marginTop: "3px"}}>
+                        <Button color="primary" variant="contained" onClick={(e: any) => setAnchorEl(e.currentTarget)}
+                                style={{
+                                    width: "60px",
+                                    height: "35px",
+                                    marginLeft: "10px",
+                                    marginRight: "71px"
+                                }}>Color</Button>
+
+                        <Button color="primary" variant="contained" onClick={addCustomStatus}
+                                style={{width: "60px", height: "35px"}}>Add</Button>
+                    </div>
+
+                    <Popover
+                        open={open}
+                        anchorEl={anchorEl}
+                        onClose={() => setAnchorEl(null)}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <TwitterPicker color={selectedColor} colors={defaultColors}
+                                       onChange={(color: any) => setSelectedColor(color.hex)}/>
+                    </Popover>
                 </div>
-
-                <div style={{marginTop: "3px"}}>
-                <Button color="primary" variant="contained" onClick={(e: any) => setAnchorEl(e.currentTarget)}
-                        style={{width: "60px", height: "35px", marginLeft: "10px", marginRight: "71px"}}>Color</Button>
-
-                    <Button color="primary" variant="contained" onClick={addCustomStatus}
-                            style={{width: "60px", height: "35px"}}>Add</Button>
-                </div>
-
-                <Popover
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={() => setAnchorEl(null)}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                >
-                    <TwitterPicker color={selectedColor} colors={defaultColors}
-                                   onChange={(color: any) => setSelectedColor(color.hex)}/>
-                </Popover>
-            </div>
             </ThemeProvider>
         </Container>
     );
