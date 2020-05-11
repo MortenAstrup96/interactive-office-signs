@@ -1,5 +1,4 @@
 import fetch from "isomorphic-unfetch";
-import {colors} from "@material-ui/core";
 
 export function fetcher(url: any) {
     return fetch(url).then(r => r.json());

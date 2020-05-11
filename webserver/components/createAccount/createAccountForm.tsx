@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import {useRouter} from "next/router";
 import {theme} from "../../styles/generalStyles";
-import {getAvailableButton} from "../../library/general_functions";
+import {generateLogEvent, getAvailableButton} from "../../library/general_functions";
 
 const gridStyle = {
     display: "grid",
@@ -42,7 +42,7 @@ export const CreateAccountForm = () => {
     const [calendarURL, setCalenderURL] = useState("");
     const [log, forceUpdate] = useReducer(x => x + 1, 0);
     const handleSubmit = () => {
-        addUser({
+        const user = {
             office: office,
             nameId: nameId,
             name: name,
@@ -56,7 +56,9 @@ export const CreateAccountForm = () => {
             thirdView: {dataType: "", data: ""},
             fourthView: {dataType: "", data: ""},
             customView: {dataType: "", data: ""}
-        });
+        };
+        generateLogEvent(user.nameId, {eventType: "New User", userInfo: user});
+        addUser(user);
         setName("");
         setNameId("");
         setOffice("");
